@@ -7,6 +7,22 @@
 
 import Foundation
 
+// TODO: Migrate Price
+struct Price {
+    let value: Int
+    let currency: String
+}
+
+typealias DetailData = ProductDetailDataModel
+// - Data Model: ProductDetail
+struct ProductDetailDataModel {
+    let id: Int
+//    let name: String
+//    let description: String
+//    let imageUrl: String
+//    let priceInfo: Price
+}
+
 // - Class Contract
 protocol ContractForProductDetailVM: AnyObject {
     
@@ -27,6 +43,7 @@ final class ProductDetailVM {
     
     // - State Variables
     // TODO: Decide Next
+    var productId: Int?
     
     // - Lifecycle: Object
     init(view: ContractForProductDetailVC) {
@@ -49,7 +66,7 @@ extension ProductDetailVM: DelegateOfProductDetailModel {
     // TODO: Handle Later
 }
 
-// - Class Helpers
+// - Helper Class Methods
 extension ProductDetailVM {
     
     // TODO: Later

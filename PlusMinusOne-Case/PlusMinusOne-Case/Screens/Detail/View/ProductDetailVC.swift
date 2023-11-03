@@ -19,9 +19,10 @@ final class ProductDetailVC: UIViewController {
     lazy var viewModel = ProductDetailVM(view: self)
     
     // Life-cycle: Object
-    init(){
+    init(id: Int){
         super.init(nibName: nil, bundle: nil)
         viewModel.delegate = self
+        viewModel.productId = id
     }
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
@@ -41,7 +42,8 @@ final class ProductDetailVC: UIViewController {
 extension ProductDetailVC: ContractForProductDetailVC {
     
     func setupUserInterface() {
-        self.view.backgroundColor = .orange
+        self.view.backgroundColor = .systemBackground
+        self.navigationController?.setNavigationBarHidden(false, animated: true)
     }
 }
 
@@ -51,7 +53,7 @@ extension ProductDetailVC: DelegateOfProductDetailVM {
 }
 
 
-// - Class Helpers
+// - Helper Class Methods
 extension ProductDetailVC {
     // TODO: Later
 }
