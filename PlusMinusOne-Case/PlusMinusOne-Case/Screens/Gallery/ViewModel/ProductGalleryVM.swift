@@ -34,8 +34,9 @@ final class ProductGalleryVM {
     // - State Variables
     // TODO: Decide Next
     private var items: [RowItem] = []
+    private var feeds: [Int : Social] = [:] // ThinkTODO: is trivial, delete or use it in another way
     var itemsCount: Int { get { items.count } }
-    var columnPreference: Int = 1
+    var columnPreference: Int = 1 // TODO: Handle Later
     
     // - Lifecycle: Object
     init(view: ContractForProductGalleryVC) {
@@ -51,7 +52,9 @@ extension ProductGalleryVM: ContractForProductGalleryVM {
         view?.setupUserInterface()
         view?.setupDelegates()
         model.getProducts()
-//        model.getSocialInfo() // TODO: Decide include or not for the cell
+        // FIXME: Normally upon products arrival, triggering a id based retrieval is suitable
+        // Populated socials as a id-social pair, not quite sure for now, might change
+        model.getSocials()
     }
     
     func getItem(at index: IndexPath) -> RowItem? {
@@ -60,9 +63,8 @@ extension ProductGalleryVM: ContractForProductGalleryVM {
     }
     
     func didSelectItem(at index: IndexPath) {
-        // TODO: Detail Page Routing
-        guard let productId = getItem(at: index)?.id else { fatalError("Unable.")} // FIXME: return
-        view?.navigateToDetail(by: productId)
+        guard let data = getItem(at: index) else { fatalError("Unable.")} // FIXME: return
+        view?.navigateToDetail(pass: data)
     }
 }
 
@@ -73,7 +75,12 @@ extension ProductGalleryVM: DelegateOfProductGalleryModel {
         let data: [RowItem] = model.products.map {
             //TODO: add props
             return RowItem(
-                id: $0.id ?? 0
+                id: $0.id ?? 0,
+                productBrand: $0.name ?? "",
+                productType: $0.desc ?? "",
+                imageUrl: $0.image ?? "",
+                priceInfo: $0.price ?? .init(value: nil, currency: nil),
+                currentSocialFeed: nil
             )
         }
         items = data
@@ -81,8 +88,22 @@ extension ProductGalleryVM: DelegateOfProductGalleryModel {
     }
     
     func didGetSocialFeed() {
-//        let data = model.socialFeed
-//        print("DEBUG PRINT: ", data)
+        let data: [SocialFeed] = model.socials.map {
+            return SocialFeed(
+                id: $0.id ?? 0,
+                social: $0.social ?? .init(likeCount: nil, commentCounts: nil)
+            )
+        }
+        
+        for socialFeed in data {
+            if let id = socialFeed.id {
+                feeds[id] = socialFeed.social
+                if let index = items.firstIndex(where: { $0.id == id }) {
+                    items[index].currentSocialFeed = socialFeed.social
+                }
+            }
+        }
+        self.delegate?.didLoadSocialFeed()
     }
     
     func didFailRetrievalOfProducts(with: Error) {

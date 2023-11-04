@@ -5,14 +5,25 @@
 //  Created by Sefa İbiş on 3.11.2023.
 //
 
-// ThinkTODO: Based on the retention(1min) change the likeCount and comments increasingly with randomness(not substantial)
-// ThinkTODO: Find a way to change that json or keep the original and populate another
-// Do this or somethin else to have a convincing UX that mimics that behavior
+// TODO: Based on the retention(1min) change the likeCount and comments increasingly with randomness(not substantial)
+// TODO: Modify social.json file upon retention
+// FIXME: First keep the retention to 5 seconds just for development, change it to 1 min later
+
 struct SocialDTO: Decodable {
+    let results: [SocialFeed]?
+}
+
+struct SocialFeed: Decodable {
+    let id: Int?
+    let social: Social?
+}
+
+struct Social: Decodable {
     let likeCount: Int?
     let commentCounts: CommentInfo?
 }
 
 struct CommentInfo: Decodable {
-    let averageRating, anonymousCommentsCount, memberCommentsCount: Int?
+    let averageRating: Double?
+    let anonymousCommentsCount, memberCommentsCount: Int?
 }

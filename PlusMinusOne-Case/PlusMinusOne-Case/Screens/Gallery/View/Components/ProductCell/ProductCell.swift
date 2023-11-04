@@ -10,7 +10,11 @@ import UIKit
 // - Data Model: Cell
 struct ProductCellDataModel {
     let id: Int
-    // TODO: Fill Later
+    let productBrand: String
+    let productType: String
+    let imageUrl: String
+    let priceInfo: Price
+    var currentSocialFeed: Social?
 }
 
 final class ProductCell: UICollectionViewCell {

@@ -37,7 +37,7 @@ final class ProductDetailVM {
     
     // - State Variables
     // TODO: Decide Next
-    var productId: Int?
+    var data: RowItem?
     
     // - Lifecycle: Object
     init(view: ContractForProductDetailVC) {

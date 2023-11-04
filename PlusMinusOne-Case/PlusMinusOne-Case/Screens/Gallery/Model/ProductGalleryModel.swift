@@ -25,7 +25,7 @@ final class ProductGalleryModel {
     weak var delegate: DelegateOfProductGalleryModel?
     // - Data Variables
     private(set) var products: [Product] = []
-    private(set) var socialFeed: SocialInfo?
+    private(set) var socials: [SocialFeed] = []
     
     func getProducts(){
         
@@ -40,12 +40,14 @@ final class ProductGalleryModel {
             }
         }
     }
-    // TODO: Decide on to include within the cell later
-    func getSocialInfo() {
+
+    func getSocials() {
+        
         DecoderService.decode(resource: "social", as: SocialInfo.self) { [weak self] result in
             switch result {
             case .success(let response):
-                self?.socialFeed = response
+                guard let data = response.results else { return } // FIXME: Return
+                self?.socials = data
                 self?.delegate?.didGetSocialFeed()
             case .failure(let error):
                 self?.delegate?.didFailRetrievalOfSocialFeed(with: error)

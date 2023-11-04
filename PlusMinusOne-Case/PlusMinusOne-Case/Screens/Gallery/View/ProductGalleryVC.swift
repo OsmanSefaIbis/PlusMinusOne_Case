@@ -13,7 +13,7 @@ protocol ContractForProductGalleryVC: AnyObject {
     func setupUserInterface()
     func setupDelegates()
     func reloadCollectionView()
-    func navigateToDetail(by id: Int)
+    func navigateToDetail(pass data: RowItem)
 }
 
 final class ProductGalleryVC: UIViewController {
@@ -69,8 +69,8 @@ extension ProductGalleryVC: ContractForProductGalleryVC {
         }
     }
     
-    func navigateToDetail(by id: Int) {
-        let detailPage = ProductDetailVC(id: id)
+    func navigateToDetail(pass data: RowItem) {
+        let detailPage = ProductDetailVC(data: data )
         self.navigationController?.pushViewController(detailPage, animated: true)
     }
 }
