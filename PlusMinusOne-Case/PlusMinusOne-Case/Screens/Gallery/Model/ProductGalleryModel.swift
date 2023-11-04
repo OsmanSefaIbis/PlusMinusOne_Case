@@ -7,14 +7,49 @@
 
 import Foundation
 
+// - Renaming
+typealias ProductsInfo = ProductsDTO
+typealias SocialInfo = SocialDTO
+
 // - Class Communicator
 protocol DelegateOfProductGalleryModel: AnyObject {
-    
-    // TODO: Decide Next
+    func didGetProducts()
+    func didGetSocialFeed()
+    func didFailRetrievalOfProducts(with: Error)
+    func didFailRetrievalOfSocialFeed(with: Error)
 }
 
 final class ProductGalleryModel {
     
     // - MVVM Variables
     weak var delegate: DelegateOfProductGalleryModel?
+    // - Data Variables
+    private(set) var products: [Product] = []
+    private(set) var socialFeed: SocialInfo?
+    
+    func getProducts(){
+        
+        DecoderService.decode(resource: "product", as: ProductsInfo.self) { [weak self] result in
+            switch result {
+            case .success(let response):
+                guard let data = response.results else { return } // FIXME: Return
+                self?.products = data
+                self?.delegate?.didGetProducts()
+            case .failure(let error):
+                self?.delegate?.didFailRetrievalOfProducts(with: error)
+            }
+        }
+    }
+    // TODO: Decide on to include within the cell later
+    func getSocialInfo() {
+        DecoderService.decode(resource: "social", as: SocialInfo.self) { [weak self] result in
+            switch result {
+            case .success(let response):
+                self?.socialFeed = response
+                self?.delegate?.didGetSocialFeed()
+            case .failure(let error):
+                self?.delegate?.didFailRetrievalOfSocialFeed(with: error)
+            }
+        }
+    }
 }

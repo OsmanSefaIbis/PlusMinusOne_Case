@@ -78,7 +78,13 @@ extension ProductGalleryVC: ContractForProductGalleryVC {
 // - MVVM Notify Methods
 extension ProductGalleryVC: DelegateOfProductGalleryVM {
     
-    // TODO: Handle Later
+    func didLoadProducts() {
+        // TODO: Reload CollectionView
+        // TODO: Think Additional Stuff
+    }
+    func didLoadSocialFeed() {
+        // TODO: Think Later
+    }
 }
 
 // - Helper Class Methods

@@ -7,12 +7,6 @@
 
 import Foundation
 
-// TODO: Migrate Price
-struct Price {
-    let value: Int
-    let currency: String
-}
-
 typealias DetailData = ProductDetailDataModel
 // - Data Model: ProductDetail
 struct ProductDetailDataModel {

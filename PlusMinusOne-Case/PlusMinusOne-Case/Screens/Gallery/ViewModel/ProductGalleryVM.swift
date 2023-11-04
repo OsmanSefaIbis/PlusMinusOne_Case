@@ -20,7 +20,8 @@ protocol ContractForProductGalleryVM: AnyObject {
 // - Class Communicator
 protocol DelegateOfProductGalleryVM: AnyObject {
     
-    // TODO: Decide Next
+    func didLoadProducts()
+    func didLoadSocialFeed()
 }
 
 final class ProductGalleryVM {
@@ -32,7 +33,7 @@ final class ProductGalleryVM {
     
     // - State Variables
     // TODO: Decide Next
-    private var items: [RowItem] = Array(repeating: RowItem(id: 1), count: 30)
+    private var items: [RowItem] = []
     var itemsCount: Int { get { items.count } }
     var columnPreference: Int = 1
     
@@ -49,6 +50,8 @@ extension ProductGalleryVM: ContractForProductGalleryVM {
     func viewDidLoad() {
         view?.setupUserInterface()
         view?.setupDelegates()
+        model.getProducts()
+//        model.getSocialInfo() // TODO: Decide include or not for the cell
     }
     
     func getItem(at index: IndexPath) -> RowItem? {
@@ -66,7 +69,29 @@ extension ProductGalleryVM: ContractForProductGalleryVM {
 // - MVVM Notify
 extension ProductGalleryVM: DelegateOfProductGalleryModel {
     
-    // TODO: Handle Later
+    func didGetProducts() {
+        let data: [RowItem] = model.products.map {
+            //TODO: add props
+            return RowItem(
+                id: $0.id ?? 0
+            )
+        }
+        items = data
+        self.delegate?.didLoadProducts()
+    }
+    
+    func didGetSocialFeed() {
+//        let data = model.socialFeed
+//        print("DEBUG PRINT: ", data)
+    }
+    
+    func didFailRetrievalOfProducts(with: Error) {
+        // TODO: Handle Later
+    }
+    
+    func didFailRetrievalOfSocialFeed(with: Error) {
+        // TODO: Handle Later
+    }
 }
 
 // - Helper Class Methods
