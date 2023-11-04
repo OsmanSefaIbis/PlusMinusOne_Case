@@ -97,7 +97,7 @@ extension ProductGalleryVM: DelegateOfProductGalleryModel {
         
         for socialFeed in data {
             if let id = socialFeed.id {
-                feeds[id] = socialFeed.social
+                feeds[id] = socialFeed.social // trivial
                 if let index = items.firstIndex(where: { $0.id == id }) {
                     items[index].currentSocialFeed = socialFeed.social
                 }
