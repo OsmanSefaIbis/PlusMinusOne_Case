@@ -31,6 +31,9 @@
 		961969642AF79DB1001CB5EB /* UIStackView+Extended.swift in Sources */ = {isa = PBXBuildFile; fileRef = 961969632AF79DB1001CB5EB /* UIStackView+Extended.swift */; };
 		961969662AF7D34C001CB5EB /* UIImageView+Extended.swift in Sources */ = {isa = PBXBuildFile; fileRef = 961969652AF7D34C001CB5EB /* UIImageView+Extended.swift */; };
 		961969682AF7D35A001CB5EB /* UILabel+Extended.swift in Sources */ = {isa = PBXBuildFile; fileRef = 961969672AF7D35A001CB5EB /* UILabel+Extended.swift */; };
+		9619696B2AF7F9A4001CB5EB /* Kingfisher in Frameworks */ = {isa = PBXBuildFile; productRef = 9619696A2AF7F9A4001CB5EB /* Kingfisher */; };
+		9619696E2AF80107001CB5EB /* Cosmos in Frameworks */ = {isa = PBXBuildFile; productRef = 9619696D2AF80107001CB5EB /* Cosmos */; };
+		961969722AF8014E001CB5EB /* CountDownView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 961969712AF8014E001CB5EB /* CountDownView.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -79,6 +82,7 @@
 		961969632AF79DB1001CB5EB /* UIStackView+Extended.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIStackView+Extended.swift"; sourceTree = "<group>"; };
 		961969652AF7D34C001CB5EB /* UIImageView+Extended.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIImageView+Extended.swift"; sourceTree = "<group>"; };
 		961969672AF7D35A001CB5EB /* UILabel+Extended.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UILabel+Extended.swift"; sourceTree = "<group>"; };
+		961969712AF8014E001CB5EB /* CountDownView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CountDownView.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -86,6 +90,8 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				9619696E2AF80107001CB5EB /* Cosmos in Frameworks */,
+				9619696B2AF7F9A4001CB5EB /* Kingfisher in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -271,6 +277,7 @@
 		9619694D2AF518AF001CB5EB /* Utils */ = {
 			isa = PBXGroup;
 			children = (
+				9619696F2AF80122001CB5EB /* Animation */,
 				961969532AF577DB001CB5EB /* Decoder */,
 				9619694F2AF518D1001CB5EB /* SDK Extension */,
 				9619694E2AF518C6001CB5EB /* Enum */,
@@ -324,6 +331,22 @@
 			path = DTO;
 			sourceTree = "<group>";
 		};
+		9619696F2AF80122001CB5EB /* Animation */ = {
+			isa = PBXGroup;
+			children = (
+				961969702AF8012E001CB5EB /* Countdown */,
+			);
+			path = Animation;
+			sourceTree = "<group>";
+		};
+		961969702AF8012E001CB5EB /* Countdown */ = {
+			isa = PBXGroup;
+			children = (
+				961969712AF8014E001CB5EB /* CountDownView.swift */,
+			);
+			path = Countdown;
+			sourceTree = "<group>";
+		};
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
@@ -340,6 +363,10 @@
 			dependencies = (
 			);
 			name = "PlusMinusOne-Case";
+			packageProductDependencies = (
+				9619696A2AF7F9A4001CB5EB /* Kingfisher */,
+				9619696D2AF80107001CB5EB /* Cosmos */,
+			);
 			productName = "PlusMinusOne-Case";
 			productReference = 96185A7E2AF40D09005A5488 /* PlusMinusOne-Case.app */;
 			productType = "com.apple.product-type.application";
@@ -388,7 +415,7 @@
 			attributes = {
 				BuildIndependentTargetsInParallel = 1;
 				LastSwiftUpdateCheck = 1430;
-				LastUpgradeCheck = 1430;
+				LastUpgradeCheck = 1500;
 				TargetAttributes = {
 					96185A7D2AF40D09005A5488 = {
 						CreatedOnToolsVersion = 14.3.1;
@@ -412,6 +439,10 @@
 				Base,
 			);
 			mainGroup = 96185A752AF40D09005A5488;
+			packageReferences = (
+				961969692AF7F9A4001CB5EB /* XCRemoteSwiftPackageReference "Kingfisher" */,
+				9619696C2AF80107001CB5EB /* XCRemoteSwiftPackageReference "Cosmos" */,
+			);
 			productRefGroup = 96185A7F2AF40D09005A5488 /* Products */;
 			projectDirPath = "";
 			projectRoot = "";
@@ -470,6 +501,7 @@
 				961969462AF45499001CB5EB /* ProductGalleryVM.swift in Sources */,
 				9619694C2AF510BA001CB5EB /* ProductCell.swift in Sources */,
 				96185A842AF40D09005A5488 /* SceneDelegate.swift in Sources */,
+				961969722AF8014E001CB5EB /* CountDownView.swift in Sources */,
 				961969662AF7D34C001CB5EB /* UIImageView+Extended.swift in Sources */,
 				961969422AF44871001CB5EB /* ProductDetailVM.swift in Sources */,
 				961969522AF51A0A001CB5EB /* Localize.swift in Sources */,
@@ -556,6 +588,7 @@
 				DEBUG_INFORMATION_FORMAT = dwarf;
 				ENABLE_STRICT_OBJC_MSGSEND = YES;
 				ENABLE_TESTABILITY = YES;
+				ENABLE_USER_SCRIPT_SANDBOXING = YES;
 				GCC_C_LANGUAGE_STANDARD = gnu11;
 				GCC_DYNAMIC_NO_PIC = NO;
 				GCC_NO_COMMON_BLOCKS = YES;
@@ -616,6 +649,7 @@
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
 				ENABLE_NS_ASSERTIONS = NO;
 				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				ENABLE_USER_SCRIPT_SANDBOXING = YES;
 				GCC_C_LANGUAGE_STANDARD = gnu11;
 				GCC_NO_COMMON_BLOCKS = YES;
 				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
@@ -812,6 +846,38 @@
 			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
+
+/* Begin XCRemoteSwiftPackageReference section */
+		961969692AF7F9A4001CB5EB /* XCRemoteSwiftPackageReference "Kingfisher" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/onevcat/Kingfisher";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 7.10.0;
+			};
+		};
+		9619696C2AF80107001CB5EB /* XCRemoteSwiftPackageReference "Cosmos" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/evgenyneu/Cosmos";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 23.0.0;
+			};
+		};
+/* End XCRemoteSwiftPackageReference section */
+
+/* Begin XCSwiftPackageProductDependency section */
+		9619696A2AF7F9A4001CB5EB /* Kingfisher */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 961969692AF7F9A4001CB5EB /* XCRemoteSwiftPackageReference "Kingfisher" */;
+			productName = Kingfisher;
+		};
+		9619696D2AF80107001CB5EB /* Cosmos */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 9619696C2AF80107001CB5EB /* XCRemoteSwiftPackageReference "Cosmos" */;
+			productName = Cosmos;
+		};
+/* End XCSwiftPackageProductDependency section */
 	};
 	rootObject = 96185A762AF40D09005A5488 /* Project object */;
 }

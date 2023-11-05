@@ -34,6 +34,11 @@ final class ProductDetailVC: UIViewController {
         viewModel.viewDidLoad()
     }
     
+    override func viewDidAppear(_ animated: Bool) {
+        super.viewDidAppear(true)
+        setupCountDown()
+    }
+    
     // - User Interface Variables
     private let scrollView: UIScrollView = {
         // Opted for a scroll view in the detail page to accommodate potential future use-cases.
@@ -133,14 +138,7 @@ final class ProductDetailVC: UIViewController {
         l.backgroundColor = .orange
         return l
     }()
-    private let imageViewSocialUpdateCountDown: UIImageView = {
-        // TODO: spm https://github.com/relatedcode/ProgressHUD
-        let iv = UIImageView()
-        iv.backgroundColor = .white
-        iv.image = UIImage(systemName: "timelapse")
-        iv.tintColor = .systemPink
-        return iv
-    }()
+    private let countDownViewContainer = UIView()
 } // - Class End
 
 // - MVVM Notify
@@ -222,7 +220,6 @@ extension ProductDetailVC {
         contentView.addSubview(vStackViewContainer)
         vStackViewContainer.translatesAutoresizingMaskIntoConstraints = false
         NSLayoutConstraint.activate([
-            //TODO: Delete some constraints
             vStackViewContainer.topAnchor.constraint(equalTo: contentView.topAnchor),
             vStackViewContainer.bottomAnchor.constraint(equalTo: contentView.bottomAnchor),
             vStackViewContainer.leadingAnchor.constraint(equalTo: contentView.leadingAnchor),
@@ -234,7 +231,6 @@ extension ProductDetailVC {
         vStackViewContainer.addArrangedSubview(imageViewContainer)
         vStackViewContainer.addArrangedSubview(productInformationContainerView)
         
-        // TODO: Shorten Naming
         imageViewContainer.heightAnchor.constraint(equalTo: contentView.heightAnchor, multiplier: 0.2).isActive = true
         productInformationContainerView.heightAnchor.constraint(equalTo: contentView.heightAnchor, multiplier: 0.8 ).isActive = true
     }
@@ -288,7 +284,7 @@ extension ProductDetailVC {
     func setupRightOfProductInformationStackView() {
         vStackViewProductInformationRightSide.addArrangedSubview(imageViewHearth)
         vStackViewProductInformationRightSide.addArrangedSubview(labelLikeCount)
-        vStackViewProductInformationRightSide.addArrangedSubview(imageViewSocialUpdateCountDown)
+        vStackViewProductInformationRightSide.addArrangedSubview(countDownViewContainer)
     }
     
     func setupFirstRowOnLeftSideOfProductInformation() {
@@ -304,6 +300,18 @@ extension ProductDetailVC {
     
     func setupThirdRowOnLeftSideOfProductInformation() {
         hStackProductInformationLeftSideThirdRow.addArrangedSubview(labelPricing)
+    }
+    
+    func setupCountDown() {
+        let countDownView = CircularTimerView(frame: countDownViewContainer.bounds)
+        countDownViewContainer.addSubview(countDownView)
+        countDownView.translatesAutoresizingMaskIntoConstraints = false
+        NSLayoutConstraint.activate([
+            countDownView.topAnchor.constraint(equalTo: countDownViewContainer.topAnchor),
+            countDownView.leadingAnchor.constraint(equalTo: countDownViewContainer.leadingAnchor),
+            countDownView.centerXAnchor.constraint(equalTo: countDownViewContainer.centerXAnchor),
+            countDownView.centerYAnchor.constraint(equalTo: countDownViewContainer.centerYAnchor),
+        ])
     }
     
 }
