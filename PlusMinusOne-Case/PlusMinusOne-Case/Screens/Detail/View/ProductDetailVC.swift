@@ -73,7 +73,7 @@ final class ProductDetailVC: UIViewController {
         return v
     }()
     private let hStackViewProductInformation: UIStackView = {
-        UIStackView(axis: .horizontal, alignment: .fill, distribution: .fill)
+        UIStackView(axis: .horizontal)
     }()
     private let vStackViewProductInformationLeftSide: UIStackView = {
         UIStackView(axis: .vertical, distribution: .fillEqually, backgroundColor: .systemPurple)
@@ -170,9 +170,9 @@ extension ProductDetailVC {
     func setupSecondly() {
         setupScrollView()
         setupContentView()
+        setupOutMostStackView()
         setupImageViewContainer()
         setupProductInformationContainerView()
-        setupOutMostStackView()
     }
     
     func setupThirdly() {
@@ -181,11 +181,12 @@ extension ProductDetailVC {
     }
     
     func setupFourthly() {
+        setupRightOfProductInformationStackView()
         setupLeftOfProductInformationStackView()
+        
         setupFirstRowOnLeftSideOfProductInformation()
         setupSecondRowOnLeftSideOfProductInformation()
         setupThirdRowOnLeftSideOfProductInformation()
-        setupRightOfProductInformationStackView()
     }
     
     func setupScrollView() {

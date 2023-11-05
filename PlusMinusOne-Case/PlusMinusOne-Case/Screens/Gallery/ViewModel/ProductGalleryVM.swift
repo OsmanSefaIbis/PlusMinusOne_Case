@@ -29,6 +29,7 @@ final class ProductGalleryVM {
     // - MVVM Variables
     lazy var model = ProductGalleryModel()
     weak var view: ContractForProductGalleryVC?
+    weak var contract: ContractForProductGalleryVM? // TODO: later
     weak var delegate: DelegateOfProductGalleryVM?
     
     // - State Variables

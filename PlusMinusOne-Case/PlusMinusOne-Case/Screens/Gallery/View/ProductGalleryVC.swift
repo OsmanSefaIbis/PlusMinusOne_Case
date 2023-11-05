@@ -142,7 +142,7 @@ extension ProductGalleryVC: UICollectionViewDelegateFlowLayout {
         let totalCellSpacing = (CGFloat(viewModel.columnPreference - 1) * flowLayout.minimumInteritemSpacing)
         let availableWidthForCells = (totalWidth - totalInsetSpace - totalCellSpacing)
         // TODO: Calculate Sizing Later
-        let cellWidth = 100, cellHeight = 100
+        let cellWidth = 150, cellHeight = 150
         let cellSize = CGSize(width: cellWidth, height: cellHeight)
         return cellSize
     }

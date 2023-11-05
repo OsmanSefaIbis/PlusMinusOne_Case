@@ -21,15 +21,6 @@ final class ProductCell: UICollectionViewCell {
     
     static let identifier = "ProductCell"
     
-    private let imageView: UIImageView = { // TODO: Delete later
-        let iv = UIImageView()
-        iv.contentMode = .scaleAspectFill
-        iv.image = UIImage(systemName: "person.fill")
-        iv.tintColor = .systemGray4
-        iv.clipsToBounds = true
-        return iv
-    }()
-    
     /// Populates the UI components of the cell with the provided data.
     func configureCell(with data: RowItem) {
         // TODO: Handle Later
@@ -39,24 +30,104 @@ final class ProductCell: UICollectionViewCell {
         setupUserInterface()
     }
     
+    override func prepareForReuse() {
+        super.prepareForReuse()
+        // TODO: Later
+        self.imageViewOfProduct.image = nil
+    }
+    // - User Interface Variables
+    
+    // - StackView's
+    private let vStackView: UIStackView = {
+        UIStackView(axis: .vertical, backgroundColor: .green)
+    }()
+    private let hStackViewOfThirdRow: UIStackView = {
+        UIStackView(axis: .horizontal, distribution: .fillEqually, backgroundColor: .blue)
+    }()
+    private let hStackViewOfForthRow: UIStackView = {
+        UIStackView(axis: .horizontal, distribution: .fillEqually, backgroundColor: .red)
+    }()
+    // - ImageView's
+    private let imageViewOfProduct: UIImageView = {
+        UIImageView(systemName: "person.fill", tintColor: .systemGray4)
+    }()
+    private let imageViewOfHeart: UIImageView = {
+        UIImageView(systemName: "heart.fill", tintColor: .red)
+    }()
+    private let imageViewOfStar: UIImageView = {
+        UIImageView(systemName: "star.leadinghalf.filled", tintColor: .yellow)
+    }()
+    private let imageViewOfComment: UIImageView = {
+        UIImageView(systemName: "message.fill", tintColor: .green)
+    }()
+    private let imageViewOfPrice: UIImageView = {
+        UIImageView(systemName: "banknote.fill", tintColor: .black)
+    }()
+    // - Label's
+    private let labelProductType: UILabel = {
+        UILabel.customLabel(text: "Product Type", textAlignment: .left)
+    }()
+    private let labelProductLikeCount: UILabel = {
+        UILabel.customLabel(text: "129")
+    }()
+    private let labelProductRatingFloat: UILabel = {
+        UILabel.customLabel(text: "4.5")
+    }()
+    private let labelProductCommentTotal: UILabel = {
+        UILabel.customLabel(text: "26")
+    }()
+    private let labelProductPrice: UILabel = {
+        UILabel.customLabel(text: "180")
+    }()
+}
+
+extension ProductCell {
+    
     private func setupUserInterface() {
-        self.backgroundColor = .systemBackground
         
-        self.addSubview(imageView)
-        imageView.translatesAutoresizingMaskIntoConstraints = false
+        setupFirstly()
+        setupSecondly()
+    }
+    private func setupFirstly() {
+        self.backgroundColor = .systemBackground
+    }
+    
+    private func setupSecondly() {
+        setupStackView()
+        setupThirdRowOfStackView()
+        setupFourthRowOfStackView()
+    }
+    
+    private func setupStackView() {
+        self.addSubview(vStackView)
+        vStackView.translatesAutoresizingMaskIntoConstraints = false
         NSLayoutConstraint.activate([
-            imageView.topAnchor.constraint(equalTo: self.topAnchor),
-            imageView.bottomAnchor.constraint(equalTo: self.bottomAnchor),
-            imageView.leadingAnchor.constraint(equalTo: self.leadingAnchor),
-            imageView.trailingAnchor.constraint(equalTo: self.trailingAnchor)
+            vStackView.topAnchor.constraint(equalTo: self.topAnchor),
+            vStackView.bottomAnchor.constraint(equalTo: self.bottomAnchor),
+            vStackView.leadingAnchor.constraint(equalTo: self.leadingAnchor),
+            vStackView.trailingAnchor.constraint(equalTo: self.trailingAnchor)
+        ])
+        
+        vStackView.addArrangedSubviews([
+            imageViewOfProduct, labelProductType, hStackViewOfThirdRow, hStackViewOfForthRow
+        ])
+        
+        imageViewOfProduct.heightAnchor.constraint(equalTo: vStackView.heightAnchor, multiplier: 0.4).isActive = true
+        labelProductType.heightAnchor.constraint(equalTo: vStackView.heightAnchor, multiplier: 0.2).isActive = true
+        hStackViewOfThirdRow.heightAnchor.constraint(equalTo: vStackView.heightAnchor, multiplier: 0.3).isActive = true
+        hStackViewOfForthRow.heightAnchor.constraint(equalTo: vStackView.heightAnchor, multiplier: 0.1).isActive = true
+    }
+    
+    private func setupThirdRowOfStackView() {
+        
+        hStackViewOfThirdRow.addArrangedSubviews([
+            imageViewOfHeart, imageViewOfStar, imageViewOfComment, imageViewOfPrice
         ])
     }
     
-    override func prepareForReuse() {
-        super.prepareForReuse()
-        self.imageView.image = nil
+    private func setupFourthRowOfStackView() {
+        hStackViewOfForthRow.addArrangedSubviews([
+            labelProductLikeCount, labelProductRatingFloat, labelProductCommentTotal, labelProductPrice
+        ])
     }
-    
-    
-    
 }

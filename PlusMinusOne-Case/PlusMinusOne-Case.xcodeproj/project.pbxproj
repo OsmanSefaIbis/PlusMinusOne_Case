@@ -29,6 +29,8 @@
 		9619695D2AF5827A001CB5EB /* ProductsDTO.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9619695C2AF5827A001CB5EB /* ProductsDTO.swift */; };
 		9619695F2AF582B7001CB5EB /* SocialDTO.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9619695E2AF582B7001CB5EB /* SocialDTO.swift */; };
 		961969642AF79DB1001CB5EB /* UIStackView+Extended.swift in Sources */ = {isa = PBXBuildFile; fileRef = 961969632AF79DB1001CB5EB /* UIStackView+Extended.swift */; };
+		961969662AF7D34C001CB5EB /* UIImageView+Extended.swift in Sources */ = {isa = PBXBuildFile; fileRef = 961969652AF7D34C001CB5EB /* UIImageView+Extended.swift */; };
+		961969682AF7D35A001CB5EB /* UILabel+Extended.swift in Sources */ = {isa = PBXBuildFile; fileRef = 961969672AF7D35A001CB5EB /* UILabel+Extended.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -75,6 +77,8 @@
 		9619695C2AF5827A001CB5EB /* ProductsDTO.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProductsDTO.swift; sourceTree = "<group>"; };
 		9619695E2AF582B7001CB5EB /* SocialDTO.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SocialDTO.swift; sourceTree = "<group>"; };
 		961969632AF79DB1001CB5EB /* UIStackView+Extended.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIStackView+Extended.swift"; sourceTree = "<group>"; };
+		961969652AF7D34C001CB5EB /* UIImageView+Extended.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIImageView+Extended.swift"; sourceTree = "<group>"; };
+		961969672AF7D35A001CB5EB /* UILabel+Extended.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UILabel+Extended.swift"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -286,6 +290,8 @@
 			isa = PBXGroup;
 			children = (
 				961969632AF79DB1001CB5EB /* UIStackView+Extended.swift */,
+				961969652AF7D34C001CB5EB /* UIImageView+Extended.swift */,
+				961969672AF7D35A001CB5EB /* UILabel+Extended.swift */,
 			);
 			path = "SDK Extension";
 			sourceTree = "<group>";
@@ -450,6 +456,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				961969682AF7D35A001CB5EB /* UILabel+Extended.swift in Sources */,
 				9619695A2AF57C42001CB5EB /* DecoderService.swift in Sources */,
 				96185A862AF40D09005A5488 /* ProductGalleryVC.swift in Sources */,
 				9619693A2AF44456001CB5EB /* ProductDetailVC.swift in Sources */,
@@ -463,6 +470,7 @@
 				961969462AF45499001CB5EB /* ProductGalleryVM.swift in Sources */,
 				9619694C2AF510BA001CB5EB /* ProductCell.swift in Sources */,
 				96185A842AF40D09005A5488 /* SceneDelegate.swift in Sources */,
+				961969662AF7D34C001CB5EB /* UIImageView+Extended.swift in Sources */,
 				961969422AF44871001CB5EB /* ProductDetailVM.swift in Sources */,
 				961969522AF51A0A001CB5EB /* Localize.swift in Sources */,
 			);
