@@ -28,6 +28,7 @@
 		9619695A2AF57C42001CB5EB /* DecoderService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 961969592AF57C42001CB5EB /* DecoderService.swift */; };
 		9619695D2AF5827A001CB5EB /* ProductsDTO.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9619695C2AF5827A001CB5EB /* ProductsDTO.swift */; };
 		9619695F2AF582B7001CB5EB /* SocialDTO.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9619695E2AF582B7001CB5EB /* SocialDTO.swift */; };
+		961969642AF79DB1001CB5EB /* UIStackView+Extended.swift in Sources */ = {isa = PBXBuildFile; fileRef = 961969632AF79DB1001CB5EB /* UIStackView+Extended.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -73,6 +74,7 @@
 		961969592AF57C42001CB5EB /* DecoderService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DecoderService.swift; sourceTree = "<group>"; };
 		9619695C2AF5827A001CB5EB /* ProductsDTO.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProductsDTO.swift; sourceTree = "<group>"; };
 		9619695E2AF582B7001CB5EB /* SocialDTO.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SocialDTO.swift; sourceTree = "<group>"; };
+		961969632AF79DB1001CB5EB /* UIStackView+Extended.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIStackView+Extended.swift"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -283,6 +285,7 @@
 		9619694F2AF518D1001CB5EB /* SDK Extension */ = {
 			isa = PBXGroup;
 			children = (
+				961969632AF79DB1001CB5EB /* UIStackView+Extended.swift */,
 			);
 			path = "SDK Extension";
 			sourceTree = "<group>";
@@ -456,6 +459,7 @@
 				96185A822AF40D09005A5488 /* AppDelegate.swift in Sources */,
 				9619695D2AF5827A001CB5EB /* ProductsDTO.swift in Sources */,
 				9619695F2AF582B7001CB5EB /* SocialDTO.swift in Sources */,
+				961969642AF79DB1001CB5EB /* UIStackView+Extended.swift in Sources */,
 				961969462AF45499001CB5EB /* ProductGalleryVM.swift in Sources */,
 				9619694C2AF510BA001CB5EB /* ProductCell.swift in Sources */,
 				96185A842AF40D09005A5488 /* SceneDelegate.swift in Sources */,

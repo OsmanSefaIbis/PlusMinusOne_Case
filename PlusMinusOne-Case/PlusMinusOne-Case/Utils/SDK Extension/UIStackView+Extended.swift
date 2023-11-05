@@ -1,0 +1,18 @@
+//
+//  UIStackView+Extended.swift
+//  PlusMinusOne-Case
+//
+//  Created by Sefa İbiş on 5.11.2023.
+//
+
+import UIKit
+
+extension UIStackView {
+    convenience init(axis: NSLayoutConstraint.Axis, alignment: UIStackView.Alignment = .fill, distribution: UIStackView.Distribution = .fill, backgroundColor: UIColor = .systemBackground) {
+        self.init()
+        self.axis = axis
+        self.alignment = alignment
+        self.distribution = distribution
+        self.backgroundColor = backgroundColor
+    }
+}

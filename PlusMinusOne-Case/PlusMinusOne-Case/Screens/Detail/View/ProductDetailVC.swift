@@ -47,26 +47,24 @@ final class ProductDetailVC: UIViewController {
         return v
     }()
     private let vStackViewContainer: UIStackView = {
-        let sv = UIStackView()
-        sv.axis = .vertical
-        sv.alignment = .fill
-        sv.distribution = .fillProportionally
-        return sv
+        UIStackView(axis: .vertical, backgroundColor: .purple)
     }()
     private let imageViewContainer: UIView = {
         let v = UIView()
-        v.backgroundColor = .systemBackground
+        v.backgroundColor = .yellow
         return v
     }()
     private let imageView: UIImageView = {
         let iv = UIImageView()
-        iv.image = .init(systemName: "Profile")
+        iv.backgroundColor = .white
+        iv.image = .init(systemName: "photo.fill")
         iv.tintColor = .red
         return iv
     }()
     private let productInformationContainerView: UIView = {
         let v = UIView()
-        v.backgroundColor = .systemBackground
+        v.backgroundColor = .systemOrange
+        v.backgroundColor = .brown
         return v
     }()
     private let productInformationView: UIView = {
@@ -75,85 +73,91 @@ final class ProductDetailVC: UIViewController {
         return v
     }()
     private let hStackViewProductInformation: UIStackView = {
-        let sv = UIStackView()
-        sv.axis = .horizontal
-        sv.alignment = .fill
-        sv.distribution = .fillProportionally
-        return sv
+        UIStackView(axis: .horizontal, alignment: .fill, distribution: .fill)
     }()
     private let vStackViewProductInformationLeftSide: UIStackView = {
-        let sv = UIStackView()
-        sv.axis = .vertical
-        sv.alignment = .leading
-        sv.distribution = .fillEqually
-        return sv
+        UIStackView(axis: .vertical, distribution: .fillEqually, backgroundColor: .systemPurple)
+    }()
+    private let vStackViewProductInformationRightSide: UIStackView = {
+        UIStackView(axis: .vertical, distribution: .fillEqually, backgroundColor: .gray)
     }()
     private let hStackProductInformationLeftSideFirstRow: UIStackView = {
-        let sv = UIStackView()
-        sv.axis = .horizontal
-        sv.distribution = .equalCentering
-        sv.alignment = .leading
-        return sv
+        UIStackView(axis: .horizontal, distribution: .fillEqually, backgroundColor: .red)
     }()
-    private let labelProductBrand = UILabel()
-    private let labelProductType = UILabel()
     private let hStackProductInformationLeftSideSecondRow: UIStackView = {
-        let sv = UIStackView()
-        sv.axis = .horizontal
-        sv.alignment = .leading
-        sv.distribution = .fillProportionally
-        return sv
+        UIStackView(axis: .horizontal, distribution: .fillEqually, backgroundColor: .green)
     }()
-    private let labelProductRatingFloat = UILabel()
+    private let hStackProductInformationLeftSideThirdRow: UIStackView = {
+        UIStackView(axis: .horizontal, distribution: .fillEqually, backgroundColor: .blue)
+    }()
+    private let labelProductBrand: UILabel = {
+        let l = UILabel()
+        l.backgroundColor = .black
+        return l
+    }()
+    private let labelProductType: UILabel = {
+        let l = UILabel()
+        l.backgroundColor = .magenta
+        return l
+    }()
+    private let labelProductRatingFloat: UILabel = {
+        let l = UILabel()
+        l.backgroundColor = .orange
+        return l
+    }()
     private let starRatingView: UIView = {
         // TODO: spm https://github.com/evgenyneu/Cosmos
         let v = UIView()
         v.backgroundColor = .systemPink
         return v
     }()
-    private let labelProductCommentTotal = UILabel()
-    private let hStackProductInformationLeftSideThirdRow: UIStackView = {
-        let sv = UIStackView()
-        sv.axis = .horizontal
-        sv.alignment = .leading
-        sv.distribution = .equalCentering
-        return sv
+    private let labelProductCommentTotal: UILabel = {
+        let l = UILabel()
+        l.backgroundColor = .black
+        return l
     }()
-    private let labelPricing = UILabel()
-    private let vStackViewProductInformationRightSide: UIStackView = {
-        let sv = UIStackView()
-        sv.axis = .vertical
-        sv.alignment = .center
-        sv.distribution = .equalCentering
-        return sv
+    private let labelPricing: UILabel = {
+        let l = UILabel()
+        l.backgroundColor = .purple
+        return l
     }()
-    private let imageViewHearth = UIImageView()
-    private let labelLikeCount = UILabel()
-    private let countDownView: UIView = {
+    private let imageViewHearth: UIImageView = {
+        let iv = UIImageView()
+        iv.backgroundColor = .white
+        iv.image = UIImage(systemName: "heart.fill")
+        iv.tintColor = .red
+        return iv
+    }()
+    private let labelLikeCount: UILabel = {
+        let l = UILabel()
+        l.backgroundColor = .orange
+        return l
+    }()
+    private let imageViewSocialUpdateCountDown: UIImageView = {
         // TODO: spm https://github.com/relatedcode/ProgressHUD
-        let v = UIView()
-        v.backgroundColor = .systemPink
-        return v
+        let iv = UIImageView()
+        iv.backgroundColor = .white
+        iv.image = UIImage(systemName: "timelapse")
+        iv.tintColor = .systemPink
+        return iv
     }()
 } // - Class End
-
-// - Contract Conformance
-extension ProductDetailVC: ContractForProductDetailVC {
-    
-    func setupUserInterface() {
-        setupFirstly() // view related
-        setupSecondly() // outmost related
-        //setupThirdly() // productInformation related
-        //setupFourthly() // productInformation left side related
-        //setupFifthly() // productInformation right side related
-    }
-}
 
 // - MVVM Notify
 extension ProductDetailVC: DelegateOfProductDetailVM {
     // TODO: Handle Later
 }
 
+// - Contract Conformance
+extension ProductDetailVC: ContractForProductDetailVC {
+    
+    func setupUserInterface() {
+        setupFirstly() // View related setup
+        setupSecondly() // Outmost related setup
+        setupThirdly() // Product information-related setup
+        setupFourthly() // Product information left and right side related setups
+    }
+}
 
 // - Helper Class Methods
 extension ProductDetailVC {
@@ -166,9 +170,9 @@ extension ProductDetailVC {
     func setupSecondly() {
         setupScrollView()
         setupContentView()
-//        setupOutMostStackView()
-//        setupImageViewContainer()
-//        setupProductInformationContainerView()
+        setupImageViewContainer()
+        setupProductInformationContainerView()
+        setupOutMostStackView()
     }
     
     func setupThirdly() {
@@ -181,9 +185,6 @@ extension ProductDetailVC {
         setupFirstRowOnLeftSideOfProductInformation()
         setupSecondRowOnLeftSideOfProductInformation()
         setupThirdRowOnLeftSideOfProductInformation()
-    }
-    
-    func setupFifthly() {
         setupRightOfProductInformationStackView()
     }
     
@@ -207,14 +208,13 @@ extension ProductDetailVC {
             contentView.leadingAnchor.constraint(equalTo: scrollView.leadingAnchor),
             contentView.trailingAnchor.constraint(equalTo: scrollView.trailingAnchor),
         ])
-        //TODO: Delete some constraints
         let heightConstraintContentView = contentView.heightAnchor.constraint(equalTo: scrollView.heightAnchor)
         let widthConstraintContentView = contentView.widthAnchor.constraint(equalTo: scrollView.widthAnchor)
         
-        widthConstraintContentView.isActive = true
-        widthConstraintContentView.priority = UILayoutPriority(50)
-        heightConstraintContentView.isActive = true
-        heightConstraintContentView.priority = UILayoutPriority(50)
+        [heightConstraintContentView, widthConstraintContentView].forEach {
+            $0.isActive = true
+            $0.priority = UILayoutPriority(50)
+        }
     }
     
     func setupOutMostStackView() {
@@ -226,14 +226,16 @@ extension ProductDetailVC {
             vStackViewContainer.bottomAnchor.constraint(equalTo: contentView.bottomAnchor),
             vStackViewContainer.leadingAnchor.constraint(equalTo: contentView.leadingAnchor),
             vStackViewContainer.trailingAnchor.constraint(equalTo: contentView.trailingAnchor),
+            vStackViewContainer.heightAnchor.constraint(equalTo: scrollView.heightAnchor),
             vStackViewContainer.widthAnchor.constraint(equalTo: scrollView.widthAnchor)
         ])
+        
         vStackViewContainer.addArrangedSubview(imageViewContainer)
         vStackViewContainer.addArrangedSubview(productInformationContainerView)
         
         // TODO: Shorten Naming
-        let heightRatioConstraintBetweenImageAndProductInformationViews = imageViewContainer.heightAnchor.constraint(equalTo: productInformationContainerView.heightAnchor, multiplier: 2/3)
-        heightRatioConstraintBetweenImageAndProductInformationViews.isActive = true
+        imageViewContainer.heightAnchor.constraint(equalTo: contentView.heightAnchor, multiplier: 0.2).isActive = true
+        productInformationContainerView.heightAnchor.constraint(equalTo: contentView.heightAnchor, multiplier: 0.8 ).isActive = true
     }
     
     func setupImageViewContainer() {
@@ -272,14 +274,20 @@ extension ProductDetailVC {
     func setupProductInformationStackView() {
         hStackViewProductInformation.addArrangedSubview(vStackViewProductInformationLeftSide)
         hStackViewProductInformation.addArrangedSubview(vStackViewProductInformationRightSide)
-        let widthConstraintRatioLeftRight = vStackViewProductInformationRightSide.heightAnchor.constraint(equalTo: vStackViewProductInformationLeftSide.heightAnchor, multiplier: 1/4)
-        widthConstraintRatioLeftRight.isActive = true
+        
+        vStackViewProductInformationLeftSide.widthAnchor.constraint(equalTo: hStackViewProductInformation.widthAnchor, multiplier: 3/4).isActive = true
+        vStackViewProductInformationRightSide.widthAnchor.constraint(equalTo: hStackViewProductInformation.widthAnchor, multiplier: 1/4).isActive = true
     }
     
     func setupLeftOfProductInformationStackView() {
         vStackViewProductInformationLeftSide.addArrangedSubview(hStackProductInformationLeftSideFirstRow)
         vStackViewProductInformationLeftSide.addArrangedSubview(hStackProductInformationLeftSideSecondRow)
         vStackViewProductInformationLeftSide.addArrangedSubview(hStackProductInformationLeftSideThirdRow)
+    }
+    func setupRightOfProductInformationStackView() {
+        vStackViewProductInformationRightSide.addArrangedSubview(imageViewHearth)
+        vStackViewProductInformationRightSide.addArrangedSubview(labelLikeCount)
+        vStackViewProductInformationRightSide.addArrangedSubview(imageViewSocialUpdateCountDown)
     }
     
     func setupFirstRowOnLeftSideOfProductInformation() {
@@ -297,9 +305,4 @@ extension ProductDetailVC {
         hStackProductInformationLeftSideThirdRow.addArrangedSubview(labelPricing)
     }
     
-    func setupRightOfProductInformationStackView() {
-        vStackViewProductInformationRightSide.addArrangedSubview(imageViewHearth)
-        vStackViewProductInformationRightSide.addArrangedSubview(labelLikeCount)
-        vStackViewProductInformationRightSide.addArrangedSubview(imageViewHearth)
-    }
 }

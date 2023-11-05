@@ -73,7 +73,6 @@ extension ProductGalleryVM: DelegateOfProductGalleryModel {
     
     func didGetProducts() {
         let data: [RowItem] = model.products.map {
-            //TODO: add props
             return RowItem(
                 id: $0.id ?? 0,
                 productBrand: $0.name ?? "",
