@@ -47,6 +47,7 @@ final class ProductDetailVC: UIViewController {
     }
     
     // - User Interface Variables
+    // TODO: Group View types under comment
     private let scrollView: UIScrollView = {
         // Opted for a scroll view in the detail page to accommodate potential future use-cases.
         // TODO: Make the product image top anchor to the superView topAnchor, so that

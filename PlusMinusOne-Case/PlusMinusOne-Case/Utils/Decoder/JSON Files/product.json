@@ -14,7 +14,7 @@
             "id": 2,
             "name": "Nike",
             "desc": "Running Shoes",
-            "image": "https://dummyimage.com/450x300/4a4a4a/26d6a1",
+            "image": "https://dummyimage.com/450x300/4a4a4a/26d6a2",
             "price": {
                 "value": 120,
                 "currency": "$"
@@ -24,7 +24,7 @@
             "id": 3,
             "name": "Adidas",
             "desc": "T-Shirt",
-            "image": "https://dummyimage.com/450x300/4a4a4a/26d6a1",
+            "image": "https://dummyimage.com/475x275/4a4a4a/26d6a3",
             "price": {
                 "value": 90,
                 "currency": "$"

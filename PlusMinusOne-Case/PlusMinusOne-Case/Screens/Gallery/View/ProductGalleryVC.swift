@@ -113,10 +113,9 @@ extension ProductGalleryVC: UICollectionViewDataSource {
         
         guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: ProductCell.identifier, for: indexPath) as? ProductCell
         else { fatalError("Failed to dequeue cell for CollectionView in ProductGalleryVC") } // TODO: Localize Enum
-//        guard let data = viewModel.getItem(at: indexPath)
-//        else { fatalError("Failed to retrieve data.") } // TODO: Localize Enum
-//        cell.configureCell(with: data)
-        cell.configure()
+        guard let data = viewModel.getItem(at: indexPath)
+        else { fatalError("Failed to retrieve data.") } // TODO: Localize Enum
+        cell.configureCell(with: data)
         return cell
     }
 }
