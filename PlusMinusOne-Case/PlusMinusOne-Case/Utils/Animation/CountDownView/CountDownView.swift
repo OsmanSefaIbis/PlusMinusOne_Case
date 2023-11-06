@@ -1,12 +1,16 @@
 import UIKit
 
-class CircularTimerView: UIView {
+protocol DelegateOfCountDownView: AnyObject {
+    func didEndCountdown()
+}
+
+class CountDownView: UIView {
     private let shapeLayer = CAShapeLayer()
     private let label = UILabel()
-    
     private var countdownTimer: Timer?
     private let secondsInitial: Int = 10
     private var secondsRemaining: Int = 10
+    weak var delegate: DelegateOfCountDownView?
     
     override init(frame: CGRect) {
         super.init(frame: frame)
@@ -69,6 +73,7 @@ class CircularTimerView: UIView {
             let progress = CGFloat(secondsRemaining) / CGFloat(secondsInitial)
             shapeLayer.strokeEnd = progress
         } else {
+            delegate?.didEndCountdown()
             secondsRemaining = secondsInitial
             shapeLayer.strokeEnd = 1.0
         }

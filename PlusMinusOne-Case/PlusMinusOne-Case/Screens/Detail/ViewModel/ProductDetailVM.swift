@@ -7,27 +7,21 @@
 
 import Foundation
 
-//typealias DetailData = ProductDetailDataModel // TODO: Delete
-
-// - Data Model: ProductDetail
-struct ProductDetailDataModel {
-    let id: Int
-//    let name: String
-//    let description: String
-//    let imageUrl: String
-//    let priceInfo: Price
-}
-
 // - Class Contract
 protocol ContractForProductDetailVM: AnyObject {
     
     func viewDidLoad()
     func getData(_ property: ProductDataAccessor) -> Any?
+    func getLatestSocial() -> Social?
+    func didEndCountdown()
+    func updateSocial(of id: Int)
+    func setUpdatedSocial()
 }
 // - Class Communicator
 protocol DelegateOfProductDetailVM: AnyObject {
     
-    // TODO: Decide Next
+    func updateSocials()
+    func didLoadSocial()
 }
 
 final class ProductDetailVM {
@@ -39,6 +33,7 @@ final class ProductDetailVM {
     
     // - State Variables
     var data: DetailData?
+    var latestUpdatedSocial: Social?
     
     // - Lifecycle: Object
     init(view: ContractForProductDetailVC) {
@@ -66,12 +61,44 @@ extension ProductDetailVM: ContractForProductDetailVM {
         }
         return nil
     }
+    
+    func getLatestSocial() -> Social? {
+        guard let data = latestUpdatedSocial else { return nil }
+        return data
+    }
+    
+    func didEndCountdown() {
+        model.modifySocials()
+    }
+    
+    func updateSocial(of id: Int) {
+        model.getSocial(with: id)
+    }
+    
+    func setUpdatedSocial() {
+        view?.setUpdatedSocial()
+    }
 }
 
 // - MVVM Notify
 extension ProductDetailVM: DelegateOfProductDetailModel {
+    func didFailRetrievalOfSocialFeed(with: Error) {
+        // TODO: Later
+    }
     
-    // TODO: Handle Later
+    
+    func didModifySocials() {
+        delegate?.updateSocials()
+    }
+    
+    func didFailModifySocials() {
+        // TODO: Later
+    }
+    
+    func didGetSocial(update: SocialFeed) {
+        latestUpdatedSocial = update.social
+        delegate?.didLoadSocial()
+    }
 }
 
 // - Helper Class Methods

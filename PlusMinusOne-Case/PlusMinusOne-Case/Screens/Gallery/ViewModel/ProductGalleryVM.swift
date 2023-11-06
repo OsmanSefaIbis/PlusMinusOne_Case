@@ -53,8 +53,6 @@ extension ProductGalleryVM: ContractForProductGalleryVM {
         view?.setupUserInterface()
         view?.setupDelegates()
         model.getProducts()
-        // FIXME: Normally upon products arrival, triggering a id based retrieval is suitable
-        // Populated socials as a id-social pair, not quite sure for now, might change
         model.getSocials()
     }
     

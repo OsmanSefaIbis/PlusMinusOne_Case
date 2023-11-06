@@ -14,6 +14,7 @@ protocol ContractForProductDetailVC: AnyObject {
     
     func setupUserInterface()
     func configureUserInterface()
+    func setUpdatedSocial()
 }
 
 final class ProductDetailVC: UIViewController {
@@ -140,7 +141,23 @@ final class ProductDetailVC: UIViewController {
 
 // - MVVM Notify
 extension ProductDetailVC: DelegateOfProductDetailVM {
-    // TODO: Handle Later
+    
+    func updateSocials() {
+        guard let id = self.productId else { return }
+        viewModel.updateSocial(of: id)
+    }
+    
+    func didLoadSocial() {
+        viewModel.setUpdatedSocial()
+    }
+}
+
+// - CountDown Notify
+extension ProductDetailVC: DelegateOfCountDownView {
+    
+    func didEndCountdown() {
+        viewModel.didEndCountdown()
+    }
 }
 
 // - Contract Conformance
@@ -164,6 +181,26 @@ extension ProductDetailVC: ContractForProductDetailVC {
         configureProductCommentCountTotal()
         configureProductPrice()
         configureProductLikeCount()
+    }
+}
+// - Update UI
+extension ProductDetailVC {
+    
+    func setUpdatedSocial() {
+        DispatchQueue.main.async { [weak self] in
+            guard let self else { fatalError("Unexpected nil self") }
+            guard let socialFeed = self.viewModel.getLatestSocial(),
+                  let productLikeCount = socialFeed.likeCount,
+                  let ratingFloat = socialFeed.commentCounts?.averageRating as? Double,
+                  let commentCountOfAnonymous = socialFeed.commentCounts?.anonymousCommentsCount as? Int,
+                  let commentCountOfMember = socialFeed.commentCounts?.memberCommentsCount as? Int
+            else { return } // FIXME: return
+            let commentTotal = commentCountOfAnonymous + commentCountOfMember
+            self.labelProductRatingFloat.text = String(ratingFloat)
+            self.labelLikeCount.text = String(productLikeCount)
+            self.labelProductCommentTotal.text = "Comment: \(commentTotal)"
+            self.starRatingView.rating = ratingFloat
+        }
     }
 }
 
@@ -316,7 +353,6 @@ extension ProductDetailVC {
         vStackViewInnerOfProductInformationRightSize.addArrangedSubview(labelLikeCount)
         
         imageViewHearth.heightAnchor.constraint(equalTo: vStackViewInnerOfProductInformationRightSize.heightAnchor, multiplier: 2/3).isActive = true
-//        let spacing = (vStackViewInnerOfProductInformationRightSize.heightAnchor)*(1/3) -
         labelLikeCount.heightAnchor.constraint(equalTo: vStackViewInnerOfProductInformationRightSize.heightAnchor, multiplier: 1/3).isActive = true
     }
     
@@ -336,7 +372,8 @@ extension ProductDetailVC {
     }
     
     private func setupCountDown() {
-        let countDownView = CircularTimerView(frame: countDownViewContainer.bounds)
+        let countDownView = CountDownView(frame: countDownViewContainer.bounds)
+        countDownView.delegate = self
         countDownViewContainer.addSubview(countDownView)
         countDownView.translatesAutoresizingMaskIntoConstraints = false
         NSLayoutConstraint.activate([
