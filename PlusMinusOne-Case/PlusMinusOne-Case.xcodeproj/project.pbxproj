@@ -34,6 +34,7 @@
 		9619696B2AF7F9A4001CB5EB /* Kingfisher in Frameworks */ = {isa = PBXBuildFile; productRef = 9619696A2AF7F9A4001CB5EB /* Kingfisher */; };
 		9619696E2AF80107001CB5EB /* Cosmos in Frameworks */ = {isa = PBXBuildFile; productRef = 9619696D2AF80107001CB5EB /* Cosmos */; };
 		961969722AF8014E001CB5EB /* CountDownView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 961969712AF8014E001CB5EB /* CountDownView.swift */; };
+		961969742AF86064001CB5EB /* ProductDataAccessor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 961969732AF86064001CB5EB /* ProductDataAccessor.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -83,6 +84,7 @@
 		961969652AF7D34C001CB5EB /* UIImageView+Extended.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIImageView+Extended.swift"; sourceTree = "<group>"; };
 		961969672AF7D35A001CB5EB /* UILabel+Extended.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UILabel+Extended.swift"; sourceTree = "<group>"; };
 		961969712AF8014E001CB5EB /* CountDownView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CountDownView.swift; sourceTree = "<group>"; };
+		961969732AF86064001CB5EB /* ProductDataAccessor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProductDataAccessor.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -289,6 +291,7 @@
 			isa = PBXGroup;
 			children = (
 				961969512AF51A0A001CB5EB /* Localize.swift */,
+				961969732AF86064001CB5EB /* ProductDataAccessor.swift */,
 			);
 			path = Enum;
 			sourceTree = "<group>";
@@ -334,17 +337,17 @@
 		9619696F2AF80122001CB5EB /* Animation */ = {
 			isa = PBXGroup;
 			children = (
-				961969702AF8012E001CB5EB /* Countdown */,
+				961969702AF8012E001CB5EB /* CountDownView */,
 			);
 			path = Animation;
 			sourceTree = "<group>";
 		};
-		961969702AF8012E001CB5EB /* Countdown */ = {
+		961969702AF8012E001CB5EB /* CountDownView */ = {
 			isa = PBXGroup;
 			children = (
 				961969712AF8014E001CB5EB /* CountDownView.swift */,
 			);
-			path = Countdown;
+			path = CountDownView;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -500,6 +503,7 @@
 				961969642AF79DB1001CB5EB /* UIStackView+Extended.swift in Sources */,
 				961969462AF45499001CB5EB /* ProductGalleryVM.swift in Sources */,
 				9619694C2AF510BA001CB5EB /* ProductCell.swift in Sources */,
+				961969742AF86064001CB5EB /* ProductDataAccessor.swift in Sources */,
 				96185A842AF40D09005A5488 /* SceneDelegate.swift in Sources */,
 				961969722AF8014E001CB5EB /* CountDownView.swift in Sources */,
 				961969662AF7D34C001CB5EB /* UIImageView+Extended.swift in Sources */,

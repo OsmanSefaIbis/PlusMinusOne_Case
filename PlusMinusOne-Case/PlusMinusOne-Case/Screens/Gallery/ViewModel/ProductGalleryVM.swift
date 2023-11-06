@@ -9,6 +9,7 @@ import Foundation
 
 // - Renaming
 typealias RowItem = ProductCellDataModel
+typealias DetailData = ProductCellDataModel
 
 // - Class Contract
 protocol ContractForProductGalleryVM: AnyObject {

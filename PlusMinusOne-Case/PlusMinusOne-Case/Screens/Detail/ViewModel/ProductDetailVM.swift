@@ -7,7 +7,8 @@
 
 import Foundation
 
-typealias DetailData = ProductDetailDataModel
+//typealias DetailData = ProductDetailDataModel // TODO: Delete
+
 // - Data Model: ProductDetail
 struct ProductDetailDataModel {
     let id: Int
@@ -21,6 +22,7 @@ struct ProductDetailDataModel {
 protocol ContractForProductDetailVM: AnyObject {
     
     func viewDidLoad()
+    func getData(_ property: ProductDataAccessor) -> Any?
 }
 // - Class Communicator
 protocol DelegateOfProductDetailVM: AnyObject {
@@ -36,8 +38,7 @@ final class ProductDetailVM {
     weak var delegate: DelegateOfProductDetailVM?
     
     // - State Variables
-    // TODO: Decide Next
-    var data: RowItem?
+    var data: DetailData?
     
     // - Lifecycle: Object
     init(view: ContractForProductDetailVC) {
@@ -48,9 +49,22 @@ final class ProductDetailVM {
 
 // - Contract Conformance
 extension ProductDetailVM: ContractForProductDetailVM {
-    
+
     func viewDidLoad() {
         view?.setupUserInterface()
+        view?.populateUserInterface()
+    }
+    
+    func getData(_ property: ProductDataAccessor) -> Any? {
+        guard let productData = data else { return nil }
+
+        let mirror = Mirror(reflecting: productData)
+        for (key, value) in mirror.children {
+            if key == property.rawValue {
+                return value
+            }
+        }
+        return nil
     }
 }
 
