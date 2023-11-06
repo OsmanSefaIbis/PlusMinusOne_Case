@@ -184,10 +184,10 @@ extension ProductCell {
               let productPrice = getData(.priceInfo, data) as? Price,
               let productPriceValue = productPrice.value,
               let productCurrency = productPrice.currency
-        else { fatalError("Invalid operation during populating UI with id: \(data.id)")} //FIXME: Resolved, added id:18 to social.json
-        //TODO: Remove commenting
+        else { fatalError("Invalid operation during populating UI with id: \(data.id)")}
+        
         let productCommentTotal: Int = productAnonymousComment + productMemberComment
-        let productPriceString: String = productCurrency.appending(String(productPriceValue))
+        let productPriceString: String = productCurrency.appending(String(Int(productPriceValue)))
         
         return (productImageUrl, productType, productLikeCount, productRatingFloat, productCommentTotal, productPriceString)
     }

@@ -13,7 +13,7 @@ import Cosmos
 protocol ContractForProductDetailVC: AnyObject {
     
     func setupUserInterface()
-    func populateUserInterface()
+    func configureUserInterface()
 }
 
 final class ProductDetailVC: UIViewController {
@@ -49,11 +49,8 @@ final class ProductDetailVC: UIViewController {
     // - User Interface Variables
     // TODO: Group View types under comment
     private let scrollView: UIScrollView = {
-        // Opted for a scroll view in the detail page to accommodate potential future use-cases.
-        // TODO: Make the product image top anchor to the superView topAnchor, so that
-        // alsoTODO: Consider the navigation bar, make it .clear
         let sv = UIScrollView()
-        sv.backgroundColor = .green
+        sv.backgroundColor = .systemBackground
         return sv
     }()
     private let contentView: UIView = {
@@ -70,11 +67,12 @@ final class ProductDetailVC: UIViewController {
         return v
     }()
     private let imageView: UIImageView = {
-        let iv = UIImageView()
-        iv.backgroundColor = .systemBackground
-        iv.image = .init(systemName: "photo.fill")
-        iv.tintColor = .red
-        return iv
+        UIImageView(systemName: "photo.fill", tintColor: .systemRed, contentMode: .scaleAspectFill)
+    }()
+    private let productLikeContainerView: UIView = {
+        let v = UIView()
+        v.backgroundColor = .clear
+        return v
     }()
     private let productInformationContainerView: UIView = {
         let v = UIView()
@@ -83,11 +81,7 @@ final class ProductDetailVC: UIViewController {
     }()
     private let productInformationView: UIView = {
         let v = UIView()
-        v.layer.cornerRadius = 10
-        v.layer.masksToBounds = true
-        v.layer.borderWidth = 1.5
-        v.layer.borderColor = UIColor.systemGray5.cgColor
-        v.backgroundColor = .systemGray6
+        v.backgroundColor = .systemBackground
         return v
     }()
     private let hStackViewProductInformation: UIStackView = {
@@ -97,78 +91,49 @@ final class ProductDetailVC: UIViewController {
         UIStackView(axis: .vertical, distribution: .equalSpacing, backgroundColor: .clear)
     }()
     private let vStackViewProductInformationRightSide: UIStackView = {
-        // TODO: distribution: .fillEqually --> then aspect ratio for desired look
-        UIStackView(axis: .vertical, distribution: .fillEqually, backgroundColor: .clear)
+        UIStackView(axis: .vertical, spacing: 10, distribution: .fillEqually, backgroundColor: .clear)
+    }()
+    private let vStackViewInnerOfProductInformationRightSize: UIStackView = {
+        UIStackView(axis: .vertical, backgroundColor: .clear)
     }()
     private let hStackProductInformationLeftSideFirstRow: UIStackView = {
-        UIStackView(axis: .horizontal, distribution: .fillProportionally, backgroundColor: .clear)
+        UIStackView(axis: .horizontal, alignment: .center, backgroundColor: .clear)
     }()
     private let hStackProductInformationLeftSideSecondRow: UIStackView = {
-        UIStackView(axis: .horizontal, alignment: .center, distribution: .fillProportionally, backgroundColor: .clear)
+        UIStackView(axis: .horizontal, alignment: .center, backgroundColor: .clear)
     }()
     private let hStackProductInformationLeftSideThirdRow: UIStackView = {
-        UIStackView(axis: .horizontal, alignment: .bottom, distribution: .fillEqually, backgroundColor: .clear)
+        UIStackView(axis: .horizontal, alignment: .center, distribution: .fillEqually, backgroundColor: .clear)
     }()
     private let labelProductBrand: UILabel = {
-        let l = UILabel()
-        l.textColor = .black
-        l.font = UIFont.boldSystemFont(ofSize: 25)
-        l.backgroundColor = .clear
-        return l
+        UILabel.customLabel(textColor: .black, textAlignment: .left, font: UIFont.boldSystemFont(ofSize: 20))
     }()
     private let labelProductType: UILabel = {
-        let l = UILabel()
-        l.textColor = .systemGray2
-        l.font = UIFont.italicSystemFont(ofSize: 15)
-        l.backgroundColor = .clear
-        return l
+        UILabel.customLabel(textColor: .systemGray2, textAlignment: .left, font: UIFont.boldSystemFont(ofSize: 15))
     }()
     private let labelProductRatingFloat: UILabel = {
-        let l = UILabel()
-        l.textColor = .systemOrange
-        l.textAlignment = .right
-        l.font = UIFont.boldSystemFont(ofSize: 12)
-        l.backgroundColor = .clear
-        return l
+        UILabel.customLabel(textColor: .systemOrange, textAlignment: .right, font: UIFont.boldSystemFont(ofSize: 15))
     }()
     private let starRatingView: CosmosView = {
         let cv = CosmosView()
         cv.backgroundColor = .clear
         cv.tintColor = .systemOrange
         cv.settings.fillMode = .precise
-        cv.settings.starSize = 25
+        cv.settings.starSize = 20
         cv.isUserInteractionEnabled = false
         return cv
     }()
     private let labelProductCommentTotal: UILabel = {
-        let l = UILabel()
-        l.textColor = .systemOrange
-        l.textAlignment = .left
-        l.font = UIFont.boldSystemFont(ofSize: 12)
-        l.backgroundColor = .clear
-        return l
+        UILabel.customLabel(textColor: .systemOrange, textAlignment: .left, font: UIFont.boldSystemFont(ofSize: 15))
     }()
     private let labelPricing: UILabel = {
-        let l = UILabel()
-        l.textColor = .black
-        l.font = UIFont.boldSystemFont(ofSize: 30)
-        l.backgroundColor = .clear
-        return l
+        UILabel.customLabel(textColor: .black, textAlignment: .left, font: UIFont.boldSystemFont(ofSize: 25))
     }()
     private let imageViewHearth: UIImageView = {
-        let iv = UIImageView()
-        iv.backgroundColor = .clear
-        iv.image = UIImage(systemName: "heart.fill")
-        iv.tintColor = .red
-        return iv
+        UIImageView(systemName: "heart.fill", tintColor: .systemRed)
     }()
     private let labelLikeCount: UILabel = {
-        let l = UILabel()
-        l.font = UIFont.boldSystemFont(ofSize: 15)
-        l.textColor = .systemGray2
-        l.textAlignment = .center
-        l.backgroundColor = .clear
-        return l
+        UILabel.customLabel(textColor: .systemGray2, textAlignment: .center, font: UIFont.boldSystemFont(ofSize: 15))
     }()
     private let countDownViewContainer = UIView()
 } // - Class End
@@ -189,7 +154,7 @@ extension ProductDetailVC: ContractForProductDetailVC {
         setupFourthly() // Product information left and right side related setups
     }
     
-    func populateUserInterface() {
+    func configureUserInterface() {
         /// Populating UI variables with data
         configureProductImage()
         configureProductBrand()
@@ -206,6 +171,8 @@ extension ProductDetailVC: ContractForProductDetailVC {
 extension ProductDetailVC {
     
     private func setupFirstly() {
+        self.edgesForExtendedLayout = .top
+        self.navigationController?.navigationBar.backgroundColor = .clear
         self.view.backgroundColor = .systemBackground
         self.navigationController?.setNavigationBarHidden(false, animated: true)
     }
@@ -227,6 +194,8 @@ extension ProductDetailVC {
         setupRightOfProductInformationStackView()
         setupLeftOfProductInformationStackView()
         
+        setupFirstRowOfProductInformationStackViewRightSide()
+        setupInnerOfProductInformationStackViewRightSide()
         setupFirstRowOnLeftSideOfProductInformation()
         setupSecondRowOnLeftSideOfProductInformation()
         setupThirdRowOnLeftSideOfProductInformation()
@@ -247,10 +216,8 @@ extension ProductDetailVC {
         scrollView.addSubview(contentView)
         contentView.translatesAutoresizingMaskIntoConstraints = false
         NSLayoutConstraint.activate([
-            contentView.topAnchor.constraint(equalTo: scrollView.topAnchor),
-            contentView.bottomAnchor.constraint(equalTo: scrollView.bottomAnchor),
+            contentView.topAnchor.constraint(equalTo: self.view.topAnchor),
             contentView.leadingAnchor.constraint(equalTo: scrollView.leadingAnchor),
-            contentView.trailingAnchor.constraint(equalTo: scrollView.trailingAnchor),
         ])
         let heightConstraintContentView = contentView.heightAnchor.constraint(equalTo: scrollView.heightAnchor)
         let widthConstraintContentView = contentView.widthAnchor.constraint(equalTo: scrollView.widthAnchor)
@@ -276,8 +243,8 @@ extension ProductDetailVC {
         vStackViewContainer.addArrangedSubview(imageViewContainer)
         vStackViewContainer.addArrangedSubview(productInformationContainerView)
         
-        imageViewContainer.heightAnchor.constraint(equalTo: contentView.heightAnchor, multiplier: 0.2).isActive = true
-        productInformationContainerView.heightAnchor.constraint(equalTo: contentView.heightAnchor, multiplier: 0.8 ).isActive = true
+        imageViewContainer.heightAnchor.constraint(equalTo: contentView.heightAnchor, multiplier: 1/3).isActive = true
+        productInformationContainerView.heightAnchor.constraint(equalTo: contentView.heightAnchor, multiplier: 2/3).isActive = true
     }
     
     private func setupImageViewContainer() {
@@ -298,7 +265,7 @@ extension ProductDetailVC {
             productInformationView.topAnchor.constraint(equalTo: productInformationContainerView.topAnchor, constant: CGFloat(5)),
             productInformationView.leadingAnchor.constraint(equalTo: productInformationContainerView.leadingAnchor, constant: CGFloat(15)),
             productInformationView.trailingAnchor.constraint(equalTo: productInformationContainerView.trailingAnchor, constant: CGFloat(-15)),
-            productInformationView.heightAnchor.constraint(equalTo: productInformationContainerView.heightAnchor, multiplier: 1/4)
+            productInformationView.heightAnchor.constraint(equalTo: productInformationContainerView.heightAnchor, multiplier: 1/5)
         ])
     }
     
@@ -317,8 +284,8 @@ extension ProductDetailVC {
         hStackViewProductInformation.addArrangedSubview(vStackViewProductInformationLeftSide)
         hStackViewProductInformation.addArrangedSubview(vStackViewProductInformationRightSide)
         
-        vStackViewProductInformationLeftSide.widthAnchor.constraint(equalTo: hStackViewProductInformation.widthAnchor, multiplier: 3/4).isActive = true
-        vStackViewProductInformationRightSide.widthAnchor.constraint(equalTo: hStackViewProductInformation.widthAnchor, multiplier: 1/4).isActive = true
+        vStackViewProductInformationLeftSide.widthAnchor.constraint(equalTo: hStackViewProductInformation.widthAnchor, multiplier: 8/9).isActive = true
+        vStackViewProductInformationRightSide.widthAnchor.constraint(equalTo: hStackViewProductInformation.widthAnchor, multiplier: 1/9).isActive = true
     }
     
     private func setupLeftOfProductInformationStackView() {
@@ -326,10 +293,31 @@ extension ProductDetailVC {
         vStackViewProductInformationLeftSide.addArrangedSubview(hStackProductInformationLeftSideSecondRow)
         vStackViewProductInformationLeftSide.addArrangedSubview(hStackProductInformationLeftSideThirdRow)
     }
+    
     private func setupRightOfProductInformationStackView() {
-        vStackViewProductInformationRightSide.addArrangedSubview(imageViewHearth)
-        vStackViewProductInformationRightSide.addArrangedSubview(labelLikeCount)
+        vStackViewProductInformationRightSide.addArrangedSubview(productLikeContainerView)
         vStackViewProductInformationRightSide.addArrangedSubview(countDownViewContainer)
+    }
+    
+    private func setupFirstRowOfProductInformationStackViewRightSide() {
+        productLikeContainerView.addSubview(vStackViewInnerOfProductInformationRightSize)
+        let inset = CGFloat(5)
+        vStackViewInnerOfProductInformationRightSize.translatesAutoresizingMaskIntoConstraints = false
+        NSLayoutConstraint.activate([
+            vStackViewInnerOfProductInformationRightSize.topAnchor.constraint(equalTo: productLikeContainerView.topAnchor, constant: inset),
+            vStackViewInnerOfProductInformationRightSize.bottomAnchor.constraint(equalTo: productLikeContainerView.bottomAnchor, constant: -inset),
+            vStackViewInnerOfProductInformationRightSize.leadingAnchor.constraint(equalTo: productLikeContainerView.leadingAnchor, constant: inset),
+            vStackViewInnerOfProductInformationRightSize.trailingAnchor.constraint(equalTo: productLikeContainerView.trailingAnchor, constant: -inset)
+        ])
+    }
+    
+    private func setupInnerOfProductInformationStackViewRightSide() {
+        vStackViewInnerOfProductInformationRightSize.addArrangedSubview(imageViewHearth)
+        vStackViewInnerOfProductInformationRightSize.addArrangedSubview(labelLikeCount)
+        
+        imageViewHearth.heightAnchor.constraint(equalTo: vStackViewInnerOfProductInformationRightSize.heightAnchor, multiplier: 2/3).isActive = true
+//        let spacing = (vStackViewInnerOfProductInformationRightSize.heightAnchor)*(1/3) -
+        labelLikeCount.heightAnchor.constraint(equalTo: vStackViewInnerOfProductInformationRightSize.heightAnchor, multiplier: 1/3).isActive = true
     }
     
     private func setupFirstRowOnLeftSideOfProductInformation() {
@@ -411,7 +399,7 @@ extension ProductDetailVC {
     private func configureProductCommentCountTotal() {
         guard let socialFeed = viewModel.getData(.currentSocialFeed) as? Social,
               let commentCountOfAnonymous = socialFeed.commentCounts?.anonymousCommentsCount as? Int,
-            let commentCountOfMember = socialFeed.commentCounts?.anonymousCommentsCount as? Int
+            let commentCountOfMember = socialFeed.commentCounts?.memberCommentsCount as? Int
         else { fatalError("Invalid operation during populating UI.")}
         let commentTotal = commentCountOfAnonymous + commentCountOfMember
         DispatchQueue.main.async { [weak self] in
@@ -426,7 +414,7 @@ extension ProductDetailVC {
         else { fatalError("Invalid operation during populating UI.")}
         DispatchQueue.main.async { [weak self] in
             guard let self else { fatalError("Unexpected nil self") }
-            self.labelPricing.text = "\(productCurrency)".appending(String(productUnitPrice))
+            self.labelPricing.text = String(productUnitPrice).appending(" \(productCurrency)")
         }
     }
     private func configureProductLikeCount() {

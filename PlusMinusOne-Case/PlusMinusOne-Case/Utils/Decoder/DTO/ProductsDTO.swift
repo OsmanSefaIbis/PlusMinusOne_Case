@@ -17,6 +17,6 @@ struct Product: Decodable {
 }
 
 struct Price: Decodable {
-    let value: Int?
+    let value: Double?
     let currency: String?
 }

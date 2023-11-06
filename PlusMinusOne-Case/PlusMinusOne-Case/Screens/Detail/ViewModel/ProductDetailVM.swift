@@ -52,7 +52,7 @@ extension ProductDetailVM: ContractForProductDetailVM {
 
     func viewDidLoad() {
         view?.setupUserInterface()
-        view?.populateUserInterface()
+        view?.configureUserInterface()
     }
     
     func getData(_ property: ProductDataAccessor) -> Any? {

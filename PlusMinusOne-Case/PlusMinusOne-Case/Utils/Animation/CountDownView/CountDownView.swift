@@ -5,24 +5,24 @@ class CircularTimerView: UIView {
     private let label = UILabel()
     
     private var countdownTimer: Timer?
-    private var secondsRemaining: Int = 5
-    private let secondsInitial: Int = 5
+    private let secondsInitial: Int = 10
+    private var secondsRemaining: Int = 10
     
     override init(frame: CGRect) {
         super.init(frame: frame)
-        createCircularProgressBar(frame: frame)
-        createLabel(frame: frame)
+        configureCircularProgressBar(frame: frame)
+        configureLabel(frame: frame)
         startCountdown()
     }
     
     required init?(coder: NSCoder) {
         super.init(coder: coder)
-        createCircularProgressBar(frame: frame)
-        createLabel(frame: frame)
+        configureCircularProgressBar(frame: frame)
+        configureLabel(frame: frame)
         startCountdown()
     }
     
-    private func createCircularProgressBar(frame: CGRect) {
+    private func configureCircularProgressBar(frame: CGRect) {
         let centerX = frame.size.width / 2
         let centerY = frame.size.height / 2
 
@@ -42,14 +42,14 @@ class CircularTimerView: UIView {
         layer.addSublayer(shapeLayer)
     }
 
-    private func createLabel(frame: CGRect) {
+    private func configureLabel(frame: CGRect) {
         let centerX = frame.size.width / 2
         let centerY = frame.size.height / 2
 
         label.frame = CGRect(x: 0, y: 0, width: frame.size.width, height: frame.size.height)
         label.center = CGPoint(x: centerX, y: centerY)
         label.textAlignment = .center
-        label.font = UIFont.boldSystemFont(ofSize: 20)
+        label.font = UIFont.boldSystemFont(ofSize: 15)
         label.textColor = UIColor.systemOrange
         addSubview(label)
     }
