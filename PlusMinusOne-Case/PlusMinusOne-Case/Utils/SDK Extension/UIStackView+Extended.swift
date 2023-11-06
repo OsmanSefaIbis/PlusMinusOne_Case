@@ -9,7 +9,12 @@ import UIKit
 
 extension UIStackView {
     
-    convenience init(axis: NSLayoutConstraint.Axis, alignment: UIStackView.Alignment = .fill, distribution: UIStackView.Distribution = .fill, backgroundColor: UIColor = .systemBackground) {
+    convenience init(
+        axis: NSLayoutConstraint.Axis,
+        alignment: UIStackView.Alignment = .fill,
+        distribution: UIStackView.Distribution = .fill,
+        backgroundColor: UIColor = .systemBackground
+    ) {
         self.init()
         self.axis = axis
         self.alignment = alignment

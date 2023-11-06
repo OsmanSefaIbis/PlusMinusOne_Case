@@ -37,8 +37,15 @@ final class ProductGalleryVC: UIViewController {
     }
     
     // - User Interface Variables
+    
+    private let containerView: UIView = {
+       let v = UIView()
+        v.backgroundColor = .clear
+        return v
+    }()
     private let collectionView: UICollectionView = {
         let layout = UICollectionViewFlowLayout()
+        layout.sectionInset = UIEdgeInsets(top: 5, left: 5, bottom: 0, right: 5)
         layout.scrollDirection = .vertical
         let cv = UICollectionView(frame: .zero, collectionViewLayout: layout)
         cv.backgroundColor = .systemBackground
@@ -55,6 +62,7 @@ extension ProductGalleryVC: ContractForProductGalleryVC {
     func setupUserInterface() {
         self.view.backgroundColor = .systemBackground
         self.navigationController?.setNavigationBarHidden(true, animated: true)
+        setupContainerView()
         setupCollectionView()
     }
     
@@ -90,15 +98,27 @@ extension ProductGalleryVC: DelegateOfProductGalleryVM {
 // - Helper Class Methods
 extension ProductGalleryVC {
     
+    func setupContainerView() {
+        self.view.addSubview(containerView)
+        containerView.translatesAutoresizingMaskIntoConstraints = false
+        NSLayoutConstraint.activate([
+            containerView.topAnchor.constraint(equalTo: self.view.safeAreaLayoutGuide.topAnchor),
+            containerView.bottomAnchor.constraint(equalTo: self.view.safeAreaLayoutGuide.bottomAnchor),
+            containerView.leadingAnchor.constraint(equalTo: self.view.leadingAnchor),
+            containerView.trailingAnchor.constraint(equalTo: self.view.trailingAnchor)
+        ])
+    }
+    
     func setupCollectionView() {
         
-        self.view.addSubview(collectionView)
+        containerView.addSubview(collectionView)
+        let inset: CGFloat = 5
         collectionView.translatesAutoresizingMaskIntoConstraints = false
         NSLayoutConstraint.activate([
-            collectionView.topAnchor.constraint(equalTo: self.view.safeAreaLayoutGuide.topAnchor),
-            collectionView.bottomAnchor.constraint(equalTo: self.view.safeAreaLayoutGuide.bottomAnchor),
-            collectionView.leadingAnchor.constraint(equalTo: self.view.leadingAnchor),
-            collectionView.trailingAnchor.constraint(equalTo: self.view.trailingAnchor)
+            collectionView.topAnchor.constraint(equalTo: containerView.topAnchor, constant: inset),
+            collectionView.bottomAnchor.constraint(equalTo: containerView.bottomAnchor, constant: -inset),
+            collectionView.leadingAnchor.constraint(equalTo: containerView.leadingAnchor, constant: inset),
+            collectionView.trailingAnchor.constraint(equalTo: containerView.trailingAnchor, constant: -inset)
         ])
     }
 }
@@ -129,8 +149,6 @@ extension ProductGalleryVC: UICollectionViewDelegate {
     
 }
 // - CollectionView Flow Layout Delegate Methods
-
-//// TODO: Assign delegate later 
 extension ProductGalleryVC: UICollectionViewDelegateFlowLayout {
     
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
@@ -140,31 +158,31 @@ extension ProductGalleryVC: UICollectionViewDelegateFlowLayout {
         let totalInsetSpace = (flowLayout.sectionInset.left + flowLayout.sectionInset.right)
         let totalCellSpacing = (CGFloat(viewModel.columnPreference - 1) * flowLayout.minimumInteritemSpacing)
         let availableWidthForCells = (totalWidth - totalInsetSpace - totalCellSpacing)
-        // TODO: Calculate Sizing Later
-        let cellWidth = 150, cellHeight = 150
-        let cellSize = CGSize(width: cellWidth, height: cellHeight)
+        let cellSizingValue = (availableWidthForCells / CGFloat(viewModel.columnPreference)) / 3
+        let cellSize = CGSize(width: (cellSizingValue * 3), height: (cellSizingValue * 2)) // - Aspect Ratio: width/height = 3/2
         return cellSize
     }
     
-    // TODO: Handle Below Later
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, insetForSectionAt section: Int) -> UIEdgeInsets {
         let defaultInset: UIEdgeInsets = .init(top: 5, left: 5, bottom: 0, right: 5)
         guard let flowLayout = collectionViewLayout as? UICollectionViewFlowLayout else { return defaultInset }
+        flowLayout.sectionInset = defaultInset
         return flowLayout.sectionInset
     }
-    
+
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, minimumInteritemSpacingForSectionAt section: Int) -> CGFloat {
-        let defaultSpacing: CGFloat = 10.0
+        let defaultSpacing: CGFloat = 5.0
         guard let flowLayout = collectionViewLayout as? UICollectionViewFlowLayout else { return defaultSpacing }
         flowLayout.minimumInteritemSpacing = defaultSpacing
         return flowLayout.minimumInteritemSpacing
     }
-    
+
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, minimumLineSpacingForSectionAt section: Int) -> CGFloat {
-        let defaultSpacing: CGFloat = 10.0
+        let defaultSpacing: CGFloat = 5.0
         guard let flowLayout = collectionViewLayout as? UICollectionViewFlowLayout else { return defaultSpacing }
         flowLayout.minimumLineSpacing = defaultSpacing
         return flowLayout.minimumLineSpacing
     }
+
 }
 

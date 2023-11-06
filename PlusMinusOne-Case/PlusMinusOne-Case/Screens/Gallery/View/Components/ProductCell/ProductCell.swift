@@ -22,7 +22,7 @@ final class ProductCell: UICollectionViewCell {
     
     static let identifier = "ProductCell"
     
-    /// Populates the UI components of the cell with the provided data.
+    /// Setups and configures the UI variables
     func configureCell(with data: RowItem) {
         setupUserInterface() // - Construct UI
         configureUserInterface(pass: data) // - Populate UI
@@ -38,48 +38,59 @@ final class ProductCell: UICollectionViewCell {
         self.labelProductCommentTotal.text = nil
     }
     //   - User Interface Variables
-    
+    private let containerView: UIView = {
+        let v = UIView()
+        v.layer.cornerRadius = 10
+        v.layer.masksToBounds = true
+        v.layer.borderWidth = 1.5
+        v.layer.borderColor = UIColor.systemGray3.cgColor
+        v.backgroundColor = .systemGray6
+        return v
+    }()
     // - StackView's
-    private let vStackView: UIStackView = {
-        UIStackView(axis: .vertical, backgroundColor: .green)
+    private let vStackViewOuter: UIStackView = {
+        UIStackView(axis: .vertical, backgroundColor: .clear)
+    }()
+    private let vStackViewInner: UIStackView = {
+        UIStackView(axis: .vertical, backgroundColor: .clear)
+    }()
+    private let hStackViewOfSecondRow: UIStackView = {
+        UIStackView(axis: .horizontal,alignment: .center, distribution: .fillEqually, backgroundColor: .clear)
     }()
     private let hStackViewOfThirdRow: UIStackView = {
-        UIStackView(axis: .horizontal, distribution: .fillEqually, backgroundColor: .blue)
-    }()
-    private let hStackViewOfForthRow: UIStackView = {
-        UIStackView(axis: .horizontal, distribution: .fillEqually, backgroundColor: .red)
+        UIStackView(axis: .horizontal, alignment: .top, distribution: .fillEqually, backgroundColor: .clear)
     }()
     // - ImageView's
     private let imageViewOfProduct: UIImageView = {
-        UIImageView(systemName: "person.fill", tintColor: .systemGray4, contentMode: .scaleAspectFill)
+        UIImageView(systemName: "person.fill", tintColor: .clear, contentMode: .scaleAspectFill)
     }()
     private let imageViewOfHeart: UIImageView = {
-        UIImageView(systemName: "heart.fill", tintColor: .red)
+        UIImageView(systemName: "heart.fill", tintColor: .systemRed)
     }()
     private let imageViewOfStar: UIImageView = {
-        UIImageView(systemName: "star.leadinghalf.filled", tintColor: .yellow)
+        UIImageView(systemName: "star.leadinghalf.filled", tintColor: .systemOrange)
     }()
     private let imageViewOfComment: UIImageView = {
-        UIImageView(systemName: "message.fill", tintColor: .green)
+        UIImageView(systemName: "message.fill", tintColor: .darkGray)
     }()
     private let imageViewOfPrice: UIImageView = {
-        UIImageView(systemName: "banknote.fill", tintColor: .black)
+        UIImageView(systemName: "banknote.fill", tintColor: .systemGreen)
     }()
     // - Label's
     private var labelProductType: UILabel = {
-        UILabel.customLabel(text: "Product Type", textAlignment: .left)
+        UILabel.customLabel(font: UIFont.boldSystemFont(ofSize: 12))
     }()
     private var labelProductLikeCount: UILabel = {
-        UILabel.customLabel(text: "129")
+        UILabel.customLabel()
     }()
     private var labelProductRatingFloat: UILabel = {
-        UILabel.customLabel(text: "4.5")
+        UILabel.customLabel()
     }()
     private var labelProductCommentTotal: UILabel = {
-        UILabel.customLabel(text: "26")
+        UILabel.customLabel()
     }()
     private var labelProductPrice: UILabel = {
-        UILabel.customLabel(text: "180")
+        UILabel.customLabel()
     }()
 }
 
@@ -91,44 +102,63 @@ extension ProductCell {
         setupSecondly()
     }
     private func setupFirstly() {
-        self.backgroundColor = .systemBackground
+        self.backgroundColor = .clear
     }
     
     private func setupSecondly() {
-        setupStackView()
+        setupContainerView()
+        setupOuterStackView()
+        setupInnerStackView()
         setupThirdRowOfStackView()
         setupFourthRowOfStackView()
     }
     
-    private func setupStackView() {
-        self.addSubview(vStackView)
-        vStackView.translatesAutoresizingMaskIntoConstraints = false
+    private func setupContainerView() {
+        self.addSubview(containerView)
+        containerView.translatesAutoresizingMaskIntoConstraints = false
+        let inset: CGFloat = 2
         NSLayoutConstraint.activate([
-            vStackView.topAnchor.constraint(equalTo: self.topAnchor),
-            vStackView.bottomAnchor.constraint(equalTo: self.bottomAnchor),
-            vStackView.leadingAnchor.constraint(equalTo: self.leadingAnchor),
-            vStackView.trailingAnchor.constraint(equalTo: self.trailingAnchor)
+            containerView.topAnchor.constraint(equalTo: self.topAnchor, constant: inset),
+            containerView.bottomAnchor.constraint(equalTo: self.bottomAnchor, constant: -inset),
+            containerView.trailingAnchor.constraint(equalTo: self.trailingAnchor, constant: inset),
+            containerView.leadingAnchor.constraint(equalTo: self.leadingAnchor, constant: -inset)
+        ])
+    }
+    private func setupOuterStackView() {
+        containerView.addSubview(vStackViewOuter)
+        vStackViewOuter.translatesAutoresizingMaskIntoConstraints = false
+        NSLayoutConstraint.activate([
+            vStackViewOuter.topAnchor.constraint(equalTo: containerView.topAnchor),
+            vStackViewOuter.bottomAnchor.constraint(equalTo: containerView.bottomAnchor),
+            vStackViewOuter.leadingAnchor.constraint(equalTo: containerView.leadingAnchor),
+            vStackViewOuter.trailingAnchor.constraint(equalTo: containerView.trailingAnchor)
+        ])
+        vStackViewOuter.addArrangedSubviews([
+            imageViewOfProduct, vStackViewInner
         ])
         
-        vStackView.addArrangedSubviews([
-            imageViewOfProduct, labelProductType, hStackViewOfThirdRow, hStackViewOfForthRow
+        imageViewOfProduct.heightAnchor.constraint(equalTo: vStackViewOuter.heightAnchor, multiplier: 0.6).isActive = true
+        vStackViewInner.heightAnchor.constraint(equalTo: vStackViewOuter.heightAnchor, multiplier: 0.4).isActive = true
+    }
+    
+    private func setupInnerStackView() {
+        vStackViewInner.addArrangedSubviews([
+            labelProductType, hStackViewOfSecondRow, hStackViewOfThirdRow
         ])
-        
-        imageViewOfProduct.heightAnchor.constraint(equalTo: vStackView.heightAnchor, multiplier: 0.4).isActive = true
-        labelProductType.heightAnchor.constraint(equalTo: vStackView.heightAnchor, multiplier: 0.2).isActive = true
-        hStackViewOfThirdRow.heightAnchor.constraint(equalTo: vStackView.heightAnchor, multiplier: 0.3).isActive = true
-        hStackViewOfForthRow.heightAnchor.constraint(equalTo: vStackView.heightAnchor, multiplier: 0.1).isActive = true
+        labelProductType.heightAnchor.constraint(equalTo: vStackViewInner.heightAnchor, multiplier: 0.4 ).isActive = true
+        hStackViewOfSecondRow.heightAnchor.constraint(equalTo: vStackViewInner.heightAnchor, multiplier: 0.3).isActive = true
+        hStackViewOfThirdRow.heightAnchor.constraint(equalTo: vStackViewInner.heightAnchor, multiplier: 0.3).isActive = true
     }
     
     private func setupThirdRowOfStackView() {
         
-        hStackViewOfThirdRow.addArrangedSubviews([
+        hStackViewOfSecondRow.addArrangedSubviews([
             imageViewOfHeart, imageViewOfStar, imageViewOfComment, imageViewOfPrice
         ])
     }
     
     private func setupFourthRowOfStackView() {
-        hStackViewOfForthRow.addArrangedSubviews([
+        hStackViewOfThirdRow.addArrangedSubviews([
             labelProductLikeCount, labelProductRatingFloat, labelProductCommentTotal, labelProductPrice
         ])
     }
@@ -136,8 +166,14 @@ extension ProductCell {
 
 extension ProductCell {
     
-    private func configureUserInterface(pass data: RowItem) {
-        //FIXME: failure onPress
+    private func populateProductTuple(pass data: RowItem) -> (
+        imageUrl: String,
+        type: String,
+        likeCount: Int,
+        ratingFloat: Double,
+        commentTotal: Int,
+        priceInfo: String
+    ) {
         guard let productImageUrl = getData(.imageUrl, data) as? String,
               let productType = getData(.productType, data) as? String,
               let productSocialFeed = getData(.currentSocialFeed, data) as? Social,
@@ -146,29 +182,27 @@ extension ProductCell {
               let productAnonymousComment = productSocialFeed.commentCounts?.anonymousCommentsCount as? Int,
               let productMemberComment = productSocialFeed.commentCounts?.memberCommentsCount as? Int,
               let productPrice = getData(.priceInfo, data) as? Price,
-              let productPriceValue = productPrice.value
-        else { fatalError("Invalid operation during populating UI.")} //FIXME: Detected bug, occurs on scroll
-        //FIXME: data not exact with detail look up
+              let productPriceValue = productPrice.value,
+              let productCurrency = productPrice.currency
+        else { fatalError("Invalid operation during populating UI with id: \(data.id)")} //FIXME: Resolved, added id:18 to social.json
+        //TODO: Remove commenting
+        let productCommentTotal: Int = productAnonymousComment + productMemberComment
+        let productPriceString: String = productCurrency.appending(String(productPriceValue))
         
-        // TODO: Tuple is lengthy use mapping
-        let productTuple: ( imageUrl: String, type: String, likeCount: Int, ratingFloat: Double, commentTotal: Int, priceInfo: String ) = (
-            productImageUrl, productType, productLikeCount, productRatingFloat, (productAnonymousComment + productMemberComment), String(productPriceValue).appending(productPrice.currency ?? "")
-        )
-// TODO: add these to product.json
-//    https://dummyimage.com/425x325/4a4a4a/26d6a4
-//    https://dummyimage.com/430x310/4a4a4a/26d6a5
-//    https://dummyimage.com/460x290/4a4a4a/26d6a6
-//    https://dummyimage.com/445x305/4a4a4a/26d6a7
-//    https://dummyimage.com/465x285/4a4a4a/26d6a8
-//    https://dummyimage.com/440x320/4a4a4a/26d6a9
-//    https://dummyimage.com/470x290/4a4a4a/26d6aa
-//    https://dummyimage.com/435x325/4a4a4a/26d6a2
-        configureProductImage(pass: productTuple.imageUrl)
-        configureProductType(pass: productTuple.type)
-        configureProductLikeCount(pass: productTuple.likeCount)
-        configureProductRatingFloat(pass: productTuple.ratingFloat)
-        configureProductCommentTotal(pass: productTuple.commentTotal)
-        configureProductPrice(pass: productTuple.priceInfo)
+        return (productImageUrl, productType, productLikeCount, productRatingFloat, productCommentTotal, productPriceString)
+    }
+
+    
+    private func configureUserInterface(pass data: RowItem) {
+
+        let product = populateProductTuple(pass: data)
+        // Configure's Each UI variable
+        configureProductImage(pass: product.imageUrl)
+        configureProductType(pass: product.type)
+        configureProductLikeCount(pass: product.likeCount)
+        configureProductRatingFloat(pass: product.ratingFloat)
+        configureProductCommentTotal(pass: product.commentTotal)
+        configureProductPrice(pass: product.priceInfo)
     }
     
     private func configureProductImage(pass unitData: String) {

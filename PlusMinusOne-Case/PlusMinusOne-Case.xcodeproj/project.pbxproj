@@ -137,9 +137,9 @@
 		96185A802AF40D09005A5488 /* PlusMinusOne-Case */ = {
 			isa = PBXGroup;
 			children = (
-				9619694D2AF518AF001CB5EB /* Utils */,
 				96185A8F2AF40D0A005A5488 /* Info.plist */,
 				96185AB22AF40E4D005A5488 /* Supporting */,
+				9619694D2AF518AF001CB5EB /* Utils */,
 				961969362AF442D3001CB5EB /* Screens */,
 			);
 			path = "PlusMinusOne-Case";

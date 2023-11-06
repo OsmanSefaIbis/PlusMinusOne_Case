@@ -36,9 +36,8 @@ final class ProductGalleryVM {
     // - State Variables
     // TODO: Decide Next
     private var items: [RowItem] = []
-    private var feeds: [Int : Social] = [:] // ThinkTODO: is trivial, delete or use it in another way
     var itemsCount: Int { get { items.count } }
-    var columnPreference: Int = 1 // TODO: Handle Later
+    var columnPreference: Int = 2 // optionalTODO: singular, grid preference
     
     // - Lifecycle: Object
     init(view: ContractForProductGalleryVC) {
@@ -98,7 +97,6 @@ extension ProductGalleryVM: DelegateOfProductGalleryModel {
         
         for socialFeed in data {
             if let id = socialFeed.id {
-                feeds[id] = socialFeed.social // trivial
                 if let index = items.firstIndex(where: { $0.id == id }) {
                     items[index].currentSocialFeed = socialFeed.social
                 }
