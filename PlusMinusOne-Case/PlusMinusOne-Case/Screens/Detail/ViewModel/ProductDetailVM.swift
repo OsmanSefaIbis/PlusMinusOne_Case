@@ -22,6 +22,7 @@ protocol ContractForProductDetailVM: AnyObject {
     func didEndCountdown()
     func updateSocial(of id: Int)
     func setUpdatedSocial()
+    func updateUserInterface(for state: ProductDetailSocailState)
 }
 // - Class Communicator
 protocol DelegateOfProductDetailVM: AnyObject {
@@ -40,9 +41,10 @@ final class ProductDetailVM {
     // - State Variables
     var data: DetailData?
     var latestUpdatedSocial: Social?
+    var timer: Timer?
     var socialState: ProductDetailSocailState = .success {
         didSet {
-            view?.updateUserInterface(for: socialState)
+            updateUserInterface(for: socialState)
         }
     }
     
@@ -55,7 +57,7 @@ final class ProductDetailVM {
 
 // - Contract Conformance
 extension ProductDetailVM: ContractForProductDetailVM {
-
+    
     func viewDidLoad() {
         socialState = .success // Data is readily available at first
         view?.setupUserInterface()
@@ -64,7 +66,7 @@ extension ProductDetailVM: ContractForProductDetailVM {
     
     func getData(_ property: ProductDataAccessor) -> Any? {
         guard let productData = data else { return nil }
-
+        
         let mirror = Mirror(reflecting: productData)
         for (key, value) in mirror.children {
             if key == property.rawValue {
@@ -81,7 +83,18 @@ extension ProductDetailVM: ContractForProductDetailVM {
     
     func didEndCountdown() {
         socialState = .loading
-         model.modifySocials()
+        model.modifySocials()
+    }
+    
+    func updateUserInterface(for state: ProductDetailSocailState) {
+        switch state {
+        case .success:
+            view?.updateUIForSuccessState()
+        case .loading:
+            view?.updateUIForLoadingState()
+        case .error(let error):
+            view?.updateUIForLoadingState()
+        }
     }
     
     func updateSocial(of id: Int) {
@@ -89,8 +102,11 @@ extension ProductDetailVM: ContractForProductDetailVM {
     }
     
     func setUpdatedSocial() {
-        view?.setUpdatedSocial()
-        socialState = .success
+        timer = Timer.scheduledTimer(withTimeInterval: 0.2, repeats: false) { [weak self] timer in
+            guard let self = self else { fatalError("Unexpected nil self") }
+            socialState = .success
+            timer.invalidate()
+        }
     }
 }
 

@@ -14,8 +14,9 @@ protocol ContractForProductDetailVC: AnyObject {
     
     func setupUserInterface()
     func configureUserInterface()
-    func setUpdatedSocial()
-    func updateUserInterface(for state: ProductDetailSocailState)
+    func updateUIForSuccessState()
+    func updateUIForLoadingState()
+    func updateUIForErrorState()
 }
 
 final class ProductDetailVC: UIViewController {
@@ -85,6 +86,18 @@ final class ProductDetailVC: UIViewController {
         let v = UIView()
         v.backgroundColor = .systemBackground
         return v
+    }()
+    private let spinnerMedium: UIActivityIndicatorView = {
+        let indicator = UIActivityIndicatorView(style: .medium)
+        indicator.color = .systemOrange
+        indicator.startAnimating()
+        return indicator
+    }()
+    private let spinnerLarge: UIActivityIndicatorView = {
+        let indicator = UIActivityIndicatorView(style: .medium)
+        indicator.color = .systemOrange
+        indicator.startAnimating()
+        return indicator
     }()
     private let hStackViewProductInformation: UIStackView = {
         UIStackView(axis: .horizontal, backgroundColor: .clear)
@@ -183,20 +196,53 @@ extension ProductDetailVC: ContractForProductDetailVC {
         configureProductPrice()
         configureProductLikeCount()
     }
-    
-    func updateUserInterface(for state: ProductDetailSocailState) {
-        switch state {
-        case .success:
-            // TODO: stop spinner and set the UI variables with the data
-            print("DEBUG PRINT: Success")
-        case .loading:
-            // TODO: start spinner for the social UI variables only
-            print("DEBUG PRINT: Loading")
-        case .error(let error):
-            // TODO: change the UI variables to imply error state
-            print("DEBUG PRINT: Error")
+
+    func updateUIForSuccessState() {
+        
+        DispatchQueue.main.async { [weak self] in
+            guard let self = self else { fatalError("Unexpected nil self") }
+            
+            // Remove Existing
+            for subview in self.hStackProductInformationLeftSideSecondRow.arrangedSubviews {
+                self.hStackProductInformationLeftSideSecondRow.removeArrangedSubview(subview)
+                subview.removeFromSuperview()
+            }
+            for subview in self.vStackViewInnerOfProductInformationRightSize.arrangedSubviews {
+                self.vStackViewInnerOfProductInformationRightSize.removeArrangedSubview(subview)
+                subview.removeFromSuperview()
+            }
+            // Original look
+            self.setupSecondRowOnLeftSideOfProductInformation()
+            self.setupFirstRowOfProductInformationStackViewRightSide()
+            self.setupInnerOfProductInformationStackViewRightSide()
+            self.setUpdatedSocial()
         }
     }
+    
+    func updateUIForLoadingState() {
+        DispatchQueue.main.async { [weak self] in
+            guard let self = self else { fatalError("Unexpected nil self") }
+            
+            // Remove Existing
+            for subview in self.hStackProductInformationLeftSideSecondRow.arrangedSubviews {
+                self.hStackProductInformationLeftSideSecondRow.removeArrangedSubview(subview)
+                subview.removeFromSuperview()
+            }
+            for subview in self.vStackViewInnerOfProductInformationRightSize.arrangedSubviews {
+                self.vStackViewInnerOfProductInformationRightSize.removeArrangedSubview(subview)
+                subview.removeFromSuperview()
+            }
+            // Add Spinner instead
+            self.hStackProductInformationLeftSideSecondRow.addArrangedSubview(self.spinnerLarge)
+            self.vStackViewInnerOfProductInformationRightSize.addArrangedSubview(self.spinnerMedium)
+        }
+    }
+    
+    func updateUIForErrorState() {
+        
+    }
+    
+    
 }
 // - Update UI
 extension ProductDetailVC {
@@ -216,7 +262,7 @@ extension ProductDetailVC {
             var productCommentTotal = commentCountOfAnonymous + commentCountOfMember
             productCommentTotal += Int.random(in: 1...5)
             productLikeCount += Int.random(in: 1...30)
-            productRatingFloat = (Double.random(in: 1...5) * 10.0).rounded() / 10.0
+            productRatingFloat = (Double.random(in: 2...5) * 10.0).rounded() / 10.0
             
             self.labelProductRatingFloat.text = String(productRatingFloat)
             self.labelLikeCount.text = String(productLikeCount)
@@ -224,6 +270,11 @@ extension ProductDetailVC {
             self.starRatingView.rating = productRatingFloat
         }
     }
+    
+    func setupSocialsOnErrorState() {
+        
+    }
+
 }
 
 // - Helper Class Methods
@@ -394,7 +445,7 @@ extension ProductDetailVC {
     }
     
     private func setupCountDown() {
-        let countDownView = CountDownView(frame: countDownViewContainer.bounds)
+        let countDownView = CountDownView(frame: countDownViewContainer.bounds, secondsInitial: 5)
         countDownView.delegate = self
         countDownViewContainer.addSubview(countDownView)
         countDownView.translatesAutoresizingMaskIntoConstraints = false

@@ -1,3 +1,10 @@
+//
+//  CountDownView.swift
+//  PlusMinusOne-Case
+//
+//  Created by Sefa İbiş on 7.11.2023.
+//
+
 import UIKit
 
 protocol DelegateOfCountDownView: AnyObject {
@@ -8,11 +15,13 @@ class CountDownView: UIView {
     private let shapeLayer = CAShapeLayer()
     private let label = UILabel()
     private var countdownTimer: Timer?
-    private let secondsInitial: Int = 5
-    private var secondsRemaining: Int = 5
+    private var secondsInitial: Int
+    private var secondsRemaining: Int
     weak var delegate: DelegateOfCountDownView?
     
-    override init(frame: CGRect) {
+    init(frame: CGRect, secondsInitial: Int = 60) {
+        self.secondsInitial = secondsInitial
+        self.secondsRemaining = secondsInitial
         super.init(frame: frame)
         configureCircularProgressBar(frame: frame)
         configureLabel(frame: frame)
@@ -20,6 +29,8 @@ class CountDownView: UIView {
     }
     
     required init?(coder: NSCoder) {
+        self.secondsInitial = 60
+        self.secondsRemaining = self.secondsInitial
         super.init(coder: coder)
         configureCircularProgressBar(frame: frame)
         configureLabel(frame: frame)
