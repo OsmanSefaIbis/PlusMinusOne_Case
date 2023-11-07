@@ -10,7 +10,7 @@ import Foundation
 // - Class Communicator
 protocol DelegateOfProductDetailModel: AnyObject {
     func didModifySocials()
-    func didFailModifySocials()
+    func didFailToModifySocials(with: Error)
     func didGetSocial(update: SocialFeed)
     func didFailRetrievalOfSocialFeed(with: Error)
 }
@@ -19,10 +19,26 @@ final class ProductDetailModel {
     
     // - MVVM Variables
     weak var delegate: DelegateOfProductDetailModel?
+    let modifiedFlag: Bool = true
     
     func modifySocials() {
-        // TODO: Modify Data
-        self.delegate?.didModifySocials()
+//        DecoderService.decodeModifyEncodeSave(resource: "social", as: SocialInfo.self) { [weak self] result in
+//            switch result {
+//            case .success():
+//                self?.delegate?.didModifySocials()
+//            case .failure(let error):
+//                self?.delegate?.didFailToModifySocials(with: error)
+//            }
+//        }
+        
+        // Intended to modify the JSON file but aborted because could not figure it out.
+        // Faced with the problem: file-access
+        if modifiedFlag {
+            self.delegate?.didModifySocials()
+        } else {
+            let error = NSError(domain: "ProductDetailModel", code: 1004, userInfo: [NSLocalizedDescriptionKey: "Failed to modify JSON in file social.json"])
+            self.delegate?.didFailToModifySocials(with: error)
+        }
     }
     
     func getSocial(with productId: Int) {

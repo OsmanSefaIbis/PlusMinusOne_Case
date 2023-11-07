@@ -8,8 +8,8 @@ class CountDownView: UIView {
     private let shapeLayer = CAShapeLayer()
     private let label = UILabel()
     private var countdownTimer: Timer?
-    private let secondsInitial: Int = 10
-    private var secondsRemaining: Int = 10
+    private let secondsInitial: Int = 5
+    private var secondsRemaining: Int = 5
     weak var delegate: DelegateOfCountDownView?
     
     override init(frame: CGRect) {

@@ -7,6 +7,12 @@
 
 import Foundation
 
+enum ProductDetailSocailState {
+    case loading
+    case error(Error)
+    case success
+}
+
 // - Class Contract
 protocol ContractForProductDetailVM: AnyObject {
     
@@ -34,6 +40,11 @@ final class ProductDetailVM {
     // - State Variables
     var data: DetailData?
     var latestUpdatedSocial: Social?
+    var socialState: ProductDetailSocailState = .success {
+        didSet {
+            view?.updateUserInterface(for: socialState)
+        }
+    }
     
     // - Lifecycle: Object
     init(view: ContractForProductDetailVC) {
@@ -46,6 +57,7 @@ final class ProductDetailVM {
 extension ProductDetailVM: ContractForProductDetailVM {
 
     func viewDidLoad() {
+        socialState = .success // Data is readily available at first
         view?.setupUserInterface()
         view?.configureUserInterface()
     }
@@ -68,7 +80,8 @@ extension ProductDetailVM: ContractForProductDetailVM {
     }
     
     func didEndCountdown() {
-        model.modifySocials()
+        socialState = .loading
+         model.modifySocials()
     }
     
     func updateSocial(of id: Int) {
@@ -77,22 +90,27 @@ extension ProductDetailVM: ContractForProductDetailVM {
     
     func setUpdatedSocial() {
         view?.setUpdatedSocial()
+        socialState = .success
     }
 }
 
 // - MVVM Notify
 extension ProductDetailVM: DelegateOfProductDetailModel {
+    func didFailToModifySocials(with: Error) {
+        // TODO: Later
+    }
+    
     func didFailRetrievalOfSocialFeed(with: Error) {
         // TODO: Later
     }
     
-    
     func didModifySocials() {
+        // Assumed that the social.json is updated
         delegate?.updateSocials()
     }
     
-    func didFailModifySocials() {
-        // TODO: Later
+    func didFailModifySocials(with: Error) {
+        socialState = .error(with)
     }
     
     func didGetSocial(update: SocialFeed) {

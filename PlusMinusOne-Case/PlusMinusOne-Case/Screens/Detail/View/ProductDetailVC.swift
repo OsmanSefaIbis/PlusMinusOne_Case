@@ -15,6 +15,7 @@ protocol ContractForProductDetailVC: AnyObject {
     func setupUserInterface()
     func configureUserInterface()
     func setUpdatedSocial()
+    func updateUserInterface(for state: ProductDetailSocailState)
 }
 
 final class ProductDetailVC: UIViewController {
@@ -182,6 +183,20 @@ extension ProductDetailVC: ContractForProductDetailVC {
         configureProductPrice()
         configureProductLikeCount()
     }
+    
+    func updateUserInterface(for state: ProductDetailSocailState) {
+        switch state {
+        case .success:
+            // TODO: stop spinner and set the UI variables with the data
+            print("DEBUG PRINT: Success")
+        case .loading:
+            // TODO: start spinner for the social UI variables only
+            print("DEBUG PRINT: Loading")
+        case .error(let error):
+            // TODO: change the UI variables to imply error state
+            print("DEBUG PRINT: Error")
+        }
+    }
 }
 // - Update UI
 extension ProductDetailVC {
@@ -190,16 +205,23 @@ extension ProductDetailVC {
         DispatchQueue.main.async { [weak self] in
             guard let self else { fatalError("Unexpected nil self") }
             guard let socialFeed = self.viewModel.getLatestSocial(),
-                  let productLikeCount = socialFeed.likeCount,
-                  let ratingFloat = socialFeed.commentCounts?.averageRating as? Double,
+                  var productLikeCount = socialFeed.likeCount,
+                  var productRatingFloat = socialFeed.commentCounts?.averageRating as? Double,
                   let commentCountOfAnonymous = socialFeed.commentCounts?.anonymousCommentsCount as? Int,
                   let commentCountOfMember = socialFeed.commentCounts?.memberCommentsCount as? Int
             else { return } // FIXME: return
-            let commentTotal = commentCountOfAnonymous + commentCountOfMember
-            self.labelProductRatingFloat.text = String(ratingFloat)
+            
+            // Assumed that the social.json was updated
+            // Manually changed the social values to imply update, did a workaround
+            var productCommentTotal = commentCountOfAnonymous + commentCountOfMember
+            productCommentTotal += Int.random(in: 1...5)
+            productLikeCount += Int.random(in: 1...30)
+            productRatingFloat = (Double.random(in: 1...5) * 10.0).rounded() / 10.0
+            
+            self.labelProductRatingFloat.text = String(productRatingFloat)
             self.labelLikeCount.text = String(productLikeCount)
-            self.labelProductCommentTotal.text = "Comment: \(commentTotal)"
-            self.starRatingView.rating = ratingFloat
+            self.labelProductCommentTotal.text = "Comment: \(productCommentTotal)"
+            self.starRatingView.rating = productRatingFloat
         }
     }
 }
