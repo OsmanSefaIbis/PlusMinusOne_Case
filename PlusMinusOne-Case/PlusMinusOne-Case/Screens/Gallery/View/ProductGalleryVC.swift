@@ -19,7 +19,7 @@ protocol ContractForProductGalleryVC: AnyObject {
 final class ProductGalleryVC: UIViewController {
     
     // - MVVM Variables
-    lazy var viewModel = ProductGalleryVM(view: self)
+    private lazy var viewModel = ProductGalleryVM(view: self)
     
     // Life-cycle: Object
     init(){

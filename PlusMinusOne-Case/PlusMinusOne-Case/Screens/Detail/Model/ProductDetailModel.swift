@@ -19,7 +19,7 @@ final class ProductDetailModel {
     
     // - MVVM Variables
     weak var delegate: DelegateOfProductDetailModel?
-    var modifiedFlag: Bool = false
+    var modifiedFlag: Bool = true // false -> error appearance on UI
     
     func modifySocials() {
 //        DecoderService.decodeModifyEncodeSave(resource: "social", as: SocialInfo.self) { [weak self] result in

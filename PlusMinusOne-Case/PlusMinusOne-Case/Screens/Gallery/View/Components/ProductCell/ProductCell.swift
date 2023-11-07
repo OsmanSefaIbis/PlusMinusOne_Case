@@ -18,6 +18,7 @@ struct ProductCellDataModel {
     var currentSocialFeed: Social?
 }
 
+
 final class ProductCell: UICollectionViewCell {
     
     static let identifier = "ProductCell"

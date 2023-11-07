@@ -7,7 +7,21 @@
 
 import Foundation
 
-enum ProductDetailSocailState {
+enum ProductDetailSocialState: Equatable {
+    static func == (lhs: ProductDetailSocialState, rhs: ProductDetailSocialState) -> Bool {
+        switch (lhs, rhs) {
+        case (.loading, .loading):
+            return true
+        case let (.error(lhsError), .error(rhsError)):
+            // Compare the errors, you can use their `localizedDescription` or other properties.
+            return lhsError.localizedDescription == rhsError.localizedDescription
+        case (.success, .success):
+            return true
+        default:
+            return false
+        }
+    }
+    
     case loading
     case error(Error)
     case success
@@ -16,13 +30,14 @@ enum ProductDetailSocailState {
 // - Class Contract
 protocol ContractForProductDetailVM: AnyObject {
     
+    //    var view: ContractForProductDetailVC? { get set }
     func viewDidLoad()
     func getData(_ property: ProductDataAccessor) -> Any?
     func getLatestSocial() -> Social?
     func didEndCountdown()
     func updateSocial(of id: Int)
     func setUpdatedSocial()
-    func updateUserInterface(for state: ProductDetailSocailState)
+    func updateUserInterface(for state: ProductDetailSocialState)
 }
 // - Class Communicator
 protocol DelegateOfProductDetailVM: AnyObject {
@@ -42,7 +57,7 @@ final class ProductDetailVM {
     var data: DetailData?
     var latestUpdatedSocial: Social?
     var timer: Timer?
-    var socialState: ProductDetailSocailState = .success {
+    var socialState: ProductDetailSocialState = .success {
         didSet {
             updateUserInterface(for: socialState)
         }
@@ -59,7 +74,7 @@ final class ProductDetailVM {
 extension ProductDetailVM: ContractForProductDetailVM {
     
     func viewDidLoad() {
-        socialState = .success // Data is readily available at first
+        socialState = .success // Data is available at first
         view?.setupUserInterface()
         view?.configureUserInterface()
     }
@@ -86,13 +101,13 @@ extension ProductDetailVM: ContractForProductDetailVM {
         model.modifySocials()
     }
     
-    func updateUserInterface(for state: ProductDetailSocailState) {
+    func updateUserInterface(for state: ProductDetailSocialState) {
         switch state {
         case .success:
             view?.updateUIForSuccessState()
         case .loading:
             view?.updateUIForLoadingState()
-        case .error(let error):
+        case .error(_):
             view?.updateUIForErrorState()
         }
     }

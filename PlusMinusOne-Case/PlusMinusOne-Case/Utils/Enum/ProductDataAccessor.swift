@@ -7,7 +7,7 @@
 
 import Foundation
 
-enum ProductDataAccessor: String {
+public enum ProductDataAccessor: String {
     case productBrand
     case productType
     case imageUrl

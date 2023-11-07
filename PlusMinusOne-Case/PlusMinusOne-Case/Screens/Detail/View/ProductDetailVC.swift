@@ -22,7 +22,7 @@ protocol ContractForProductDetailVC: AnyObject {
 final class ProductDetailVC: UIViewController {
     
     // - MVVM Variables
-    lazy var viewModel = ProductDetailVM(view: self)
+    private lazy var viewModel = ProductDetailVM(view: self)
     
     // - State Variables
     var productId: Int?
@@ -188,7 +188,7 @@ extension ProductDetailVC: ContractForProductDetailVC {
     
     // TODO: Better Naming
     func setupUserInterface() {
-        setupFirstly() // View related setup
+        setupViewInitials() // View related setup
         setupSecondly() // Outmost related setup
         setupThirdly() // Product information-related setup
         setupFourthly() // Product information left and right side related setups
@@ -275,7 +275,7 @@ extension ProductDetailVC {
 // - Helper Class Methods
 extension ProductDetailVC {
     
-    private func setupFirstly() {
+    private func setupViewInitials() {
         self.edgesForExtendedLayout = .top
         self.navigationController?.navigationBar.backgroundColor = .clear
         self.view.backgroundColor = .systemBackground
