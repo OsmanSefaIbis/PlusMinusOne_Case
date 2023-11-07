@@ -19,7 +19,7 @@ final class ProductDetailModel {
     
     // - MVVM Variables
     weak var delegate: DelegateOfProductDetailModel?
-    let modifiedFlag: Bool = true
+    var modifiedFlag: Bool = false
     
     func modifySocials() {
 //        DecoderService.decodeModifyEncodeSave(resource: "social", as: SocialInfo.self) { [weak self] result in
@@ -37,6 +37,7 @@ final class ProductDetailModel {
             self.delegate?.didModifySocials()
         } else {
             let error = NSError(domain: "ProductDetailModel", code: 1004, userInfo: [NSLocalizedDescriptionKey: "Failed to modify JSON in file social.json"])
+            modifiedFlag.toggle()
             self.delegate?.didFailToModifySocials(with: error)
         }
     }

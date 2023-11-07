@@ -93,7 +93,7 @@ extension ProductDetailVM: ContractForProductDetailVM {
         case .loading:
             view?.updateUIForLoadingState()
         case .error(let error):
-            view?.updateUIForLoadingState()
+            view?.updateUIForErrorState()
         }
     }
     
@@ -113,20 +113,16 @@ extension ProductDetailVM: ContractForProductDetailVM {
 // - MVVM Notify
 extension ProductDetailVM: DelegateOfProductDetailModel {
     func didFailToModifySocials(with: Error) {
-        // TODO: Later
+        socialState = .error(with)
     }
     
     func didFailRetrievalOfSocialFeed(with: Error) {
-        // TODO: Later
+        socialState = .error(with)
     }
     
     func didModifySocials() {
         // Assumed that the social.json is updated
         delegate?.updateSocials()
-    }
-    
-    func didFailModifySocials(with: Error) {
-        socialState = .error(with)
     }
     
     func didGetSocial(update: SocialFeed) {

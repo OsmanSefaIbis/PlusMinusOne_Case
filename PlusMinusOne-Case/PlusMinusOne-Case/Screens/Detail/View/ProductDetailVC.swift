@@ -150,6 +150,15 @@ final class ProductDetailVC: UIViewController {
     private let labelLikeCount: UILabel = {
         UILabel.customLabel(textColor: .systemGray2, textAlignment: .center, font: UIFont.boldSystemFont(ofSize: 15))
     }()
+    private let labelErrorOccured: UILabel = {
+        UILabel.customLabel(text: "Update social failed.", textColor: .systemGray3, textAlignment: .center, font: UIFont.boldSystemFont(ofSize: 10))
+    }()
+    private let imageViewSocialError: UIImageView = {
+        UIImageView(systemName: "exclamationmark.triangle.fill", tintColor: .systemOrange)
+    }()
+    private let imageViewOffline: UIImageView = {
+        UIImageView(systemName: "wifi.exclamationmark", tintColor: .systemGray4)
+    }()
     private let countDownViewContainer = UIView()
 } // - Class End
 
@@ -201,17 +210,8 @@ extension ProductDetailVC: ContractForProductDetailVC {
         
         DispatchQueue.main.async { [weak self] in
             guard let self = self else { fatalError("Unexpected nil self") }
-            
-            // Remove Existing
-            for subview in self.hStackProductInformationLeftSideSecondRow.arrangedSubviews {
-                self.hStackProductInformationLeftSideSecondRow.removeArrangedSubview(subview)
-                subview.removeFromSuperview()
-            }
-            for subview in self.vStackViewInnerOfProductInformationRightSize.arrangedSubviews {
-                self.vStackViewInnerOfProductInformationRightSize.removeArrangedSubview(subview)
-                subview.removeFromSuperview()
-            }
-            // Original look
+            self.removeSocials() // Remove Existing
+            // Setup original UI
             self.setupSecondRowOnLeftSideOfProductInformation()
             self.setupFirstRowOfProductInformationStackViewRightSide()
             self.setupInnerOfProductInformationStackViewRightSide()
@@ -222,24 +222,19 @@ extension ProductDetailVC: ContractForProductDetailVC {
     func updateUIForLoadingState() {
         DispatchQueue.main.async { [weak self] in
             guard let self = self else { fatalError("Unexpected nil self") }
-            
-            // Remove Existing
-            for subview in self.hStackProductInformationLeftSideSecondRow.arrangedSubviews {
-                self.hStackProductInformationLeftSideSecondRow.removeArrangedSubview(subview)
-                subview.removeFromSuperview()
-            }
-            for subview in self.vStackViewInnerOfProductInformationRightSize.arrangedSubviews {
-                self.vStackViewInnerOfProductInformationRightSize.removeArrangedSubview(subview)
-                subview.removeFromSuperview()
-            }
+            self.removeSocials() // Remove Existing
             // Add Spinner instead
-            self.hStackProductInformationLeftSideSecondRow.addArrangedSubview(self.spinnerLarge)
-            self.vStackViewInnerOfProductInformationRightSize.addArrangedSubview(self.spinnerMedium)
+            self.setupSpinnersForSocials()
         }
     }
     
     func updateUIForErrorState() {
         
+        DispatchQueue.main.async { [weak self] in
+            guard let self = self else { fatalError("Unexpected nil self") }
+            self.removeSocials() // Remove Existing
+            self.setupWithErrorAppearance() // Add error appearance instead
+        }
     }
     
     
@@ -456,8 +451,29 @@ extension ProductDetailVC {
             countDownView.centerYAnchor.constraint(equalTo: countDownViewContainer.centerYAnchor),
         ])
     }
-}
+    
+    private func removeSocials() {
+        for subview in hStackProductInformationLeftSideSecondRow.arrangedSubviews {
+            hStackProductInformationLeftSideSecondRow.removeArrangedSubview(subview)
+            subview.removeFromSuperview()
+        }
+        for subview in vStackViewInnerOfProductInformationRightSize.arrangedSubviews {
+            vStackViewInnerOfProductInformationRightSize.removeArrangedSubview(subview)
+            subview.removeFromSuperview()
+        }
+    }
+    
+    private func setupSpinnersForSocials() {
+        hStackProductInformationLeftSideSecondRow.addArrangedSubview(spinnerLarge)
+        vStackViewInnerOfProductInformationRightSize.addArrangedSubview(spinnerMedium)
+    }
 
+    private func setupWithErrorAppearance() {
+        hStackProductInformationLeftSideSecondRow.addArrangedSubview(labelErrorOccured)
+        vStackViewInnerOfProductInformationRightSize.addArrangedSubview(imageViewSocialError)
+    }
+}
+// - Configuration of UI variables
 extension ProductDetailVC {
     private func configureProductImage() {
         guard let productImageUrlString = viewModel.getData(.imageUrl) as? String
