@@ -30,14 +30,12 @@ final class ProductGalleryVM {
     // - MVVM Variables
     lazy var model = ProductGalleryModel()
     weak var view: ContractForProductGalleryVC?
-    weak var contract: ContractForProductGalleryVM? // TODO: later
     weak var delegate: DelegateOfProductGalleryVM?
     
     // - State Variables
-    // TODO: Decide Next
     var items: [RowItem] = [] // changed access for testing
     var itemsCount: Int { get { items.count } }
-    var columnPreference: Int = 2 // optionalTODO: singular, grid preference
+    var columnPreference: Int = 2 // optionalTODO: singular OR grid preference
     
     // - Lifecycle: Object
     init(view: ContractForProductGalleryVC) {
@@ -62,7 +60,7 @@ extension ProductGalleryVM: ContractForProductGalleryVM {
     }
     
     func didSelectItem(at index: IndexPath) {
-        guard let data = getItem(at: index) else { fatalError("Unable.")} // FIXME: return
+        guard let data = getItem(at: index) else { fatalError(Localize.getItemFailPrompt.raw())}
         view?.navigateToDetail(pass: data)
     }
 }
@@ -104,15 +102,15 @@ extension ProductGalleryVM: DelegateOfProductGalleryModel {
     }
     
     func didFailRetrievalOfProducts(with: Error) {
-        // TODO: Handle Later
+        // Not in scope.
     }
     
     func didFailRetrievalOfSocialFeed(with: Error) {
-        // TODO: Handle Later
+        // Not in scope.
     }
 }
 
 // - Helper Class Methods
 extension ProductGalleryVM {
-
+    // Ready
 }

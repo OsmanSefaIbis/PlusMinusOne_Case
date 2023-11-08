@@ -19,7 +19,7 @@ final class DecoderService {
                 completion(.failure(error))
             }
         } else {
-            let error = NSError(domain: "DecoderService.decode", code: 1001, userInfo: [NSLocalizedDescriptionKey: "JSON file not found in project directory."]) // TODO: Migrate to Localize Enum
+            let error = NSError(domain: Localize.decodeDomain.raw(), code: 1001, userInfo: [NSLocalizedDescriptionKey: Localize.decodeDescriptionKey.raw()])
             completion(.failure(error))
         }
     }

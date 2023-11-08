@@ -18,10 +18,9 @@ struct ProductCellDataModel {
     var currentSocialFeed: Social?
 }
 
-
 final class ProductCell: UICollectionViewCell {
     
-    static let identifier = "ProductCell"
+    static let identifier = Localize.identifierProductCell.raw()
     private var internet: InternetManager { InternetManager.shared }
     
     /// Setups and configures the UI variables
@@ -32,14 +31,14 @@ final class ProductCell: UICollectionViewCell {
     
     override func prepareForReuse() {
         super.prepareForReuse()
-        // TODO: later
+        // reset
         self.imageViewOfProduct.image = nil
         self.labelProductType.text = nil
         self.labelProductLikeCount.text = nil
         self.labelProductRatingFloat.text = nil
         self.labelProductCommentTotal.text = nil
     }
-    //   - User Interface Variables
+    //   -- User Interface Variables --
     private let containerView: UIView = {
         let v = UIView()
         v.layer.cornerRadius = 10
@@ -64,22 +63,22 @@ final class ProductCell: UICollectionViewCell {
     }()
     // - ImageView's
     private let imageViewOfProduct: UIImageView = {
-        UIImageView(systemName: "wifi.exclamationmark", tintColor: .systemGray4, contentMode: .scaleAspectFill)
+        UIImageView(systemName: Localize.symbolOffline.raw(), tintColor: .systemGray4, contentMode: .scaleAspectFill)
     }()
     private let imageViewOffline: UIImageView = {
-        UIImageView(systemName: "wifi.exclamationmark", tintColor: .systemGray4, contentMode: .scaleAspectFill)
+        UIImageView(systemName: Localize.symbolOffline.raw(), tintColor: .systemGray4, contentMode: .scaleAspectFill)
     }()
     private let imageViewOfHeart: UIImageView = {
-        UIImageView(systemName: "heart.fill", tintColor: .systemRed)
+        UIImageView(systemName: Localize.symbolHearth.raw(), tintColor: .systemRed)
     }()
     private let imageViewOfStar: UIImageView = {
-        UIImageView(systemName: "star.leadinghalf.filled", tintColor: .systemOrange)
+        UIImageView(systemName: Localize.symbolHalfStar.raw(), tintColor: .systemOrange)
     }()
     private let imageViewOfComment: UIImageView = {
-        UIImageView(systemName: "message.fill", tintColor: .darkGray)
+        UIImageView(systemName: Localize.symbolMessage.raw(), tintColor: .darkGray)
     }()
     private let imageViewOfPrice: UIImageView = {
-        UIImageView(systemName: "banknote.fill", tintColor: .systemGreen)
+        UIImageView(systemName: Localize.symbolPrice.raw(), tintColor: .systemGreen)
     }()
     // - Label's
     private var labelProductType: UILabel = {
@@ -102,11 +101,10 @@ final class ProductCell: UICollectionViewCell {
 extension ProductCell {
     
     private func setupUserInterface() {
-        // TODO: rename below
-        setupFirstly()
+        setupViewInitials()
         setupSecondly()
     }
-    private func setupFirstly() {
+    private func setupViewInitials() {
         self.backgroundColor = .clear
     }
     
@@ -189,7 +187,7 @@ extension ProductCell {
               let productPrice = getData(.priceInfo, data) as? Price,
               let productPriceValue = productPrice.value,
               let productCurrency = productPrice.currency
-        else { fatalError("Invalid operation during populating UI with id: \(data.id)")}
+        else { fatalError(Localize.fatalConfigurePrompt.raw())}
         
         let productCommentTotal: Int = productAnonymousComment + productMemberComment
         let productPriceString: String = productCurrency.appending(String(Int(productPriceValue)))
@@ -215,7 +213,7 @@ extension ProductCell {
         if internet.isOnline() {
             imageViewOfProduct.contentMode = .scaleAspectFill
             DispatchQueue.main.async { [weak self] in
-                guard let self else { fatalError("Unexpected nil self") }
+                guard let self else { fatalError(Localize.nilSelfFatal.raw()) }
                 self.imageViewOfProduct.kf.setImage(
                     with: URL(string: unitData),
                     placeholder: nil,
@@ -226,7 +224,7 @@ extension ProductCell {
         } else {
             imageViewOfProduct.contentMode = .scaleAspectFit
             DispatchQueue.main.async { [weak self] in
-                guard let self else { fatalError("Unexpected nil self") }
+                guard let self else { fatalError(Localize.nilSelfFatal.raw()) }
                 self.imageViewOfProduct.image = self.imageViewOffline.image
             }
         }
@@ -234,35 +232,35 @@ extension ProductCell {
     
     private func configureProductType(pass unitData: String) {
         DispatchQueue.main.async { [weak self] in
-            guard let self else { fatalError("Unexpected nil self") }
+            guard let self else { fatalError(Localize.nilSelfFatal.raw()) }
             self.labelProductType.text = unitData
         }
     }
     
     private func configureProductLikeCount(pass unitData: Int) {
         DispatchQueue.main.async { [weak self] in
-            guard let self else { fatalError("Unexpected nil self") }
+            guard let self else { fatalError(Localize.nilSelfFatal.raw()) }
             self.labelProductLikeCount.text = String(unitData)
         }
     }
     
     private func configureProductRatingFloat(pass unitData: Double) {
         DispatchQueue.main.async { [weak self] in
-            guard let self else { fatalError("Unexpected nil self") }
+            guard let self else { fatalError(Localize.nilSelfFatal.raw()) }
             self.labelProductRatingFloat.text = String(unitData)
         }
     }
     
     private func configureProductCommentTotal(pass unitData: Int) {
         DispatchQueue.main.async { [weak self] in
-            guard let self else { fatalError("Unexpected nil self") }
+            guard let self else { fatalError(Localize.nilSelfFatal.raw()) }
             self.labelProductCommentTotal.text = String(unitData)
         }
     }
     
     private func configureProductPrice(pass unitData: String) {
         DispatchQueue.main.async { [weak self] in
-            guard let self else { fatalError("Unexpected nil self") }
+            guard let self else { fatalError(Localize.nilSelfFatal.raw()) }
             self.labelProductPrice.text = unitData
         }
     }

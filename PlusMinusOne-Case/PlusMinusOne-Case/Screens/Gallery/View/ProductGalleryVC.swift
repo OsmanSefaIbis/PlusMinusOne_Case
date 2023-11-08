@@ -47,7 +47,7 @@ final class ProductGalleryVC: UIViewController {
         layout.sectionInset = UIEdgeInsets(top: 5, left: 5, bottom: 0, right: 5)
         layout.scrollDirection = .vertical
         let cv = UICollectionView(frame: .zero, collectionViewLayout: layout)
-        cv.accessibilityIdentifier = "collectionViewUserInterfaceTestIdentifier"
+        cv.accessibilityIdentifier = Localize.identifierCollectionView.raw()
         cv.backgroundColor = .systemBackground
         cv.register(ProductCell.self, forCellWithReuseIdentifier: ProductCell.identifier)
         cv.showsVerticalScrollIndicator = false
@@ -87,11 +87,10 @@ extension ProductGalleryVC: ContractForProductGalleryVC {
 extension ProductGalleryVC: DelegateOfProductGalleryVM {
     
     func didLoadProducts() {
-        // TODO: Reload CollectionView
-        // TODO: Think Additional Stuff
+        // Not in scope.
     }
     func didLoadSocialFeed() {
-        // TODO: Think Later
+        // Not in scope.
     }
 }
 
@@ -132,9 +131,9 @@ extension ProductGalleryVC: UICollectionViewDataSource {
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         
         guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: ProductCell.identifier, for: indexPath) as? ProductCell
-        else { fatalError("Failed to dequeue cell for CollectionView in ProductGalleryVC") } // TODO: Localize Enum
+        else { fatalError(Localize.fatalDequeueCellPrompt.raw()) }
         guard let data = viewModel.getItem(at: indexPath)
-        else { fatalError("Failed to retrieve data.") } // TODO: Localize Enum
+        else { fatalError(Localize.getItemFailPrompt.raw()) }
         cell.configureCell(with: data)
         return cell
     }
@@ -152,7 +151,7 @@ extension ProductGalleryVC: UICollectionViewDelegate {
 extension ProductGalleryVC: UICollectionViewDelegateFlowLayout {
     
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
-        guard let flowLayout = collectionViewLayout as? UICollectionViewFlowLayout else { return CGSize() } // FIXME: Return
+        guard let flowLayout = collectionViewLayout as? UICollectionViewFlowLayout else { return CGSize() }
         
         let totalWidth = collectionView.bounds.width
         let totalInsetSpace = (flowLayout.sectionInset.left + flowLayout.sectionInset.right)

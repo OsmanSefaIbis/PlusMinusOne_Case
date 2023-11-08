@@ -22,22 +22,10 @@ final class ProductDetailModel {
     var modifiedFlag: Bool = true // false -> error appearance on UI
     
     func modifySocials() {
-//        DecoderService.decodeModifyEncodeSave(resource: "social", as: SocialInfo.self) { [weak self] result in
-//            switch result {
-//            case .success():
-//                self?.delegate?.didModifySocials()
-//            case .failure(let error):
-//                self?.delegate?.didFailToModifySocials(with: error)
-//            }
-//        }
-        
-        // Intended to modify the JSON file but aborted because could not figure it out.
-        // Faced with the problem: file-access
-        // abortedTODO: Update Local JSON File
         if modifiedFlag {
             self.delegate?.didModifySocials()
         } else {
-            let error = NSError(domain: "ProductDetailModel", code: 1004, userInfo: [NSLocalizedDescriptionKey: "Failed to modify JSON in file social.json"])
+            let error = NSError(domain: Localize.modifySocialDomain.raw(), code: 1004, userInfo: [NSLocalizedDescriptionKey: Localize.modifySocialDescriptionKey.raw()])
             modifiedFlag.toggle()
             self.delegate?.didFailToModifySocials(with: error)
         }
@@ -47,8 +35,8 @@ final class ProductDetailModel {
         DecoderService.decode(resource: "social", as: SocialInfo.self) { [weak self] result in
             switch result {
             case .success(let response):
-                guard let data = response.results else { return } // FIXME: Return
-                guard let social = data.first(where: { $0.id == productId }) else { return } // TODO: handle
+                guard let data = response.results else { return }
+                guard let social = data.first(where: { $0.id == productId }) else { return }
                 self?.delegate?.didGetSocial(update: social)
             case .failure(let error):
                 self?.delegate?.didFailRetrievalOfSocialFeed(with: error)
@@ -56,4 +44,22 @@ final class ProductDetailModel {
         }
     }
     
+    // Intended to modify the JSON file but aborted because could not figure it out.
+    // Faced with the problem: file-access
+    // abortedTODO: Update Local JSON File
+    
+    /*
+    func modifySocials() {
+        DecoderService.decodeModifyEncodeSave(resource: "social", as: SocialInfo.self) { [weak self] result in
+            switch result {
+            case .success():
+                self?.delegate?.didModifySocials()
+            case .failure(let error):
+                self?.delegate?.didFailToModifySocials(with: error)
+            }
+        }
+    }
+    */
+    
 }
+

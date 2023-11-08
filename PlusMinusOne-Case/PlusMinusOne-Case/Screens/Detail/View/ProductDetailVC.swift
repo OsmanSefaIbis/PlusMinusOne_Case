@@ -50,28 +50,24 @@ final class ProductDetailVC: UIViewController {
         setupCountDown()
     }
     
-    // - User Interface Variables
-    // TODO: Group View types under comment
+    // --User Interface Variables--
+
+    // - ScrollView
     private let scrollView: UIScrollView = {
         let sv = UIScrollView()
         sv.backgroundColor = .systemBackground
         return sv
     }()
+    // - UIView's
     private let contentView: UIView = {
         let v = UIView()
         v.backgroundColor = .systemBackground
         return v
     }()
-    private let vStackViewContainer: UIStackView = {
-        UIStackView(axis: .vertical)
-    }()
     private let imageViewContainer: UIView = {
         let v = UIView()
         v.backgroundColor = .systemBackground
         return v
-    }()
-    private let imageView: UIImageView = {
-        UIImageView(systemName: "wifi.exclamationmark", tintColor: .systemGray4, contentMode: .scaleAspectFit) // changed from aspectFill to accommodate
     }()
     private let productLikeContainerView: UIView = {
         let v = UIView()
@@ -88,17 +84,10 @@ final class ProductDetailVC: UIViewController {
         v.backgroundColor = .systemBackground
         return v
     }()
-    private let spinnerMedium: UIActivityIndicatorView = {
-        let indicator = UIActivityIndicatorView(style: .medium)
-        indicator.color = .systemOrange
-        indicator.startAnimating()
-        return indicator
-    }()
-    private let spinnerLarge: UIActivityIndicatorView = {
-        let indicator = UIActivityIndicatorView(style: .medium)
-        indicator.color = .systemOrange
-        indicator.startAnimating()
-        return indicator
+    private let countDownViewContainer = UIView()
+    // - StackView's
+    private let vStackViewContainer: UIStackView = {
+        UIStackView(axis: .vertical)
     }()
     private let hStackViewProductInformation: UIStackView = {
         UIStackView(axis: .horizontal, backgroundColor: .clear)
@@ -121,15 +110,17 @@ final class ProductDetailVC: UIViewController {
     private let hStackProductInformationLeftSideThirdRow: UIStackView = {
         UIStackView(axis: .horizontal, alignment: .center, distribution: .fillEqually, backgroundColor: .clear)
     }()
-    private let labelProductBrand: UILabel = {
-        UILabel.customLabel(textColor: .black, textAlignment: .left, font: UIFont.boldSystemFont(ofSize: 20))
+    // - ImageView's
+    private let imageView: UIImageView = {
+        UIImageView(systemName: Localize.symbolOffline.raw(), tintColor: .systemGray4, contentMode: .scaleAspectFit)
     }()
-    private let labelProductType: UILabel = {
-        UILabel.customLabel(textColor: .systemGray2, textAlignment: .left, font: UIFont.boldSystemFont(ofSize: 15))
+    private let imageViewSocialError: UIImageView = {
+        UIImageView(systemName: Localize.symbolErrorTriangle.raw(), tintColor: .systemOrange)
     }()
-    private let labelProductRatingFloat: UILabel = {
-        UILabel.customLabel(textColor: .systemOrange, textAlignment: .right, font: UIFont.boldSystemFont(ofSize: 15))
+    private let imageViewOffline: UIImageView = {
+        UIImageView(systemName: Localize.symbolOffline.raw(), tintColor: .systemGray4)
     }()
+    // - Cosmos View
     private let starRatingView: CosmosView = {
         let cv = CosmosView()
         cv.backgroundColor = .clear
@@ -139,6 +130,7 @@ final class ProductDetailVC: UIViewController {
         cv.isUserInteractionEnabled = false
         return cv
     }()
+    // - Label's
     private let labelProductCommentTotal: UILabel = {
         UILabel.customLabel(textColor: .systemOrange, textAlignment: .left, font: UIFont.boldSystemFont(ofSize: 15))
     }()
@@ -146,21 +138,36 @@ final class ProductDetailVC: UIViewController {
         UILabel.customLabel(textColor: .black, textAlignment: .left, font: UIFont.boldSystemFont(ofSize: 25))
     }()
     private let imageViewHearth: UIImageView = {
-        UIImageView(systemName: "heart.fill", tintColor: .systemRed)
+        UIImageView(systemName: Localize.symbolHearth.raw(), tintColor: .systemRed)
     }()
     private let labelLikeCount: UILabel = {
         UILabel.customLabel(textColor: .systemGray2, textAlignment: .center, font: UIFont.boldSystemFont(ofSize: 15))
     }()
     private let labelErrorOccured: UILabel = {
-        UILabel.customLabel(text: "Update social failed.", textColor: .systemGray3, textAlignment: .center, font: UIFont.boldSystemFont(ofSize: 10))
+        UILabel.customLabel(text: Localize.labelErrorPrompt.raw() , textColor: .systemGray3, textAlignment: .center, font: UIFont.boldSystemFont(ofSize: 10))
     }()
-    private let imageViewSocialError: UIImageView = {
-        UIImageView(systemName: "exclamationmark.triangle.fill", tintColor: .systemOrange)
+    private let labelProductBrand: UILabel = {
+        UILabel.customLabel(textColor: .black, textAlignment: .left, font: UIFont.boldSystemFont(ofSize: 20))
     }()
-    private let imageViewOffline: UIImageView = { // use for offline case
-        UIImageView(systemName: "wifi.exclamationmark", tintColor: .systemGray4)
+    private let labelProductType: UILabel = {
+        UILabel.customLabel(textColor: .systemGray2, textAlignment: .left, font: UIFont.boldSystemFont(ofSize: 15))
     }()
-    private let countDownViewContainer = UIView()
+    private let labelProductRatingFloat: UILabel = {
+        UILabel.customLabel(textColor: .systemOrange, textAlignment: .right, font: UIFont.boldSystemFont(ofSize: 15))
+    }()
+    // - Spinner's
+    private let spinnerMedium: UIActivityIndicatorView = {
+        let indicator = UIActivityIndicatorView(style: .medium)
+        indicator.color = .systemOrange
+        indicator.startAnimating()
+        return indicator
+    }()
+    private let spinnerLarge: UIActivityIndicatorView = {
+        let indicator = UIActivityIndicatorView(style: .medium)
+        indicator.color = .systemOrange
+        indicator.startAnimating()
+        return indicator
+    }()
 } // - Class End
 
 // - MVVM Notify
@@ -209,7 +216,7 @@ extension ProductDetailVC: ContractForProductDetailVC {
     func updateUIForSuccessState() {
         
         DispatchQueue.main.async { [weak self] in
-            guard let self = self else { fatalError("Unexpected nil self") }
+            guard let self = self else { fatalError(Localize.nilSelfFatal.raw()) }
             self.removeSocials() // Remove Existing
             // Setup original UI
             self.setupSecondRowOnLeftSideOfProductInformation()
@@ -221,7 +228,7 @@ extension ProductDetailVC: ContractForProductDetailVC {
     
     func updateUIForLoadingState() {
         DispatchQueue.main.async { [weak self] in
-            guard let self = self else { fatalError("Unexpected nil self") }
+            guard let self = self else { fatalError(Localize.nilSelfFatal.raw()) }
             self.removeSocials() // Remove Existing
             // Add Spinner instead
             self.setupSpinnersForSocials()
@@ -231,7 +238,7 @@ extension ProductDetailVC: ContractForProductDetailVC {
     func updateUIForErrorState() {
         
         DispatchQueue.main.async { [weak self] in
-            guard let self = self else { fatalError("Unexpected nil self") }
+            guard let self = self else { fatalError(Localize.nilSelfFatal.raw()) }
             self.removeSocials() // Remove Existing
             self.setupWithErrorAppearance() // Add error appearance instead
         }
@@ -240,25 +247,23 @@ extension ProductDetailVC: ContractForProductDetailVC {
     func configureOfflineProductImage() {
         imageView.contentMode = .scaleAspectFit
         DispatchQueue.main.async { [weak self] in
-            guard let self = self else { fatalError("Unexpected nil self") }
+            guard let self = self else { fatalError(Localize.nilSelfFatal.raw()) }
             self.imageView.image = self.imageViewOffline.image
         }
     }
-    
-    
 }
 // - Update UI
 extension ProductDetailVC {
     
     func setUpdatedSocial() {
         DispatchQueue.main.async { [weak self] in
-            guard let self else { fatalError("Unexpected nil self") }
+            guard let self else { fatalError(Localize.nilSelfFatal.raw()) }
             guard let socialFeed = self.viewModel.getLatestSocial(),
                   var productLikeCount = socialFeed.likeCount,
                   var productRatingFloat = socialFeed.commentCounts?.averageRating as? Double,
                   let commentCountOfAnonymous = socialFeed.commentCounts?.anonymousCommentsCount as? Int,
                   let commentCountOfMember = socialFeed.commentCounts?.memberCommentsCount as? Int
-            else { return } // FIXME: return
+            else { return }
             
             // Assumed that the social.json was updated
             // Manually changed the social values to imply update, did a workaround
@@ -273,18 +278,13 @@ extension ProductDetailVC {
             self.starRatingView.rating = productRatingFloat
         }
     }
-    
-    func setupSocialsOnErrorState() {
-        
-    }
-
 }
 
 // - Helper Class Methods
 extension ProductDetailVC {
     
     private func setupViewInitials() {
-        self.view.accessibilityIdentifier = "detailPageUserInterfaceTestIdentifier" // For: UI-Testing
+        self.view.accessibilityIdentifier = Localize.identifierDetailPage.raw() // For: UI-Testing
         self.navigationController?.navigationBar.backgroundColor = .clear
         self.view.backgroundColor = .systemBackground
         self.navigationController?.setNavigationBarHidden(false, animated: true)
@@ -330,9 +330,10 @@ extension ProductDetailVC {
         contentView.translatesAutoresizingMaskIntoConstraints = false
         NSLayoutConstraint.activate([
             contentView.topAnchor.constraint(equalTo: self.view.topAnchor), // change to scrollView.topAnchor
-            // contentView.bottomAnchor.constraint(equalTo: scrollView.bottomAnchor), // open also
             contentView.leadingAnchor.constraint(equalTo: scrollView.leadingAnchor),
-            // contentView.trailingAnchor.constraint(equalTo: scrollView.trailingAnchor) // open also --> to make detail within a scrollView
+            // contentView.bottomAnchor.constraint(equalTo: scrollView.bottomAnchor), //
+            // contentView.trailingAnchor.constraint(equalTo: scrollView.trailingAnchor) //
+            // Scalability Purpose --> do commented outs to make detail within a scrollView
         ])
         let heightConstraintContentView = contentView.heightAnchor.constraint(equalTo: scrollView.heightAnchor)
         let widthConstraintContentView = contentView.widthAnchor.constraint(equalTo: scrollView.widthAnchor)
@@ -487,7 +488,7 @@ extension ProductDetailVC {
 extension ProductDetailVC {
     private func configureProductImage() {
         guard let productImageUrlString = viewModel.getData(.imageUrl) as? String
-        else { fatalError("Invalid operation during populating UI.")}
+        else { fatalError(Localize.fatalConfigurePrompt.raw())}
         DispatchQueue.main.async { [weak self] in
             guard let self else { fatalError("Unexpected nil self") }
             self.imageView.kf.setImage(
@@ -500,35 +501,35 @@ extension ProductDetailVC {
     }
     private func configureProductBrand() {
         guard let productBrandName = viewModel.getData(.productBrand) as? String
-        else { fatalError("Invalid operation during populating UI.")}
+        else { fatalError(Localize.fatalConfigurePrompt.raw())}
         DispatchQueue.main.async { [weak self] in
-            guard let self else { fatalError("Unexpected nil self") }
+            guard let self else { fatalError(Localize.nilSelfFatal.raw()) }
             self.labelProductBrand.text = productBrandName
         }
     }
     private func configureProductType() {
         guard let productType = viewModel.getData(.productType) as? String
-        else { fatalError("Invalid operation during populating UI.")}
+        else { fatalError(Localize.fatalConfigurePrompt.raw())}
         DispatchQueue.main.async { [weak self] in
-            guard let self else { fatalError("Unexpected nil self") }
+            guard let self else { fatalError(Localize.nilSelfFatal.raw()) }
             self.labelProductType.text = productType
         }
     }
     private func configureProductAverageRating() {
         guard let socialFeed = viewModel.getData(.currentSocialFeed) as? Social,
               let ratingFloat = socialFeed.commentCounts?.averageRating as? Double
-        else { fatalError("Invalid operation during populating UI.")}
+        else { fatalError(Localize.fatalConfigurePrompt.raw())}
         DispatchQueue.main.async { [weak self] in
-            guard let self else { fatalError("Unexpected nil self") }
+            guard let self else { fatalError(Localize.nilSelfFatal.raw()) }
             self.labelProductRatingFloat.text = String(ratingFloat)
         }
     }
     private func configureProductRatingStarScalar() {
         guard let socialFeed = viewModel.getData(.currentSocialFeed) as? Social,
               let ratingFloat = socialFeed.commentCounts?.averageRating as? Double
-        else { fatalError("Invalid operation during populating UI.")}
+        else { fatalError(Localize.fatalConfigurePrompt.raw())}
         DispatchQueue.main.async { [weak self] in
-            guard let self else { fatalError("Unexpected nil self") }
+            guard let self else { fatalError(Localize.nilSelfFatal.raw()) }
             self.starRatingView.rating = ratingFloat
         }
     }
@@ -536,10 +537,10 @@ extension ProductDetailVC {
         guard let socialFeed = viewModel.getData(.currentSocialFeed) as? Social,
               let commentCountOfAnonymous = socialFeed.commentCounts?.anonymousCommentsCount as? Int,
             let commentCountOfMember = socialFeed.commentCounts?.memberCommentsCount as? Int
-        else { fatalError("Invalid operation during populating UI.")}
+        else { fatalError(Localize.fatalConfigurePrompt.raw())}
         let commentTotal = commentCountOfAnonymous + commentCountOfMember
         DispatchQueue.main.async { [weak self] in
-            guard let self else { fatalError("Unexpected nil self") }
+            guard let self else { fatalError(Localize.nilSelfFatal.raw()) }
             self.labelProductCommentTotal.text = "Comment: \(commentTotal)"
         }
     }
@@ -547,18 +548,18 @@ extension ProductDetailVC {
         guard let productPriceInfo = viewModel.getData(.priceInfo) as? Price,
               let productCurrency = productPriceInfo.currency,
                 let productUnitPrice = productPriceInfo.value
-        else { fatalError("Invalid operation during populating UI.")}
+        else { fatalError(Localize.fatalConfigurePrompt.raw())}
         DispatchQueue.main.async { [weak self] in
-            guard let self else { fatalError("Unexpected nil self") }
+            guard let self else { fatalError(Localize.nilSelfFatal.raw()) }
             self.labelPricing.text = String(productUnitPrice).appending(" \(productCurrency)")
         }
     }
     private func configureProductLikeCount() {
         guard let socialFeed = viewModel.getData(.currentSocialFeed) as? Social,
               let productLikeCount = socialFeed.likeCount
-        else { fatalError("Invalid operation during populating UI.")}
+        else { fatalError(Localize.fatalConfigurePrompt.raw())}
         DispatchQueue.main.async { [weak self] in
-            guard let self else { fatalError("Unexpected nil self") }
+            guard let self else { fatalError(Localize.nilSelfFatal.raw()) }
             self.labelLikeCount.text = String(productLikeCount)
         }
     }

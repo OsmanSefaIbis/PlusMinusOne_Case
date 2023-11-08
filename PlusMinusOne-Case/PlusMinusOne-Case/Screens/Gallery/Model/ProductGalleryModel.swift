@@ -32,7 +32,7 @@ final class ProductGalleryModel {
         DecoderService.decode(resource: "product", as: ProductsInfo.self) { [weak self] result in
             switch result {
             case .success(let response):
-                guard let data = response.results else { return } // FIXME: Return
+                guard let data = response.results else { return }
                 self?.products = data
                 self?.delegate?.didGetProducts()
             case .failure(let error):
@@ -46,7 +46,7 @@ final class ProductGalleryModel {
         DecoderService.decode(resource: "social", as: SocialInfo.self) { [weak self] result in
             switch result {
             case .success(let response):
-                guard let data = response.results else { return } // FIXME: Return
+                guard let data = response.results else { return }
                 self?.socials = data
                 self?.delegate?.didGetSocialFeed()
             case .failure(let error):

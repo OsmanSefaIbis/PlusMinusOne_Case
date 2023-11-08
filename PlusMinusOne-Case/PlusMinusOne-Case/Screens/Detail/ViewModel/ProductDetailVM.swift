@@ -7,30 +7,9 @@
 
 import Foundation
 
-enum ProductDetailSocialState: Equatable {
-    static func == (lhs: ProductDetailSocialState, rhs: ProductDetailSocialState) -> Bool {
-        switch (lhs, rhs) {
-        case (.loading, .loading):
-            return true
-        case let (.error(lhsError), .error(rhsError)):
-            // Compare the errors, you can use their `localizedDescription` or other properties.
-            return lhsError.localizedDescription == rhsError.localizedDescription
-        case (.success, .success):
-            return true
-        default:
-            return false
-        }
-    }
-    
-    case loading
-    case error(Error)
-    case success
-}
-
 // - Class Contract
 protocol ContractForProductDetailVM: AnyObject {
     
-    //    var view: ContractForProductDetailVC? { get set }
     func viewDidLoad()
     func getData(_ property: ProductDataAccessor) -> Any?
     func getLatestSocial() -> Social?
@@ -54,11 +33,12 @@ final class ProductDetailVM {
     weak var delegate: DelegateOfProductDetailVM?
     
     // - State Variables
-    var data: DetailData?
-    var latestUpdatedSocial: Social?
     private var timer: Timer?
     private var internet: InternetManager { InternetManager.shared }
-    private var socialState: ProductDetailSocialState = .success {
+    
+    var data: DetailData?
+    var latestUpdatedSocial: Social?
+    var socialState: ProductDetailSocialState = .success {
         didSet {
             updateUserInterface(for: socialState)
         }
@@ -119,7 +99,7 @@ extension ProductDetailVM: ContractForProductDetailVM {
     
     func setUpdatedSocial() {
         timer = Timer.scheduledTimer(withTimeInterval: 0.2, repeats: false) { [weak self] timer in
-            guard let self = self else { fatalError("Unexpected nil self") }
+            guard let self = self else { fatalError(Localize.nilSelfFatal.raw()) }
             socialState = .success
             timer.invalidate()
         }
@@ -151,8 +131,7 @@ extension ProductDetailVM: DelegateOfProductDetailModel {
 extension ProductDetailVM {
     
     func connectivityCheck() {
-        let flagOnline = internet.isOnline()
-        if !flagOnline {
+        if !internet.isOnline() {
             view?.configureOfflineProductImage()
         }
     }

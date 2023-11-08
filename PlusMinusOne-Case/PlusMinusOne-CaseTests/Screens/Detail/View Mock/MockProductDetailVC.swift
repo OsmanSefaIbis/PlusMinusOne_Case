@@ -14,6 +14,7 @@ final class MockProductDetailVC: ContractForProductDetailVC {
     var counter_updateUIForSuccessState = 0
     var counter_updateUIForLoadingState = 0
     var counter_updateUIForErrorState = 0
+    var counter_configureOfflineProductImage = 0
     
     func setupUserInterface() {
         counter_setupUserInterface += 1
@@ -33,5 +34,8 @@ final class MockProductDetailVC: ContractForProductDetailVC {
     
     func updateUIForErrorState() {
         counter_updateUIForErrorState += 1
+    }
+    func configureOfflineProductImage() {
+        counter_configureOfflineProductImage += 1
     }
 }

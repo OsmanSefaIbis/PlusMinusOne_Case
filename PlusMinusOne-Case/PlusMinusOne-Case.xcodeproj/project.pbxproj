@@ -39,6 +39,7 @@
 		96C42F162AFAE8DD001FC52F /* MockDetailData.swift in Sources */ = {isa = PBXBuildFile; fileRef = 96C42F152AFAE8DD001FC52F /* MockDetailData.swift */; };
 		96C42F1A2AFB0F7C001FC52F /* MockProductGalleryVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 96C42F192AFB0F7C001FC52F /* MockProductGalleryVC.swift */; };
 		96C42F1D2AFB714B001FC52F /* InternetManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 96C42F1C2AFB714B001FC52F /* InternetManager.swift */; };
+		96C42F1F2AFB8A17001FC52F /* ProductDetailSocialState.swift in Sources */ = {isa = PBXBuildFile; fileRef = 96C42F1E2AFB8A17001FC52F /* ProductDetailSocialState.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -93,6 +94,7 @@
 		96C42F152AFAE8DD001FC52F /* MockDetailData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MockDetailData.swift; sourceTree = "<group>"; };
 		96C42F192AFB0F7C001FC52F /* MockProductGalleryVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MockProductGalleryVC.swift; sourceTree = "<group>"; };
 		96C42F1C2AFB714B001FC52F /* InternetManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InternetManager.swift; sourceTree = "<group>"; };
+		96C42F1E2AFB8A17001FC52F /* ProductDetailSocialState.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProductDetailSocialState.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -302,6 +304,7 @@
 			children = (
 				961969512AF51A0A001CB5EB /* Localize.swift */,
 				961969732AF86064001CB5EB /* ProductDataAccessor.swift */,
+				96C42F1E2AFB8A17001FC52F /* ProductDetailSocialState.swift */,
 			);
 			path = Enum;
 			sourceTree = "<group>";
@@ -567,6 +570,7 @@
 				961969352AF4363E001CB5EB /* Development Log.swift in Sources */,
 				96185A822AF40D09005A5488 /* AppDelegate.swift in Sources */,
 				96C42F1D2AFB714B001FC52F /* InternetManager.swift in Sources */,
+				96C42F1F2AFB8A17001FC52F /* ProductDetailSocialState.swift in Sources */,
 				9619695D2AF5827A001CB5EB /* ProductsDTO.swift in Sources */,
 				9619695F2AF582B7001CB5EB /* SocialDTO.swift in Sources */,
 				961969642AF79DB1001CB5EB /* UIStackView+Extended.swift in Sources */,
