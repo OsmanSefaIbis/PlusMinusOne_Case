@@ -42,11 +42,11 @@ final class PlusMinusOne_CaseTests: XCTestCase {
         XCTAssertEqual(viewDetail.counter_configureUserInterface, 1)
     }
     
-    func test_getData_WhenDataAvailable() {
+    func test_getData_whenDataAvailable() {
         
         let mockDataWannaBe: DetailData? = .init(
             id: 1,
-            productBrand: "Dolce Gabanna",
+            productBrand: "Brand Name",
             productType: "Hat",
             imageUrl: "www.someUrl.com",
             priceInfo: .init(value: 1, currency: "TL"),
@@ -64,13 +64,13 @@ final class PlusMinusOne_CaseTests: XCTestCase {
         XCTAssertEqual(result, data.productBrand)
     }
     
-    func test_getData_WhenDataNotAvailable() {
+    func test_getData_whenDataNotAvailable() {
         
         let result = viewModelDetail.getData(.productBrand) as? String // when
         XCTAssertNil(result)
     }
     
-    func test_getLatestSocial_WhenLatestUpdatedSocialAvailable() {
+    func test_getLatestSocial_whenLatestUpdatedSocialAvailable() {
         let mockDataWannaBe: Social = .init(likeCount: 1, commentCounts: CommentInfo(averageRating: 1.0, anonymousCommentsCount: 1, memberCommentsCount: 1))
         
         viewModelDetail.latestUpdatedSocial = mockDataWannaBe
@@ -83,7 +83,7 @@ final class PlusMinusOne_CaseTests: XCTestCase {
         
     }
     
-    func test_getLatestSocial_WhenLatestUpdatedSocialUnavailable() {
+    func test_getLatestSocial_whenLatestUpdatedSocialUnavailable() {
         let result = viewModelDetail.getLatestSocial() // when
         XCTAssertNil(result)
     }
@@ -123,6 +123,58 @@ final class PlusMinusOne_CaseTests: XCTestCase {
     // - Start of - ProductGallery ViewModel
     
     func test_viewDidLoad_invokesRequiredSequence() {
-        // TODO: Complete Gallery Tests
+        XCTAssertEqual(viewGallery.counter_setupUserInterface, 0)
+        XCTAssertEqual(viewGallery.counter_setupDelegates, 0)
+        viewModelGallery.viewDidLoad() // when
+        XCTAssertEqual(viewGallery.counter_setupUserInterface, 1)
+        XCTAssertEqual(viewGallery.counter_setupDelegates, 1)
     }
+    
+    func test_getItem_whenAvailableAtIndexpath() {
+        let item1 = RowItem(id: 1, productBrand: "Brand1", productType: "Type1", imageUrl: "Image1", priceInfo: Price(value: 10, currency: "USD"), currentSocialFeed: nil)
+        let item2 = RowItem(id: 2, productBrand: "Brand2", productType: "Type2", imageUrl: "Image2", priceInfo: Price(value: 20, currency: "EUR"), currentSocialFeed: nil)
+
+        viewModelGallery.items = [item1, item2]
+
+        let indexPath1 = IndexPath(item: 0, section: 0)
+        let indexPath2 = IndexPath(item: 1, section: 0)
+
+        let resultItem1 = viewModelGallery.getItem(at: indexPath1) // when
+        let resultItem2 = viewModelGallery.getItem(at: indexPath2)
+
+        XCTAssertEqual(resultItem1?.id, item1.id)
+        XCTAssertEqual(resultItem2?.id, item2.id)
+    }
+    
+    func test_getItem_whenUnavailable() {
+        let item1 = RowItem(id: 1, productBrand: "Brand1", productType: "Type1", imageUrl: "Image1", priceInfo: Price(value: 10, currency: "USD"), currentSocialFeed: nil)
+        let item2 = RowItem(id: 2, productBrand: "Brand2", productType: "Type2", imageUrl: "Image2", priceInfo: Price(value: 20, currency: "EUR"), currentSocialFeed: nil)
+
+        viewModelGallery.items = [item1, item2]
+
+        let indexPath1 = IndexPath(item: 0, section: 0)
+        let indexPath2 = IndexPath(item: 2, section: 0) // Out of bounds
+
+        let resultItem1 = viewModelGallery.getItem(at: indexPath1) // when
+        let resultItem2 = viewModelGallery.getItem(at: indexPath2)
+
+        XCTAssertEqual(resultItem1?.id, item1.id)
+        XCTAssertNil(resultItem2)
+    }
+    
+    func test_didSelectItem_routesToDetail() {
+        let item = RowItem(id: 1, productBrand: "Brand1", productType: "Type1", imageUrl: "Image1", priceInfo: Price(value: 10, currency: "USD"), currentSocialFeed: nil)
+
+        viewModelGallery.items = [item]
+        let indexPath = IndexPath(item: 0, section: 0)
+
+        viewModelGallery.didSelectItem(at: indexPath) // when
+        
+        let resultItem = viewModelGallery.getItem(at: indexPath)
+
+        XCTAssertTrue(viewGallery.flag_navigateToDetail)
+        XCTAssertEqual(resultItem?.id, item.id)
+    }
+    
+    // - End of - ProductGallery ViewModel
 }

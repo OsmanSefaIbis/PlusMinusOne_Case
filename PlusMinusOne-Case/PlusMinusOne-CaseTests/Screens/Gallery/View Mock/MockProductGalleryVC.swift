@@ -12,7 +12,8 @@ final class MockProductGalleryVC: ContractForProductGalleryVC {
     var counter_setupUserInterface = 0
     var counter_setupDelegates = 0
     var counter_reloadCollectionView = 0
-    var counter_navigateToDetail = 0
+    var flag_navigateToDetail = false
+    var passedData: RowItem?
     
     func setupUserInterface() {
         counter_setupUserInterface += 1
@@ -27,6 +28,6 @@ final class MockProductGalleryVC: ContractForProductGalleryVC {
     }
     
     func navigateToDetail(pass data: PlusMinusOne_Case.DetailData) {
-        counter_navigateToDetail += 1
+        flag_navigateToDetail = true
     }
 }

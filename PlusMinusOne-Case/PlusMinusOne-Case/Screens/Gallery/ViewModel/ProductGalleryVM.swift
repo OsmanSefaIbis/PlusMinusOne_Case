@@ -35,7 +35,7 @@ final class ProductGalleryVM {
     
     // - State Variables
     // TODO: Decide Next
-    private var items: [RowItem] = []
+    var items: [RowItem] = [] // changed access for testing
     var itemsCount: Int { get { items.count } }
     var columnPreference: Int = 2 // optionalTODO: singular, grid preference
     
