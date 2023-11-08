@@ -79,8 +79,7 @@ extension ProductGalleryVC: ContractForProductGalleryVC {
     }
     
     func navigateToDetail(pass data: DetailData) {
-        let detailPage = ProductDetailVC(data: data )
-        detailPage.view.accessibilityIdentifier = "detailPageUserInterfaceTestIdentifier"
+        let detailPage = ProductDetailVC(data: data)
         self.navigationController?.pushViewController(detailPage, animated: true)
     }
 }

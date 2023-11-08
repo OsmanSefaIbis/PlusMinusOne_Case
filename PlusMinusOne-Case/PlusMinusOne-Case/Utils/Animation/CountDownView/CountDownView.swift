@@ -69,7 +69,6 @@ class CountDownView: UIView {
         addSubview(label)
     }
 
-    
     private func startCountdown() {
         
         secondsRemaining = secondsInitial
@@ -84,7 +83,7 @@ class CountDownView: UIView {
             let progress = CGFloat(secondsRemaining) / CGFloat(secondsInitial)
             shapeLayer.strokeEnd = progress
         } else {
-            delegate?.didEndCountdown()
+            delegate?.didEndCountdown() // notify
             secondsRemaining = secondsInitial
             shapeLayer.strokeEnd = 1.0
         }
@@ -92,7 +91,6 @@ class CountDownView: UIView {
         updateLabel()
     }
 
-    
     private func updateLabel() {
         label.text = "\(secondsRemaining)"
     }

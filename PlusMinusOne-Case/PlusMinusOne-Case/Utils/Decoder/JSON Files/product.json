@@ -34,7 +34,7 @@
             "id": 4,
             "name": "Puma",
             "desc": "Sneakers",
-            "image": "https://dummyimage.com/450x300/4a4a4a/26d6a1",
+            "image": "https://dummyimage.com/250x250/4a4a4a/26d6a1",
             "price": {
                 "value": 150,
                 "currency": "$"
@@ -44,7 +44,7 @@
             "id": 5,
             "name": "Under Armour",
             "desc": "Leggings",
-            "image": "https://dummyimage.com/450x300/4a4a4a/26d6a1",
+            "image": "https://dummyimage.com/500x500/4a4a4a/26d6a1",
             "price": {
                 "value": 80,
                 "currency": "$"
@@ -54,7 +54,7 @@
             "id": 6,
             "name": "Reebok",
             "desc": "Jogging Pants",
-            "image": "https://dummyimage.com/450x300/4a4a4a/26d6a1",
+            "image": "https://dummyimage.com/425x600/4a4a4a/26d6a1",
             "price": {
                 "value": 65,
                 "currency": "$"
@@ -64,7 +64,7 @@
             "id": 7,
             "name": "New Balance",
             "desc": "Running Shorts",
-            "image": "https://dummyimage.com/450x300/4a4a4a/26d6a1",
+            "image": "https://dummyimage.com/150x100/4a4a4a/26d6a1",
             "price": {
                 "value": 45,
                 "currency": "$"
@@ -74,7 +74,7 @@
             "id": 8,
             "name": "Columbia",
             "desc": "Winter Jacket",
-            "image": "https://dummyimage.com/450x300/4a4a4a/26d6a1",
+            "image": "https://dummyimage.com/100x100/4a4a4a/26d6a1",
             "price": {
                 "value": 200,
                 "currency": "$"
@@ -84,7 +84,7 @@
             "id": 9,
             "name": "The North Face",
             "desc": "Hiking Boots",
-            "image": "https://dummyimage.com/450x300/4a4a4a/26d6a1",
+            "image": "https://dummyimage.com/600x600/4a4a4a/26d6a1",
             "price": {
                 "value": 150,
                 "currency": "$"
@@ -94,7 +94,7 @@
             "id": 10,
             "name": "Adidas",
             "desc": "Soccer Ball",
-            "image": "https://dummyimage.com/450x300/4a4a4a/26d6a1",
+            "image": "https://dummyimage.com/450x300/4a4a4a/ff5733",
             "price": {
                 "value": 20,
                 "currency": "$"
@@ -104,7 +104,7 @@
             "id": 11,
             "name": "Nike",
             "desc": "Basketball",
-            "image": "https://dummyimage.com/450x300/4a4a4a/26d6a1",
+            "image": "https://dummyimage.com/450x300/888888/26d6a2",
             "price": {
                 "value": 25,
                 "currency": "$"
@@ -114,7 +114,7 @@
             "id": 12,
             "name": "Puma",
             "desc": "Swimsuit",
-            "image": "https://dummyimage.com/450x300/4a4a4a/26d6a1",
+            "image": "https://dummyimage.com/600x400/4a4a4a/26d6a2",
             "price": {
                 "value": 40,
                 "currency": "$"
@@ -134,7 +134,7 @@
             "id": 14,
             "name": "Abercrombie & Fitch",
             "desc": "Polo Shirt",
-            "image": "https://dummyimage.com/450x300/4a4a4a/26d6a1",
+            "image": "https://dummyimage.com/450x300/595959/26d6a2",
             "price": {
                 "value": 55,
                 "currency": "$"
@@ -154,7 +154,7 @@
             "id": 16,
             "name": "Nike",
             "desc": "Yoga Mat",
-            "image": "https://dummyimage.com/450x300/4a4a4a/26d6a1",
+            "image": "https://dummyimage.com/450x300/4a4a4a/33ff8d",
             "price": {
                 "value": 25,
                 "currency": "$"
@@ -174,7 +174,7 @@
             "id": 18,
             "name": "Puma",
             "desc": "Sunglasses",
-            "image": "https://dummyimage.com/450x300/4a4a4a/26d6a1",
+            "image": "https://dummyimage.com/450x300/4a4a4a/ff26d1",
             "price": {
                 "value": 35,
                 "currency": "$"
@@ -204,7 +204,7 @@
             "id": 21,
             "name": "Nike",
             "desc": "Golf Balls",
-            "image": "https://dummyimage.com/450x300/4a4a4a/26d6a1",
+            "image": "https://dummyimage.com/450x300/777777/26d6a2",
             "price": {
                 "value": 30,
                 "currency": "$"
@@ -224,7 +224,7 @@
             "id": 23,
             "name": "Puma",
             "desc": "Fitness Tracker",
-            "image": "https://dummyimage.com/450x300/4a4a4a/26d6a1",
+            "image": "https://dummyimage.com/480x320/4a4a4a/26d6a2",
             "price": {
                 "value": 100,
                 "currency": "$"
@@ -294,7 +294,7 @@
             "id": 30,
             "name": "Abercrombie & Fitch",
             "desc": "Swim Shorts",
-            "image": "https://dummyimage.com/450x300/4a4a4a/26d6a1",
+            "image": "https://dummyimage.com/450x300/4a4a4a/d126d6",
             "price": {
                 "value": 55,
                 "currency": "$"
@@ -302,4 +302,6 @@
         }
     ]
 }
+
+
 

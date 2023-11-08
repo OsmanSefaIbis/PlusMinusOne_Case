@@ -48,6 +48,10 @@
 // • Constructed detail page with UI variables and populated with corresponding data
 // • Constructed productCell with UI variables and populated with corresponding data
 // • Finalized UI of the app
+// • Kingfisher option to cache images was included for performance
+// • Thought to resize images to gain performance but did not deal with it
+// • Added a enum to hold the strings
+// • Finalized UI of the app
 
 // +-1 ~ Date: 7.11
 
@@ -63,5 +67,9 @@
 // • Unit testing completed. ViewModel's productDetail and productGallery all contracted methods passed.
 // • UI testing passes. Covered the tap collectionView to navigate to detail page case only.
 // • Will refactor or check: namings, left todo's, left fixme's, empty methods, some minor improvements.
+
+// - Considered to do but did not
+// • For performant UI can resize or scaleDown for custom cell
+// • CheckInternet connectivity
 
 

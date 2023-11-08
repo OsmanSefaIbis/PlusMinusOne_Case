@@ -63,7 +63,7 @@ final class ProductCell: UICollectionViewCell {
     }()
     // - ImageView's
     private let imageViewOfProduct: UIImageView = {
-        UIImageView(systemName: "person.fill", tintColor: .clear, contentMode: .scaleAspectFill)
+        UIImageView(systemName: "wifi.exclamationmark", tintColor: .systemGray4, contentMode: .scaleAspectFill)
     }()
     private let imageViewOfHeart: UIImageView = {
         UIImageView(systemName: "heart.fill", tintColor: .systemRed)

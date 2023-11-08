@@ -15,7 +15,6 @@ final class PlusMinusOne_CaseTests: XCTestCase {
     private var viewDetail: MockProductDetailVC!
     private var viewGallery: MockProductGalleryVC!
     
-    
     override func setUp() {
         super.setUp()
         viewDetail = .init()
@@ -32,7 +31,7 @@ final class PlusMinusOne_CaseTests: XCTestCase {
         viewGallery = nil
         viewModelGallery = nil
     }
-    
+    // ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
     // - Start of - ProductDetail ViewModel
     func test_viewDidLoad_invokesSetupAndConfigurationOfUserInterface() {
         XCTAssertEqual(viewDetail.counter_setupUserInterface, 0)

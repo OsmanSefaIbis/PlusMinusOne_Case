@@ -8,7 +8,12 @@
 import UIKit
 
 extension UIImageView {
-    convenience init(systemName: String, backgroundColor: UIColor = .clear, tintColor: UIColor = .systemBackground, contentMode: UIView.ContentMode = .scaleAspectFit) {
+    convenience init(
+        systemName: String,
+        backgroundColor: UIColor = .clear,
+        tintColor: UIColor = .systemBackground,
+        contentMode: UIView.ContentMode = .scaleAspectFit
+    ) {
         self.init()
         self.image = UIImage(systemName: systemName)
         self.backgroundColor = backgroundColor

@@ -70,7 +70,7 @@ final class ProductDetailVC: UIViewController {
         return v
     }()
     private let imageView: UIImageView = {
-        UIImageView(systemName: "photo.fill", tintColor: .systemRed, contentMode: .scaleAspectFill)
+        UIImageView(systemName: "wifi.exclamationmark", tintColor: .systemGray4, contentMode: .scaleAspectFit) // changed from aspectFill to accommodate
     }()
     private let productLikeContainerView: UIView = {
         let v = UIView()
@@ -156,7 +156,7 @@ final class ProductDetailVC: UIViewController {
     private let imageViewSocialError: UIImageView = {
         UIImageView(systemName: "exclamationmark.triangle.fill", tintColor: .systemOrange)
     }()
-    private let imageViewOffline: UIImageView = {
+    private let imageViewOffline: UIImageView = { // use for offline case
         UIImageView(systemName: "wifi.exclamationmark", tintColor: .systemGray4)
     }()
     private let countDownViewContainer = UIView()
@@ -186,7 +186,6 @@ extension ProductDetailVC: DelegateOfCountDownView {
 // - Contract Conformance
 extension ProductDetailVC: ContractForProductDetailVC {
     
-    // TODO: Better Naming
     func setupUserInterface() {
         setupViewInitials() // View related setup
         setupSecondly() // Outmost related setup
@@ -276,7 +275,7 @@ extension ProductDetailVC {
 extension ProductDetailVC {
     
     private func setupViewInitials() {
-        self.edgesForExtendedLayout = .top
+        self.view.accessibilityIdentifier = "detailPageUserInterfaceTestIdentifier" // For: UI-Testing
         self.navigationController?.navigationBar.backgroundColor = .clear
         self.view.backgroundColor = .systemBackground
         self.navigationController?.setNavigationBarHidden(false, animated: true)
@@ -321,8 +320,10 @@ extension ProductDetailVC {
         scrollView.addSubview(contentView)
         contentView.translatesAutoresizingMaskIntoConstraints = false
         NSLayoutConstraint.activate([
-            contentView.topAnchor.constraint(equalTo: self.view.topAnchor),
+            contentView.topAnchor.constraint(equalTo: self.view.topAnchor), // change to scrollView.topAnchor
+            // contentView.bottomAnchor.constraint(equalTo: scrollView.bottomAnchor), // open also
             contentView.leadingAnchor.constraint(equalTo: scrollView.leadingAnchor),
+            // contentView.trailingAnchor.constraint(equalTo: scrollView.trailingAnchor) // open also --> to make detail within a scrollView
         ])
         let heightConstraintContentView = contentView.heightAnchor.constraint(equalTo: scrollView.heightAnchor)
         let widthConstraintContentView = contentView.widthAnchor.constraint(equalTo: scrollView.widthAnchor)
@@ -440,7 +441,7 @@ extension ProductDetailVC {
     }
     
     private func setupCountDown() {
-        let countDownView = CountDownView(frame: countDownViewContainer.bounds, secondsInitial: 5)
+        let countDownView = CountDownView(frame: countDownViewContainer.bounds)
         countDownView.delegate = self
         countDownViewContainer.addSubview(countDownView)
         countDownView.translatesAutoresizingMaskIntoConstraints = false
