@@ -56,8 +56,9 @@ final class ProductDetailVM {
     // - State Variables
     var data: DetailData?
     var latestUpdatedSocial: Social?
-    var timer: Timer?
-    var socialState: ProductDetailSocialState = .success {
+    private var timer: Timer?
+    private var internet: InternetManager { InternetManager.shared }
+    private var socialState: ProductDetailSocialState = .success {
         didSet {
             updateUserInterface(for: socialState)
         }
@@ -76,6 +77,7 @@ extension ProductDetailVM: ContractForProductDetailVM {
     func viewDidLoad() {
         view?.setupUserInterface()
         view?.configureUserInterface()
+        connectivityCheck()
     }
     
     func getData(_ property: ProductDataAccessor) -> Any? {
@@ -148,5 +150,10 @@ extension ProductDetailVM: DelegateOfProductDetailModel {
 // - Helper Class Methods
 extension ProductDetailVM {
     
-    // TODO: Later
+    func connectivityCheck() {
+        let flagOnline = internet.isOnline()
+        if !flagOnline {
+            view?.configureOfflineProductImage()
+        }
+    }
 }

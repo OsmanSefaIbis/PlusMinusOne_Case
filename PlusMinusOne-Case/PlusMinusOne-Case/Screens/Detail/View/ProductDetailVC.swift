@@ -17,6 +17,7 @@ protocol ContractForProductDetailVC: AnyObject {
     func updateUIForSuccessState()
     func updateUIForLoadingState()
     func updateUIForErrorState()
+    func configureOfflineProductImage()
 }
 
 final class ProductDetailVC: UIViewController {
@@ -233,6 +234,14 @@ extension ProductDetailVC: ContractForProductDetailVC {
             guard let self = self else { fatalError("Unexpected nil self") }
             self.removeSocials() // Remove Existing
             self.setupWithErrorAppearance() // Add error appearance instead
+        }
+    }
+    
+    func configureOfflineProductImage() {
+        imageView.contentMode = .scaleAspectFit
+        DispatchQueue.main.async { [weak self] in
+            guard let self = self else { fatalError("Unexpected nil self") }
+            self.imageView.image = self.imageViewOffline.image
         }
     }
     

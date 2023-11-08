@@ -22,6 +22,7 @@ struct ProductCellDataModel {
 final class ProductCell: UICollectionViewCell {
     
     static let identifier = "ProductCell"
+    private var internet: InternetManager { InternetManager.shared }
     
     /// Setups and configures the UI variables
     func configureCell(with data: RowItem) {
@@ -63,6 +64,9 @@ final class ProductCell: UICollectionViewCell {
     }()
     // - ImageView's
     private let imageViewOfProduct: UIImageView = {
+        UIImageView(systemName: "wifi.exclamationmark", tintColor: .systemGray4, contentMode: .scaleAspectFill)
+    }()
+    private let imageViewOffline: UIImageView = {
         UIImageView(systemName: "wifi.exclamationmark", tintColor: .systemGray4, contentMode: .scaleAspectFill)
     }()
     private let imageViewOfHeart: UIImageView = {
@@ -207,14 +211,24 @@ extension ProductCell {
     }
     
     private func configureProductImage(pass unitData: String) {
-        DispatchQueue.main.async { [weak self] in
-            guard let self else { fatalError("Unexpected nil self") }
-            self.imageViewOfProduct.kf.setImage(
-                with: URL(string: unitData),
-                placeholder: nil,
-                options: [.cacheMemoryOnly],
-                progressBlock: nil
-            )
+        
+        if internet.isOnline() {
+            imageViewOfProduct.contentMode = .scaleAspectFill
+            DispatchQueue.main.async { [weak self] in
+                guard let self else { fatalError("Unexpected nil self") }
+                self.imageViewOfProduct.kf.setImage(
+                    with: URL(string: unitData),
+                    placeholder: nil,
+                    options: [.cacheMemoryOnly],
+                    progressBlock: nil
+                )
+            }
+        } else {
+            imageViewOfProduct.contentMode = .scaleAspectFit
+            DispatchQueue.main.async { [weak self] in
+                guard let self else { fatalError("Unexpected nil self") }
+                self.imageViewOfProduct.image = self.imageViewOffline.image
+            }
         }
     }
     

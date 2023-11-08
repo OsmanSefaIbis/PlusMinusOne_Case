@@ -20,7 +20,7 @@ final class ProductGalleryVC: UIViewController {
     
     // - MVVM Variables
     private lazy var viewModel = ProductGalleryVM(view: self)
-    
+
     // Life-cycle: Object
     init(){
         super.init(nibName: nil, bundle: nil)
@@ -37,7 +37,6 @@ final class ProductGalleryVC: UIViewController {
     }
     
     // - User Interface Variables
-    
     private let containerView: UIView = {
        let v = UIView()
         v.backgroundColor = .clear

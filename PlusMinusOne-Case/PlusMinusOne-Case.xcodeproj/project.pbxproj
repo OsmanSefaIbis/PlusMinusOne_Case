@@ -38,6 +38,7 @@
 		96C42F132AFAC953001FC52F /* MockProductDetailVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 96C42F122AFAC953001FC52F /* MockProductDetailVC.swift */; };
 		96C42F162AFAE8DD001FC52F /* MockDetailData.swift in Sources */ = {isa = PBXBuildFile; fileRef = 96C42F152AFAE8DD001FC52F /* MockDetailData.swift */; };
 		96C42F1A2AFB0F7C001FC52F /* MockProductGalleryVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 96C42F192AFB0F7C001FC52F /* MockProductGalleryVC.swift */; };
+		96C42F1D2AFB714B001FC52F /* InternetManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 96C42F1C2AFB714B001FC52F /* InternetManager.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -91,6 +92,7 @@
 		96C42F122AFAC953001FC52F /* MockProductDetailVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MockProductDetailVC.swift; sourceTree = "<group>"; };
 		96C42F152AFAE8DD001FC52F /* MockDetailData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MockDetailData.swift; sourceTree = "<group>"; };
 		96C42F192AFB0F7C001FC52F /* MockProductGalleryVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MockProductGalleryVC.swift; sourceTree = "<group>"; };
+		96C42F1C2AFB714B001FC52F /* InternetManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InternetManager.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -286,6 +288,7 @@
 		9619694D2AF518AF001CB5EB /* Utils */ = {
 			isa = PBXGroup;
 			children = (
+				96C42F1B2AFB712C001FC52F /* Manager */,
 				9619696F2AF80122001CB5EB /* Animation */,
 				961969532AF577DB001CB5EB /* Decoder */,
 				9619694F2AF518D1001CB5EB /* SDK Extension */,
@@ -405,6 +408,14 @@
 				96C42F192AFB0F7C001FC52F /* MockProductGalleryVC.swift */,
 			);
 			path = "View Mock";
+			sourceTree = "<group>";
+		};
+		96C42F1B2AFB712C001FC52F /* Manager */ = {
+			isa = PBXGroup;
+			children = (
+				96C42F1C2AFB714B001FC52F /* InternetManager.swift */,
+			);
+			path = Manager;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -555,6 +566,7 @@
 				961969442AF4493B001CB5EB /* ProductDetailModel.swift in Sources */,
 				961969352AF4363E001CB5EB /* Development Log.swift in Sources */,
 				96185A822AF40D09005A5488 /* AppDelegate.swift in Sources */,
+				96C42F1D2AFB714B001FC52F /* InternetManager.swift in Sources */,
 				9619695D2AF5827A001CB5EB /* ProductsDTO.swift in Sources */,
 				9619695F2AF582B7001CB5EB /* SocialDTO.swift in Sources */,
 				961969642AF79DB1001CB5EB /* UIStackView+Extended.swift in Sources */,

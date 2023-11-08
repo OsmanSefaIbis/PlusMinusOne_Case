@@ -114,6 +114,5 @@ extension ProductGalleryVM: DelegateOfProductGalleryModel {
 
 // - Helper Class Methods
 extension ProductGalleryVM {
-    
-    
+
 }
