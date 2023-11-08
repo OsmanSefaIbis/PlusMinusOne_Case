@@ -48,6 +48,7 @@ final class ProductGalleryVC: UIViewController {
         layout.sectionInset = UIEdgeInsets(top: 5, left: 5, bottom: 0, right: 5)
         layout.scrollDirection = .vertical
         let cv = UICollectionView(frame: .zero, collectionViewLayout: layout)
+        cv.accessibilityIdentifier = "collectionViewUserInterfaceTestIdentifier"
         cv.backgroundColor = .systemBackground
         cv.register(ProductCell.self, forCellWithReuseIdentifier: ProductCell.identifier)
         cv.showsVerticalScrollIndicator = false
@@ -79,6 +80,7 @@ extension ProductGalleryVC: ContractForProductGalleryVC {
     
     func navigateToDetail(pass data: DetailData) {
         let detailPage = ProductDetailVC(data: data )
+        detailPage.view.accessibilityIdentifier = "detailPageUserInterfaceTestIdentifier"
         self.navigationController?.pushViewController(detailPage, animated: true)
     }
 }

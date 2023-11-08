@@ -60,6 +60,8 @@
 
 // +-1 ~ Date: 8.11
 
-// • Fill
+// • Unit testing completed. ViewModel's productDetail and productGallery all contracted methods passed.
+// • UI testing passes. Covered the tap collectionView to navigate to detail page case only.
+// • Will refactor or check: namings, left todo's, left fixme's, empty methods, some minor improvements.
 
 
