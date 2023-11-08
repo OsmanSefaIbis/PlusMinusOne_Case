@@ -37,6 +37,7 @@
 		961969742AF86064001CB5EB /* ProductDataAccessor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 961969732AF86064001CB5EB /* ProductDataAccessor.swift */; };
 		96C42F132AFAC953001FC52F /* MockProductDetailVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 96C42F122AFAC953001FC52F /* MockProductDetailVC.swift */; };
 		96C42F162AFAE8DD001FC52F /* MockDetailData.swift in Sources */ = {isa = PBXBuildFile; fileRef = 96C42F152AFAE8DD001FC52F /* MockDetailData.swift */; };
+		96C42F1A2AFB0F7C001FC52F /* MockProductGalleryVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 96C42F192AFB0F7C001FC52F /* MockProductGalleryVC.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -89,6 +90,7 @@
 		961969732AF86064001CB5EB /* ProductDataAccessor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProductDataAccessor.swift; sourceTree = "<group>"; };
 		96C42F122AFAC953001FC52F /* MockProductDetailVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MockProductDetailVC.swift; sourceTree = "<group>"; };
 		96C42F152AFAE8DD001FC52F /* MockDetailData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MockDetailData.swift; sourceTree = "<group>"; };
+		96C42F192AFB0F7C001FC52F /* MockProductGalleryVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MockProductGalleryVC.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -152,9 +154,8 @@
 		96185A972AF40D0A005A5488 /* PlusMinusOne-CaseTests */ = {
 			isa = PBXGroup;
 			children = (
-				96C42F102AFAC901001FC52F /* Gallery */,
-				96C42F0F2AFAC8F5001FC52F /* Detail */,
 				96185A982AF40D0A005A5488 /* PlusMinusOne_CaseTests.swift */,
+				96C42F172AFB0EED001FC52F /* Screens */,
 			);
 			path = "PlusMinusOne-CaseTests";
 			sourceTree = "<group>";
@@ -368,6 +369,7 @@
 		96C42F102AFAC901001FC52F /* Gallery */ = {
 			isa = PBXGroup;
 			children = (
+				96C42F182AFB0F61001FC52F /* View Mock */,
 			);
 			path = Gallery;
 			sourceTree = "<group>";
@@ -386,6 +388,23 @@
 				96C42F152AFAE8DD001FC52F /* MockDetailData.swift */,
 			);
 			path = "Data Mock";
+			sourceTree = "<group>";
+		};
+		96C42F172AFB0EED001FC52F /* Screens */ = {
+			isa = PBXGroup;
+			children = (
+				96C42F0F2AFAC8F5001FC52F /* Detail */,
+				96C42F102AFAC901001FC52F /* Gallery */,
+			);
+			path = Screens;
+			sourceTree = "<group>";
+		};
+		96C42F182AFB0F61001FC52F /* View Mock */ = {
+			isa = PBXGroup;
+			children = (
+				96C42F192AFB0F7C001FC52F /* MockProductGalleryVC.swift */,
+			);
+			path = "View Mock";
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -555,6 +574,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				96C42F162AFAE8DD001FC52F /* MockDetailData.swift in Sources */,
+				96C42F1A2AFB0F7C001FC52F /* MockProductGalleryVC.swift in Sources */,
 				96185A992AF40D0A005A5488 /* PlusMinusOne_CaseTests.swift in Sources */,
 				96C42F132AFAC953001FC52F /* MockProductDetailVC.swift in Sources */,
 			);

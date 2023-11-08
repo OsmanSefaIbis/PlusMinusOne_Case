@@ -74,7 +74,6 @@ final class ProductDetailVM {
 extension ProductDetailVM: ContractForProductDetailVM {
     
     func viewDidLoad() {
-        socialState = .success // Data is available at first
         view?.setupUserInterface()
         view?.configureUserInterface()
     }

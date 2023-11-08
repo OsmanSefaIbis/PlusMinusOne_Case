@@ -6,34 +6,40 @@
 //
 
 import XCTest
-import PlusMinusOne_Case // FIXME: Had to import for testing purposes, MockStructs did not work
 @testable import PlusMinusOne_Case
 
 final class PlusMinusOne_CaseTests: XCTestCase {
     
-    private var viewModel: ProductDetailVM!
-    private var view: MockProductDetailVC!
+    private var viewModelDetail: ProductDetailVM!
+    private var viewModelGallery: ProductGalleryVM!
+    private var viewDetail: MockProductDetailVC!
+    private var viewGallery: MockProductGalleryVC!
+    
     
     override func setUp() {
         super.setUp()
-        view = .init()
-        viewModel = .init(view: view)
+        viewDetail = .init()
+        viewModelDetail = .init(view: viewDetail)
+        viewGallery = .init()
+        viewModelGallery = .init(view: viewGallery)
         
     }
     
     override func tearDown() {
         super.tearDown()
-        view = nil
-        viewModel = nil
+        viewDetail = nil
+        viewModelDetail = nil
+        viewGallery = nil
+        viewModelGallery = nil
     }
     
-    
-    func test_viewDidLoad_invokesRequiredSequence() {
-        XCTAssertEqual(view.counter_setupUserInterface, 0)
-        XCTAssertEqual(view.counter_configureUserInterface, 0)
-        viewModel.viewDidLoad()
-        XCTAssertEqual(view.counter_setupUserInterface, 1)
-        XCTAssertEqual(view.counter_configureUserInterface, 1)
+    // - Start of - ProductDetail ViewModel
+    func test_viewDidLoad_invokesSetupAndConfigurationOfUserInterface() {
+        XCTAssertEqual(viewDetail.counter_setupUserInterface, 0)
+        XCTAssertEqual(viewDetail.counter_configureUserInterface, 0)
+        viewModelDetail.viewDidLoad()
+        XCTAssertEqual(viewDetail.counter_setupUserInterface, 1)
+        XCTAssertEqual(viewDetail.counter_configureUserInterface, 1)
     }
     
     func test_getData_WhenDataAvailable() {
@@ -50,9 +56,9 @@ final class PlusMinusOne_CaseTests: XCTestCase {
                 memberCommentsCount: 5
             )))
         guard let data = mockDataWannaBe else { return }
-        viewModel.data = data
+        viewModelDetail.data = data
         
-        let result = viewModel.getData(.productBrand) as? String // when
+        let result = viewModelDetail.getData(.productBrand) as? String // when
         
         XCTAssertNotNil(result)
         XCTAssertEqual(result, data.productBrand)
@@ -60,15 +66,15 @@ final class PlusMinusOne_CaseTests: XCTestCase {
     
     func test_getData_WhenDataNotAvailable() {
         
-        let result = viewModel.getData(.productBrand) as? String // when
+        let result = viewModelDetail.getData(.productBrand) as? String // when
         XCTAssertNil(result)
     }
     
     func test_getLatestSocial_WhenLatestUpdatedSocialAvailable() {
         let mockDataWannaBe: Social = .init(likeCount: 1, commentCounts: CommentInfo(averageRating: 1.0, anonymousCommentsCount: 1, memberCommentsCount: 1))
         
-        viewModel.latestUpdatedSocial = mockDataWannaBe
-        let result = viewModel.getLatestSocial() // when
+        viewModelDetail.latestUpdatedSocial = mockDataWannaBe
+        let result = viewModelDetail.getLatestSocial() // when
         
         XCTAssertEqual(result?.likeCount, 1)
         XCTAssertEqual(result?.commentCounts?.averageRating, 1.0)
@@ -78,29 +84,45 @@ final class PlusMinusOne_CaseTests: XCTestCase {
     }
     
     func test_getLatestSocial_WhenLatestUpdatedSocialUnavailable() {
-        let result = viewModel.getLatestSocial() // when
+        let result = viewModelDetail.getLatestSocial() // when
         XCTAssertNil(result)
     }
     
     func test_didEndCountDown_stateUpdate() {
-        viewModel.didEndCountdown() // when
-        XCTAssertEqual(viewModel.socialState, .loading)
         
+        viewModelDetail.didEndCountdown() // when
+        XCTAssertEqual(viewModelDetail.socialState, .loading)
         // ProductDetailModel: var modifiedFlag: Bool = false, makes this test fail, changed it to true
     }
     
     func test_updateUserInterface_forStateSuccess_uponCurrentStateNotifiesViewToUpdateUI() {
-        
+
+        XCTAssertEqual(viewDetail.counter_updateUIForSuccessState, 0)
+        viewModelDetail.updateUserInterface(for: .success) // when
+        XCTAssertEqual(viewDetail.counter_updateUIForSuccessState, 1)
     }
     
     func test_updateUserInterface_forStateLoading_uponCurrentStateNotifiesViewToUpdateUI() {
-        
+        XCTAssertEqual(viewDetail.counter_updateUIForLoadingState, 0)
+        viewModelDetail.updateUserInterface(for: .loading) // when
+        XCTAssertEqual(viewDetail.counter_updateUIForLoadingState, 1)
     }
     
     func test_updateUserInterface_forStateError_uponCurrentStateNotifiesViewToUpdateUI() {
-        
+        XCTAssertEqual(viewDetail.counter_updateUIForErrorState, 0)
+        viewModelDetail.updateUserInterface(for: .error(NSError())) // when
+        XCTAssertEqual(viewDetail.counter_updateUIForErrorState, 1)
     }
     
+    func test_setUpdatedSocial_stateUpdate() {
+        viewModelDetail.setUpdatedSocial() // when
+        XCTAssertEqual(viewModelDetail.socialState, .success)
+    }
+    // - End of - ProductDetail ViewModel
+    // ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    // - Start of - ProductGallery ViewModel
     
-    
+    func test_viewDidLoad_invokesRequiredSequence() {
+        // TODO: Complete Gallery Tests
+    }
 }
