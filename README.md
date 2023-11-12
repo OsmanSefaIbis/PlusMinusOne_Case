@@ -4,13 +4,13 @@ Case Study: PlusMinusOne <br />
 <br />-> Unit testing, UITesting, Architecture: MVVM, Clean Coded, UIKit, Auto-Layout, Programmatic UI Construction <br />
 
 # Demo
-https://github.com/OsmanSefaIbis/PlusMinusOne_Case/assets/24541415/d49743a0-3323-4419-8691-af919e2b9bfa
+https://github.com/OsmanSefaIbis/PlusMinusOne_Case/assets/24541415/fe721798-c22e-47eb-94c6-ee9b62d45062
 
 # Device Compatible - 1
-<img width="973" alt="Screenshot 2023-11-08 at 13 15 42" src="https://github.com/OsmanSefaIbis/PlusMinusOne_Case/assets/24541415/8872f3cf-ea6b-44c4-af5f-0672aaf0775d">
+<img width="958" alt="Screenshot 2023-11-12 at 23 37 28" src="https://github.com/OsmanSefaIbis/PlusMinusOne_Case/assets/24541415/18907a2c-28c3-40b5-9c74-b897d110c500">
 
 # Device Compatible - 2
-<img width="973" alt="Screenshot 2023-11-08 at 13 16 35" src="https://github.com/OsmanSefaIbis/PlusMinusOne_Case/assets/24541415/671894b4-bd0a-45db-8bb6-563474d87d98">
+<img width="958" alt="Screenshot 2023-11-12 at 23 41 54" src="https://github.com/OsmanSefaIbis/PlusMinusOne_Case/assets/24541415/f084d5e5-4d66-453c-9365-0687aa5784f9">
 
 
 
