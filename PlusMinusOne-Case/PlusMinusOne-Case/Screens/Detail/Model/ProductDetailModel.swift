@@ -14,12 +14,17 @@ protocol DelegateOfProductDetailModel: AnyObject {
     func didGetSocial(update: SocialFeed)
     func didFailRetrievalOfSocialFeed(with: Error)
 }
+// - Class Contract
+protocol ContractOfProductDetailModel {
+    var delegate: DelegateOfProductDetailModel? { get set }
+    func modifySocials()
+    func getSocial(with productId: Int)
+}
 
-final class ProductDetailModel {
+final class ProductDetailModel: ContractOfProductDetailModel{
     
-    // - MVVM Variables
-    weak var delegate: DelegateOfProductDetailModel?
-    var modifiedFlag: Bool = true // false -> error appearance on UI
+    weak var delegate: DelegateOfProductDetailModel? // - MVVM prop
+    private var modifiedFlag: Bool = true // error appearance on UI make -> false
     
     func modifySocials() {
         if modifiedFlag {
@@ -30,7 +35,6 @@ final class ProductDetailModel {
             self.delegate?.didFailToModifySocials(with: error)
         }
     }
-    
     func getSocial(with productId: Int) {
         DecoderService.decode(resource: "social", as: SocialInfo.self) { [weak self] result in
             switch result {

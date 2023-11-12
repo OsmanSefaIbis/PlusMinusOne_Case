@@ -9,7 +9,11 @@ import Foundation
 
 // - Class Contract
 protocol ContractForProductDetailVM: AnyObject {
-    
+
+    var delegate: DelegateOfProductDetailVM? { get set }
+    var data: DetailData? { get set }
+    var latestUpdatedSocial: Social? { get set }
+    var socialState: ProductDetailSocialState { get set }
     func viewDidLoad()
     func getData(_ property: ProductDataAccessor) -> Any?
     func getLatestSocial() -> Social?
@@ -25,17 +29,13 @@ protocol DelegateOfProductDetailVM: AnyObject {
     func didLoadSocial()
 }
 
-final class ProductDetailVM {
-    
-    // - MVVM Variables
-    lazy var model = ProductDetailModel()
+final class ProductDetailVM: ContractForProductDetailVM {
+    // - MVVM Prop's
+    private lazy var model: ContractOfProductDetailModel = ProductDetailModel()
     weak var view: ContractForProductDetailVC?
     weak var delegate: DelegateOfProductDetailVM?
     
-    // - State Variables
-    private var timer: Timer?
-    private var internet: InternetManager { InternetManager.shared }
-    
+    // - State Prop's
     var data: DetailData?
     var latestUpdatedSocial: Social?
     var socialState: ProductDetailSocialState = .success {
@@ -43,17 +43,16 @@ final class ProductDetailVM {
             updateUserInterface(for: socialState)
         }
     }
+    private var timer: Timer?
+    private var internet: InternetManager { InternetManager.shared }
     
     // - Lifecycle: Object
     init(view: ContractForProductDetailVC) {
         model.delegate = self
         self.view = view
     }
-}
-
-// - Contract Conformance
-extension ProductDetailVM: ContractForProductDetailVM {
     
+    // - Contract Conformance
     func viewDidLoad() {
         view?.setupUserInterface()
         view?.configureUserInterface()
@@ -104,7 +103,7 @@ extension ProductDetailVM: ContractForProductDetailVM {
             timer.invalidate()
         }
     }
-}
+}   // - Class End
 
 // - MVVM Notify
 extension ProductDetailVM: DelegateOfProductDetailModel {

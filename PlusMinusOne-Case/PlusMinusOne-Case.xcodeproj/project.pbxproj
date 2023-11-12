@@ -40,6 +40,7 @@
 		96C42F1A2AFB0F7C001FC52F /* MockProductGalleryVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 96C42F192AFB0F7C001FC52F /* MockProductGalleryVC.swift */; };
 		96C42F1D2AFB714B001FC52F /* InternetManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 96C42F1C2AFB714B001FC52F /* InternetManager.swift */; };
 		96C42F1F2AFB8A17001FC52F /* ProductDetailSocialState.swift in Sources */ = {isa = PBXBuildFile; fileRef = 96C42F1E2AFB8A17001FC52F /* ProductDetailSocialState.swift */; };
+		96DDC25F2B00045A00AF6D67 /* StarContainerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 96DDC25E2B00045A00AF6D67 /* StarContainerView.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -95,6 +96,7 @@
 		96C42F192AFB0F7C001FC52F /* MockProductGalleryVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MockProductGalleryVC.swift; sourceTree = "<group>"; };
 		96C42F1C2AFB714B001FC52F /* InternetManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InternetManager.swift; sourceTree = "<group>"; };
 		96C42F1E2AFB8A17001FC52F /* ProductDetailSocialState.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProductDetailSocialState.swift; sourceTree = "<group>"; };
+		96DDC25E2B00045A00AF6D67 /* StarContainerView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StarContainerView.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -241,6 +243,7 @@
 		9619693D2AF44507001CB5EB /* View */ = {
 			isa = PBXGroup;
 			children = (
+				96DDC25C2B00040300AF6D67 /* Components */,
 				961969392AF44456001CB5EB /* ProductDetailVC.swift */,
 			);
 			path = View;
@@ -291,7 +294,6 @@
 			isa = PBXGroup;
 			children = (
 				96C42F1B2AFB712C001FC52F /* Manager */,
-				9619696F2AF80122001CB5EB /* Animation */,
 				961969532AF577DB001CB5EB /* Decoder */,
 				9619694F2AF518D1001CB5EB /* SDK Extension */,
 				9619694E2AF518C6001CB5EB /* Enum */,
@@ -345,14 +347,6 @@
 				9619695E2AF582B7001CB5EB /* SocialDTO.swift */,
 			);
 			path = DTO;
-			sourceTree = "<group>";
-		};
-		9619696F2AF80122001CB5EB /* Animation */ = {
-			isa = PBXGroup;
-			children = (
-				961969702AF8012E001CB5EB /* CountDownView */,
-			);
-			path = Animation;
 			sourceTree = "<group>";
 		};
 		961969702AF8012E001CB5EB /* CountDownView */ = {
@@ -419,6 +413,23 @@
 				96C42F1C2AFB714B001FC52F /* InternetManager.swift */,
 			);
 			path = Manager;
+			sourceTree = "<group>";
+		};
+		96DDC25C2B00040300AF6D67 /* Components */ = {
+			isa = PBXGroup;
+			children = (
+				96DDC25D2B00042300AF6D67 /* StarContainerView */,
+				961969702AF8012E001CB5EB /* CountDownView */,
+			);
+			path = Components;
+			sourceTree = "<group>";
+		};
+		96DDC25D2B00042300AF6D67 /* StarContainerView */ = {
+			isa = PBXGroup;
+			children = (
+				96DDC25E2B00045A00AF6D67 /* StarContainerView.swift */,
+			);
+			path = StarContainerView;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -582,6 +593,7 @@
 				961969662AF7D34C001CB5EB /* UIImageView+Extended.swift in Sources */,
 				961969422AF44871001CB5EB /* ProductDetailVM.swift in Sources */,
 				961969522AF51A0A001CB5EB /* Localize.swift in Sources */,
+				96DDC25F2B00045A00AF6D67 /* StarContainerView.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

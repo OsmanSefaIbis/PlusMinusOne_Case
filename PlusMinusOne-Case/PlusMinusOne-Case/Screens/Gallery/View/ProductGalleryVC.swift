@@ -19,9 +19,9 @@ protocol ContractForProductGalleryVC: AnyObject {
 final class ProductGalleryVC: UIViewController {
     
     // - MVVM Variables
-    private lazy var viewModel = ProductGalleryVM(view: self)
+    private lazy var viewModel: ContractForProductGalleryVM = ProductGalleryVM(view: self)
 
-    // Life-cycle: Object
+    // - Life-cycle: Object
     init(){
         super.init(nibName: nil, bundle: nil)
         viewModel.delegate = self
@@ -30,7 +30,7 @@ final class ProductGalleryVC: UIViewController {
         fatalError("init(coder:) has not been implemented")
     }
     
-    // Life-cycle: View
+    // - Life-cycle: View
     override func viewDidLoad() {
         super.viewDidLoad()
         viewModel.viewDidLoad()

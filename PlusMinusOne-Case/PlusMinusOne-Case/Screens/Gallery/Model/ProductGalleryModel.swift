@@ -13,19 +13,29 @@ typealias SocialInfo = SocialDTO
 
 // - Class Communicator
 protocol DelegateOfProductGalleryModel: AnyObject {
+    
     func didGetProducts()
     func didGetSocialFeed()
     func didFailRetrievalOfProducts(with: Error)
     func didFailRetrievalOfSocialFeed(with: Error)
 }
-
-final class ProductGalleryModel {
+// - Class Contract
+protocol ContractOfProductGalleryModel {
     
-    // - MVVM Variables
-    weak var delegate: DelegateOfProductGalleryModel?
-    // - Data Variables
-    private(set) var products: [Product] = []
-    private(set) var socials: [SocialFeed] = []
+    var delegate: DelegateOfProductGalleryModel? { get set }
+    var products: [Product] { get }
+    var socials: [SocialFeed] { get }
+    func getProducts()
+    func getSocials()
+}
+
+final class ProductGalleryModel: ContractOfProductGalleryModel {
+    
+    // - MVVM Prop
+    var delegate: DelegateOfProductGalleryModel?
+    // - Data Prop's
+    var products: [Product] = []
+    var socials: [SocialFeed] = []
     
     func getProducts(){
         

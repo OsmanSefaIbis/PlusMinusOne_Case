@@ -11,7 +11,7 @@ protocol DelegateOfCountDownView: AnyObject {
     func didEndCountdown()
 }
 
-class CountDownView: UIView {
+final class CountDownView: UIView {
     private let shapeLayer = CAShapeLayer()
     private let label = UILabel()
     private var countdownTimer: Timer?
@@ -35,6 +35,11 @@ class CountDownView: UIView {
         configureCircularProgressBar(frame: frame)
         configureLabel(frame: frame)
         startCountdown()
+    }
+    deinit {
+        /*  Timer objects are retained by the run loop, if no invalidate happens on a repeating timer,
+            timer object holds strong referance for this class (retain cycle)  */
+        countdownTimer?.invalidate()
     }
     
     private func configureCircularProgressBar(frame: CGRect) {

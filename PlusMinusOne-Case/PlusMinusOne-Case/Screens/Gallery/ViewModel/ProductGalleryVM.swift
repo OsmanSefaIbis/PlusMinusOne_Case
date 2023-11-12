@@ -14,6 +14,10 @@ typealias DetailData = ProductCellDataModel
 // - Class Contract
 protocol ContractForProductGalleryVM: AnyObject {
     
+    var items: [RowItem] { get set }
+    var itemsCount: Int { get }
+    var columnPreference: Int { get }
+    var delegate: DelegateOfProductGalleryVM? { get set }
     func viewDidLoad()
     func getItem(at index: IndexPath) -> RowItem?
     func didSelectItem(at index: IndexPath)
@@ -25,28 +29,25 @@ protocol DelegateOfProductGalleryVM: AnyObject {
     func didLoadSocialFeed()
 }
 
-final class ProductGalleryVM {
+final class ProductGalleryVM: ContractForProductGalleryVM{
     
-    // - MVVM Variables
-    lazy var model = ProductGalleryModel()
+    // - MVVM Prop's
+    private lazy var model: ContractOfProductGalleryModel = ProductGalleryModel()
     weak var view: ContractForProductGalleryVC?
     weak var delegate: DelegateOfProductGalleryVM?
     
-    // - State Variables
-    var items: [RowItem] = [] // changed access for testing
-    var itemsCount: Int { get { items.count } }
+    // - State Prop's
+    var items: [RowItem] = []
+    var itemsCount: Int { get { items.count} }
     var columnPreference: Int = 2 // optionalTODO: singular OR grid preference
     
-    // - Lifecycle: Object
+    // - Life-cycle: Object
     init(view: ContractForProductGalleryVC) {
         model.delegate = self
         self.view = view
     }
-}
-
-// - Contract Conformance
-extension ProductGalleryVM: ContractForProductGalleryVM {
     
+    // - Contract Conformance
     func viewDidLoad() {
         view?.setupUserInterface()
         view?.setupDelegates()

@@ -7,7 +7,6 @@
 
 import UIKit
 import Kingfisher
-import Cosmos
 
 // - Class Contract
 protocol ContractForProductDetailVC: AnyObject {
@@ -23,7 +22,7 @@ protocol ContractForProductDetailVC: AnyObject {
 final class ProductDetailVC: UIViewController {
     
     // - MVVM Variables
-    private lazy var viewModel = ProductDetailVM(view: self)
+    private lazy var viewModel: ContractForProductDetailVM = ProductDetailVM(view: self)
     
     // - State Variables
     var productId: Int?
@@ -85,6 +84,7 @@ final class ProductDetailVC: UIViewController {
         return v
     }()
     private let countDownViewContainer = UIView()
+    private let starContainerView = StarContainerView()
     // - StackView's
     private let vStackViewContainer: UIStackView = {
         UIStackView(axis: .vertical)
@@ -102,10 +102,10 @@ final class ProductDetailVC: UIViewController {
         UIStackView(axis: .vertical, backgroundColor: .clear)
     }()
     private let hStackProductInformationLeftSideFirstRow: UIStackView = {
-        UIStackView(axis: .horizontal, alignment: .center, backgroundColor: .clear)
+        UIStackView(axis: .horizontal,spacing: 10, alignment: .center, distribution: .fill, backgroundColor: .clear)
     }()
     private let hStackProductInformationLeftSideSecondRow: UIStackView = {
-        UIStackView(axis: .horizontal, alignment: .center, backgroundColor: .clear)
+        UIStackView(axis: .horizontal, alignment: .center, distribution: .fillProportionally, backgroundColor: .clear)
     }()
     private let hStackProductInformationLeftSideThirdRow: UIStackView = {
         UIStackView(axis: .horizontal, alignment: .center, distribution: .fillEqually, backgroundColor: .clear)
@@ -119,16 +119,6 @@ final class ProductDetailVC: UIViewController {
     }()
     private let imageViewOffline: UIImageView = {
         UIImageView(systemName: Localize.symbolOffline.raw(), tintColor: .systemGray4)
-    }()
-    // - Cosmos View
-    private let starRatingView: CosmosView = {
-        let cv = CosmosView()
-        cv.backgroundColor = .clear
-        cv.tintColor = .systemOrange
-        cv.settings.fillMode = .precise
-        cv.settings.starSize = 20
-        cv.isUserInteractionEnabled = false
-        return cv
     }()
     // - Label's
     private let labelProductCommentTotal: UILabel = {
@@ -153,7 +143,7 @@ final class ProductDetailVC: UIViewController {
         UILabel.customLabel(textColor: .systemGray2, textAlignment: .left, font: UIFont.boldSystemFont(ofSize: 15))
     }()
     private let labelProductRatingFloat: UILabel = {
-        UILabel.customLabel(textColor: .systemOrange, textAlignment: .right, font: UIFont.boldSystemFont(ofSize: 15))
+        UILabel.customLabel(textColor: .systemOrange, textAlignment: .left, font: UIFont.boldSystemFont(ofSize: 15))
     }()
     // - Spinner's
     private let spinnerMedium: UIActivityIndicatorView = {
@@ -196,9 +186,9 @@ extension ProductDetailVC: ContractForProductDetailVC {
     
     func setupUserInterface() {
         setupViewInitials() // View related setup
-        setupSecondly() // Outmost related setup
-        setupThirdly() // Product information-related setup
-        setupFourthly() // Product information left and right side related setups
+        setupUISecondly() // Outmost related setup
+        setupUIThirdly() // Product information-related setup
+        setupUIFourthly() // Product information left and right side related setups
     }
     
     func configureUserInterface() {
@@ -275,7 +265,7 @@ extension ProductDetailVC {
             self.labelProductRatingFloat.text = String(productRatingFloat)
             self.labelLikeCount.text = String(productLikeCount)
             self.labelProductCommentTotal.text = "Comment: \(productCommentTotal)"
-            self.starRatingView.rating = productRatingFloat
+            self.starContainerView.setRating(productRatingFloat)
         }
     }
 }
@@ -290,7 +280,7 @@ extension ProductDetailVC {
         self.navigationController?.setNavigationBarHidden(false, animated: true)
     }
     
-    private func setupSecondly() {
+    private func setupUISecondly() {
         setupScrollView()
         setupContentView()
         setupOutMostStackView()
@@ -298,12 +288,12 @@ extension ProductDetailVC {
         setupProductInformationContainerView()
     }
     
-    private func setupThirdly() {
+    private func setupUIThirdly() {
         setupProductInformationView()
         setupProductInformationStackView()
     }
     
-    private func setupFourthly() {
+    private func setupUIFourthly() {
         setupRightOfProductInformationStackView()
         setupLeftOfProductInformationStackView()
         
@@ -438,12 +428,18 @@ extension ProductDetailVC {
     private func setupFirstRowOnLeftSideOfProductInformation() {
         hStackProductInformationLeftSideFirstRow.addArrangedSubview(labelProductBrand)
         hStackProductInformationLeftSideFirstRow.addArrangedSubview(labelProductType)
+        labelProductBrand.setContentHuggingPriority(.defaultHigh, for: .horizontal)
+        labelProductType.setContentHuggingPriority(.defaultLow, for: .horizontal)
     }
-    
     private func setupSecondRowOnLeftSideOfProductInformation() {
+        
         hStackProductInformationLeftSideSecondRow.addArrangedSubview(labelProductRatingFloat)
-        hStackProductInformationLeftSideSecondRow.addArrangedSubview(starRatingView)
+        hStackProductInformationLeftSideSecondRow.addArrangedSubview(starContainerView)
         hStackProductInformationLeftSideSecondRow.addArrangedSubview(labelProductCommentTotal)
+        
+        labelProductRatingFloat.setContentHuggingPriority(.defaultHigh, for: .horizontal)
+        starContainerView.setContentHuggingPriority(.defaultHigh, for: .horizontal)
+        labelProductCommentTotal.setContentHuggingPriority(.defaultLow, for: .horizontal)
     }
     
     private func setupThirdRowOnLeftSideOfProductInformation() {
@@ -451,7 +447,8 @@ extension ProductDetailVC {
     }
     
     private func setupCountDown() {
-        let countDownView = CountDownView(frame: countDownViewContainer.bounds)
+         let countDownView = CountDownView(frame: countDownViewContainer.bounds, secondsInitial: 2)
+//        let countDownView = CountDownView(frame: countDownViewContainer.bounds)
         countDownView.delegate = self
         countDownViewContainer.addSubview(countDownView)
         countDownView.translatesAutoresizingMaskIntoConstraints = false
@@ -530,7 +527,7 @@ extension ProductDetailVC {
         else { fatalError(Localize.fatalConfigurePrompt.raw())}
         DispatchQueue.main.async { [weak self] in
             guard let self else { fatalError(Localize.nilSelfFatal.raw()) }
-            self.starRatingView.rating = ratingFloat
+            self.starContainerView.setRating(ratingFloat)
         }
     }
     private func configureProductCommentCountTotal() {
