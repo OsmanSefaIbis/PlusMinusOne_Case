@@ -175,5 +175,33 @@ final class PlusMinusOne_CaseTests: XCTestCase {
         XCTAssertEqual(resultItem?.id, item.id)
     }
     
+    func test_updateUserInterface_gridPreference_collectionViewDisplaysAsGrid() {
+        
+        XCTAssertEqual(viewGallery.counter_setNavigationBarItemToGrid, 0)
+        XCTAssertEqual(viewGallery.counter_reloadCollectionView, 0)
+        viewModelGallery.updateColumnPreference(by: 2) // when
+        XCTAssertEqual(viewGallery.counter_setNavigationBarItemToGrid, 1)
+        XCTAssertEqual(viewGallery.counter_reloadCollectionView, 1)
+    }
+    
+    func test_updateUserInterface_singularPreference_collectionViewDisplaysAsSingular() {
+        
+        XCTAssertEqual(viewGallery.counter_setNavigationBarItemToSingular, 0)
+        XCTAssertEqual(viewGallery.counter_reloadCollectionView, 0)
+        viewModelGallery.updateColumnPreference(by: 1) // when
+        XCTAssertEqual(viewGallery.counter_setNavigationBarItemToSingular, 1)
+        XCTAssertEqual(viewGallery.counter_reloadCollectionView, 1)
+    }
+    
+    func test_updateUserInterface_someOtherPreference_collectionViewDisplaysPriorSet() {
+        XCTAssertEqual(viewGallery.counter_setNavigationBarItemToSingular, 0)
+        XCTAssertEqual(viewGallery.counter_setNavigationBarItemToGrid, 0)
+        XCTAssertEqual(viewGallery.counter_reloadCollectionView, 0)
+        viewModelGallery.updateColumnPreference(by: 99) // when
+        XCTAssertEqual(viewGallery.counter_setNavigationBarItemToSingular, 0)
+        XCTAssertEqual(viewGallery.counter_setNavigationBarItemToGrid, 0)
+        XCTAssertEqual(viewGallery.counter_reloadCollectionView, 1)
+    }
+    
     // - End of - ProductGallery ViewModel
 }

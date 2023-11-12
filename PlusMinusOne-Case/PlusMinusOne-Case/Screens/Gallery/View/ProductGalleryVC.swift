@@ -14,6 +14,8 @@ protocol ContractForProductGalleryVC: AnyObject {
     func setupDelegates()
     func reloadCollectionView()
     func navigateToDetail(pass data: DetailData)
+    func setNavigationBarItemToSingular()
+    func setNavigationBarItemToGrid()
 }
 
 final class ProductGalleryVC: UIViewController {
@@ -53,7 +55,8 @@ final class ProductGalleryVC: UIViewController {
         cv.showsVerticalScrollIndicator = false
         return cv
     }()
-    
+    private var buttonSingular = UIBarButtonItem()
+    private var buttonGrid = UIBarButtonItem()
 }
 
 // - Contract Conformance
@@ -61,7 +64,10 @@ extension ProductGalleryVC: ContractForProductGalleryVC {
     
     func setupUserInterface() {
         self.view.backgroundColor = .systemBackground
-        self.navigationController?.setNavigationBarHidden(true, animated: true)
+        self.navigationController?.setNavigationBarHidden(false, animated: true)
+        self.navigationController?.navigationBar.tintColor = .systemGray2
+        updateNavigationBarItemButtons()
+        viewModel.updateColumnPreference(by: viewModel.columnPreference)
         setupContainerView()
         setupCollectionView()
     }
@@ -73,13 +79,26 @@ extension ProductGalleryVC: ContractForProductGalleryVC {
     
     func reloadCollectionView() {
         DispatchQueue.main.async { [weak self] in
-            self?.collectionView.reloadData()
+            guard let self = self else { return }
+            self.collectionView.reloadData()
         }
     }
     
     func navigateToDetail(pass data: DetailData) {
         let detailPage = ProductDetailVC(data: data)
         self.navigationController?.pushViewController(detailPage, animated: true)
+    }
+    
+    func setNavigationBarItemToSingular() {
+        buttonSingular = UIBarButtonItem(image: UIImage(systemName: "square.split.1x2.fill"), style: .plain, target: self, action: #selector(tappedSingularButton))
+        buttonGrid = UIBarButtonItem(image: UIImage(systemName: "square.grid.2x2"), style: .plain, target: self, action: #selector(tappedGridButton))
+        updateNavigationBarItemButtons()
+    }
+    
+    func setNavigationBarItemToGrid() {
+        buttonGrid = UIBarButtonItem(image: UIImage(systemName: "square.grid.2x2.fill"), style: .plain, target: self, action: #selector(tappedGridButton))
+        buttonSingular = UIBarButtonItem(image: UIImage(systemName: "square.split.1x2"), style: .plain, target: self, action: #selector(tappedSingularButton))
+        updateNavigationBarItemButtons()
     }
 }
 
@@ -119,6 +138,15 @@ extension ProductGalleryVC {
             collectionView.leadingAnchor.constraint(equalTo: containerView.leadingAnchor, constant: inset),
             collectionView.trailingAnchor.constraint(equalTo: containerView.trailingAnchor, constant: -inset)
         ])
+    }
+    @objc func tappedSingularButton() {
+        viewModel.updateColumnPreference(by: 1)
+    }
+    @objc func tappedGridButton() {
+        viewModel.updateColumnPreference(by: 2)
+    }
+    func updateNavigationBarItemButtons() {
+        navigationItem.rightBarButtonItems = [buttonGrid, buttonSingular]
     }
 }
 // - CollectionView DataSource Methods

@@ -21,6 +21,7 @@ protocol ContractForProductGalleryVM: AnyObject {
     func viewDidLoad()
     func getItem(at index: IndexPath) -> RowItem?
     func didSelectItem(at index: IndexPath)
+    func updateColumnPreference(by value: Int)
 }
 // - Class Communicator
 protocol DelegateOfProductGalleryVM: AnyObject {
@@ -39,7 +40,7 @@ final class ProductGalleryVM: ContractForProductGalleryVM{
     // - State Prop's
     var items: [RowItem] = []
     var itemsCount: Int { get { items.count} }
-    var columnPreference: Int = 2 // optionalTODO: singular OR grid preference
+    var columnPreference: Int = 2
     
     // - Life-cycle: Object
     init(view: ContractForProductGalleryVC) {
@@ -63,6 +64,20 @@ final class ProductGalleryVM: ContractForProductGalleryVM{
     func didSelectItem(at index: IndexPath) {
         guard let data = getItem(at: index) else { fatalError(Localize.getItemFailPrompt.raw())}
         view?.navigateToDetail(pass: data)
+    }
+    
+    func updateColumnPreference(by value: Int) {
+       columnPreference = value
+        switch columnPreference {
+        case 1:
+            view?.setNavigationBarItemToSingular()
+            view?.reloadCollectionView()
+        case 2:
+            view?.setNavigationBarItemToGrid()
+            view?.reloadCollectionView()
+        default:
+            view?.reloadCollectionView()
+        }
     }
 }
 

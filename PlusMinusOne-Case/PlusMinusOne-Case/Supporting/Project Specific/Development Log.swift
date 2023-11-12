@@ -68,8 +68,20 @@
 // • UI testing passes. Covered the tap collectionView to navigate to detail page case only.
 // • Will refactor or check: namings, left todo's, left fixme's, empty methods, some minor improvements.
 // • Added internet connectivity handling
+// • Submitted the case study at 13:30
 
 // - Considered to do but did not
 // • For performant UI can resize or scaleDown for custom cell
 
+// +-1 ~ Date: 12.11
+
+// • Refactored the code upon code-review.
+//   - Contracts of ViewModels are used correctly.
+//   - Added contracts also to models to follow the coherency.
+//   - Invalidated the timer in the CountDownTimer class that was causing a retain cycle.
+//   - Socials placement is fixed, upon update they are no longer oriented to rightmost.
+//   - Spacing between labels are added to match the exact look.
+//   - Added two buttons to the navigation bar so that the user can choose between a singular or grid layout.
+//   - Added a unit test to verify updateColumnPreference() method in ProductGalleryVM.
+// • Ran all tests again to validate the app execution.
 

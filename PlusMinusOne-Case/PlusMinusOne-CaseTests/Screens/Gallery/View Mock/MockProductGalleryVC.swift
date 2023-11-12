@@ -12,6 +12,8 @@ final class MockProductGalleryVC: ContractForProductGalleryVC {
     var counter_setupUserInterface = 0
     var counter_setupDelegates = 0
     var counter_reloadCollectionView = 0
+    var counter_setNavigationBarItemToSingular = 0
+    var counter_setNavigationBarItemToGrid = 0
     var flag_navigateToDetail = false
     var passedData: RowItem?
     
@@ -29,5 +31,13 @@ final class MockProductGalleryVC: ContractForProductGalleryVC {
     
     func navigateToDetail(pass data: PlusMinusOne_Case.DetailData) {
         flag_navigateToDetail = true
+    }
+    
+    func setNavigationBarItemToSingular() {
+        counter_setNavigationBarItemToSingular += 1
+    }
+    
+    func setNavigationBarItemToGrid() {
+        counter_setNavigationBarItemToGrid += 1
     }
 }
