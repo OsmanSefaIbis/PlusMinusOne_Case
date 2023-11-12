@@ -447,8 +447,8 @@ extension ProductDetailVC {
     }
     
     private func setupCountDown() {
-         let countDownView = CountDownView(frame: countDownViewContainer.bounds, secondsInitial: 2)
-//        let countDownView = CountDownView(frame: countDownViewContainer.bounds)
+//         let countDownView = CountDownView(frame: countDownViewContainer.bounds, secondsInitial: 2)
+        let countDownView = CountDownView(frame: countDownViewContainer.bounds)
         countDownView.delegate = self
         countDownViewContainer.addSubview(countDownView)
         countDownView.translatesAutoresizingMaskIntoConstraints = false
